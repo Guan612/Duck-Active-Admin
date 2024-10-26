@@ -10,7 +10,9 @@ export class UserService {
       data: createUserDto,
     });
 
-    return res
+    return {
+      loginId: res.loginId,
+    };
   }
 
   findAll() {
