@@ -1,6 +1,25 @@
-import { Injectable } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { Role } from '../dto/user.dto';
+import { Reflector } from '@nestjs/core';
+import { ROLES_KEY } from '../decorator/roles.decorator';
 
 @Injectable()
-export class RoleGuard {
-    
+export class RoleGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const requiredRoles = this.reflector.getAllAndOverride(ROLES_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (!requiredRoles) {
+      return true; // 如果没有定义角色要求，则允许访问
+    }
+
+    const { user } = context.switchToHttp().getRequest(); //注意自己的user信息
+    return requiredRoles.some((role) => user.userInfo.role === role);
+  }
 }

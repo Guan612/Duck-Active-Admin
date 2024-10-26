@@ -6,6 +6,12 @@ import {
   MinLength,
 } from 'class-validator';
 
+export enum Role {
+  User = 0, // 学生
+  Teacher = 1, // 老师
+  Admin = 2, // 超级管理员
+}
+
 export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
@@ -21,7 +27,7 @@ export class CreateUserDto {
   email?: string;
 
   @IsOptional()
-  @IsString({message: '昵称格式不正确'})
+  @IsString({ message: '昵称格式不正确' })
   nickname?: string;
 }
 
