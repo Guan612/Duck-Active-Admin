@@ -11,7 +11,7 @@ model User {
   id           Int            @id @default(autoincrement())
   loginId      String         @unique
   nickname     String?
-  role        Int            @default(0) //0：用户，1：活动管理员，2：超级管理员
+  role         Int            @default(0) //0：用户，1：活动管理员，2：超级管理员
   password     String
   email        String?        @unique
   createdAt    DateTime       @default(now())
