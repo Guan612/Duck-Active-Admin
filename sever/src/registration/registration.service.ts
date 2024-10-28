@@ -8,23 +8,38 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class RegistrationService {
   constructor(private prisma: PrismaService) {}
-  create(createRegistrationDto: CreateRegistrationDto) {
-    return 'This action adds a new registration';
+
+  async create(createRegistrationDto: CreateRegistrationDto) {
+    const res = await this.prisma.registration.create({
+      data: createRegistrationDto,
+    });
+    return res;
   }
 
-  findAll() {
-    return `This action returns all registration`;
+  async findAll() {
+    const res = await this.prisma.registration.findMany();
+    return res;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} registration`;
+  async findOne(id: number) {
+    const res = await this.prisma.registration.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return res;
   }
 
   update(id: number, updateRegistrationDto: UpdateRegistrationDto) {
     return `This action updates a #${id} registration`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} registration`;
+  async remove(id: number) {
+    const res = await this.prisma.registration.delete({
+      where: {
+        id: id,
+      },
+    });
+    return res;
   }
 }

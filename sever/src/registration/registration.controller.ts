@@ -12,17 +12,21 @@ import {
   CreateRegistrationDto,
   UpdateRegistrationDto,
 } from './dto/registration.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('registration')
+@ApiTags('registration')
 export class RegistrationController {
   constructor(private readonly registrationService: RegistrationService) {}
 
-  @Post()
+  @Post(':id')
+  @ApiOperation({ summary: '报名' })
   create(@Body() createRegistrationDto: CreateRegistrationDto) {
     return this.registrationService.create(createRegistrationDto);
   }
 
   @Get()
+  @ApiOperation({ summary: '获取报名列表' })
   findAll() {
     return this.registrationService.findAll();
   }
