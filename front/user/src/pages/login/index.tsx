@@ -17,7 +17,7 @@ export default function Login() {
 					>
 						<Form.Item
 							label="登录ID"
-							name="loginid"
+							name="loginId"
 							rules={[
 								{
 									required: true,
