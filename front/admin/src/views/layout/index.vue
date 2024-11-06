@@ -6,7 +6,7 @@ import Siderbar from './components/siderbar.vue';
 <template>
     <div class="flex flex-col">
         <Headerbar></Headerbar>
-        <div class="flex flex-row h-screen">
+        <div class="flex flex-row overflow-hidden">
             <Siderbar></Siderbar>
             <router-view></router-view>
         </div>
