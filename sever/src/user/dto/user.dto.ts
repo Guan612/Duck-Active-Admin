@@ -1,6 +1,7 @@
 import {
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   MinLength,
@@ -39,4 +40,18 @@ export class LoginUserDto {
   @IsNotEmpty()
   @IsString()
   password: string;
+}
+
+export class UpdateUserDto {
+  @IsOptional()
+  @IsEmail()
+  email?: string;
+
+  @IsOptional()
+  @IsString({ message: '昵称格式不正确' })
+  nickname?: string;
+
+  @IsOptional()
+  @IsNumber()
+  role?: number;
 }
