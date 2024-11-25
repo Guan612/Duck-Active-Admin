@@ -20,8 +20,10 @@ export class AuthService {
         const payload = { userInfo };
         return {
           message: '登录成功',
-          ...userInfo,
-          token: this.jwtService.sign(payload),
+          userInfo:{
+            ...userInfo,
+            token: this.jwtService.sign(payload),
+          }
         };
       } else {
         throw new HttpException('密码错误', 404);
