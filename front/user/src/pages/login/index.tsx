@@ -1,6 +1,6 @@
 import { Button, Form, Input, Radio } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useLogin } from "../../hooks/login/uselogin";
+import useLogin from "../../hooks/login/uselogin";
 export default function Login() {
 	const { onFinish } = useLogin();
 	return (
