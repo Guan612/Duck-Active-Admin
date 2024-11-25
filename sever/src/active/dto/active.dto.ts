@@ -1,16 +1,16 @@
 import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateActiveDto {
-  @IsNotEmpty()
+  @IsNotEmpty({message: '活动标题不能为空'})
   @IsString()
   title: string;
 
-  @IsNotEmpty()
-  @IsDate()
+  @IsNotEmpty({message: '活动开始时间不能为空'})
+  @IsDate({message: '活动开始时间格式不正确'})
   startDate: Date;
 
-  @IsNotEmpty()
-  @IsDate()
+  @IsNotEmpty({message: '活动结束时间不能为空'})
+  @IsDate({message: '活动结束时间格式不正确'})
   endDate: Date;
 
   @IsOptional()
