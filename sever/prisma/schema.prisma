@@ -24,7 +24,6 @@ model User {
 model Activitie {
   id           Int            @id @default(autoincrement())
   title        String
-  content      String?
   activitieType Int            @default(0) //0：通用 1：博学 2：笃行 3：尽美 4：明德
   isOnline      Int            @default(0) //0：线下 1：线上
   activitStatus Int            @default(0) //0：创建活动 1：审核活动 2：开始报名 3：报名结束 4：活动结束
@@ -33,6 +32,15 @@ model Activitie {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   registration Registration[]
+  activitieDetail ActivitieDetail[]
+}
+
+model ActivitieDetail {
+  id           Int            @id @default(autoincrement())
+  activitieId  Int
+  content      String?
+  activitieImgUrl String?
+  activitie    Activitie      @relation(fields: [activitieId], references: [id])
 }
 
 model Integral{

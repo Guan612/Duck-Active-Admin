@@ -12,10 +12,16 @@ export class CreateActiveDto {
   @IsNotEmpty({message: '活动结束时间不能为空'})
   @IsDate({message: '活动结束时间格式不正确'})
   endDate: Date;
+}
 
-  @IsOptional()
+export class CreateActivitieDetailDto{
+  @IsNotEmpty()
   @IsString()
-  content?: string;
+  content: string;
+
+  @IsNotEmpty()
+  @IsString()
+  activitieImgUrl:string;
 }
 
 export class UpdateActiveDto {
