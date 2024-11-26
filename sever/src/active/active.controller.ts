@@ -23,10 +23,17 @@ export class ActiveController {
 
   @Post()
   @UseGuards(JwtAuthGuard,RoleGuard)
-  @Roles(Role.Admin,Role.Teacher)
+  @Roles(Role.Responsible,Role.Admin,Role.Teacher)
   @ApiOperation({ summary: '创建活动' })
   create(@Body() createActiveDto: CreateActiveDto) {
     return this.activeService.create(createActiveDto);
+  }
+
+  @Post('join')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: ' 是否加入活动' })
+  join(@Body() joinActiveDto: any) {
+    return this.activeService.join(joinActiveDto);
   }
 
   @Get()
@@ -45,7 +52,7 @@ export class ActiveController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard,RoleGuard)
-  @Roles(Role.Admin,Role.Teacher)
+  @Roles(Role.Admin,Role.Teacher,Role.Responsible)
   @ApiOperation({ summary: '更新活动' })
   update(@Param('id') id: string, @Body() updateActiveDto: UpdateActiveDto) {
     return this.activeService.update(+id, updateActiveDto);
@@ -53,7 +60,7 @@ export class ActiveController {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard,RoleGuard)
-  @Roles(Role.Admin,Role.Teacher)
+  @Roles(Role.Admin,Role.Teacher,Role.Responsible)
   @ApiOperation({ summary: '删除活动' })
   remove(@Param('id') id: string) {
     return this.activeService.remove(+id);
