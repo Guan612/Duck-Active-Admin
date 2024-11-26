@@ -11,18 +11,23 @@ model User {
   id           Int            @id @default(autoincrement())
   loginId      String         @unique
   nickname     String?
-  role         Int            @default(0) //0：用户，1：活动管理员，2：超级管理员
+  role         Int            @default(0) //0：用户，1：活动发布者，2：活动审核者，3：管理员
+  headerimg    String?
   password     String
   email        String?        @unique
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   registration Registration[]
+  integral    Integral[]
 }
 
 model Activitie {
   id           Int            @id @default(autoincrement())
   title        String
   content      String?
+  activitieType Int            @default(0) //0：通用 1：博学 2：笃行 3：尽美 4：明德
+  isOnline      Int            @default(0) //0：线下 1：线上
+  activitStatus Int            @default(0) //0：创建活动 1：审核活动 2：开始报名 3：报名结束 4：活动结束
   startDate    DateTime
   endDate      DateTime
   createdAt    DateTime       @default(now())
@@ -30,10 +35,21 @@ model Activitie {
   registration Registration[]
 }
 
+model Integral{
+  id           Int            @id @default(autoincrement())
+  userId       Int
+  LearnedPoints Int           @default(0) //博学
+  ActionPoints Int            @default(0) //笃行
+  BeautyPoints Int            @default(0) //尽美
+  MoralPoints Int             @default(0) //明德
+  user         User           @relation(fields: [userId], references: [id])
+}
+
 model Registration {
   id          Int       @id @default(autoincrement())
   userId      Int
   activitieId Int
+  status      Int       @default(0) //0：已报名，2：已同意参加，3：已拒绝参加
   user        User      @relation(fields: [userId], references: [id])
   activitie   Activitie @relation(fields: [activitieId], references: [id])
 }
