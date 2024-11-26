@@ -35,3 +35,18 @@ export class UpdateActiveDto {
   @IsString()
   content?: string;
 }
+
+export enum ActivitieType {
+  //0：博学 1：笃行 2：尽美 3：明德
+  通用 = 0,
+  博学 = 1,
+  笃行 = 2,
+  尽美 = 3,
+  明德 = 4
+}
+
+export enum isOnline {
+  //0：未上线 1：已上线
+  线上 = 0,
+  线下 = 1
+}
