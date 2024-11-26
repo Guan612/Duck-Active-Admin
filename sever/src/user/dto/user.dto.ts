@@ -9,8 +9,9 @@ import {
 
 export enum Role {
   User = 0, // 学生
-  Teacher = 1, // 老师
-  Admin = 2, // 超级管理员
+  Responsible = 1, // 活动负责人
+  Teacher = 2, // 教师
+  Admin = 3, // 超级管理员
 }
 
 export class CreateUserDto {
