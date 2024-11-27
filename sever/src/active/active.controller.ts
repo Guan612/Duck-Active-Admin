@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ActiveService } from './active.service';
 import { CreateActiveDto, UpdateActiveDto } from './dto/active.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/user/guard/jwt.guard';
 import { RoleGuard } from 'src/user/guard/role.guard';
 import { Roles } from 'src/user/decorator/roles.decorator';
@@ -25,6 +25,13 @@ export class ActiveController {
   @UseGuards(JwtAuthGuard,RoleGuard)
   @Roles(Role.Responsible,Role.Admin,Role.Teacher)
   @ApiOperation({ summary: '创建活动' })
+  @ApiResponse({
+    status:201,
+    description:'创建成功',
+    schema:{
+      
+    }
+  })
   create(@Body() createActiveDto: CreateActiveDto) {
     return this.activeService.create(createActiveDto);
   }
