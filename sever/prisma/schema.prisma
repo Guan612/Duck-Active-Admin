@@ -37,7 +37,7 @@ model Activitie {
 
 model ActivitieDetail {
   id           Int            @id @default(autoincrement())
-  activitieId  Int
+  activitieId  Int            @unique
   content      String?
   activitieImgUrl String?
   activitie    Activitie      @relation(fields: [activitieId], references: [id])
