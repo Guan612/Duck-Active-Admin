@@ -6,5 +6,5 @@ export const registerAPI = (data:loginDto)=>{
 }
 
 export const loginAPI = (data:loginDto)=>{
-    return http.post("/user/login", data)
+    return http.post("/user/adminlogin", data)
 }
