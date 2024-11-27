@@ -10,6 +10,7 @@ async function bootstrap() {
     .setTitle('鸭鸭活动管理')
     .setDescription('鸭鸭活动管理API文档')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
