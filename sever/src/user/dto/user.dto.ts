@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -15,29 +16,53 @@ export enum Role {
 }
 
 export class CreateUserDto {
+  @ApiProperty({
+    description: '用户的用户名',
+    example: 'snmqwq',
+  })
   @IsNotEmpty()
   @IsString()
   loginId: string;
 
+  @ApiProperty({
+    description: '用户的密码',
+    example: '123456',
+  })
   @IsNotEmpty()
   @IsString()
   @MinLength(6, { message: '密码长度不能低于6位' })
   password: string;
 
+  @ApiProperty({
+    description: '用户的邮箱',
+    example: 'snmqwq@love.com',
+  })
   @IsOptional()
   @IsEmail()
   email?: string;
 
+  @ApiProperty({
+    description: '用户的昵称',
+    example: '尚凝梦',
+  })
   @IsOptional()
   @IsString({ message: '昵称格式不正确' })
   nickname?: string;
 }
 
 export class LoginUserDto {
+  @ApiProperty({
+    description: '用户的用户名',
+    example: 'snmqwq',
+  })
   @IsNotEmpty()
   @IsString()
   loginId: string;
 
+  @ApiProperty({
+    description: '用户的密码',
+    example: '123456',
+  })
   @IsNotEmpty()
   @IsString()
   password: string;
