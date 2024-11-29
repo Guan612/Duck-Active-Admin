@@ -47,6 +47,6 @@ export class ActiveService {
   }
 
   async join(joinActiveDto) {
-    const {userId,activeId} = joinActiveDto
+    const { userId, activeId } = joinActiveDto;
   }
 }

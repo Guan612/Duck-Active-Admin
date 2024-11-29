@@ -13,7 +13,13 @@ import { UserService } from './service/user.service';
 import { CreateUserDto, LoginUserDto, Role } from './dto/user.dto';
 import { HashPasswordPipe } from './pipe/hash-password.pipe';
 import { CheckUserExistsPipe } from './pipe/check-user-exists.pipe';
-import { ApiBasicAuth, ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBasicAuth,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthService } from './service/auth.service';
 import { JwtAuthGuard } from './guard/jwt.guard';
 import { RoleGuard } from './guard/role.guard';
@@ -34,7 +40,7 @@ export class UserController {
     description: '创建用户成功',
     schema: {
       example: {
-        loginId:"snmqwq"
+        loginId: 'snmqwq',
       },
     },
   })
@@ -43,9 +49,9 @@ export class UserController {
     description: '用户已注册',
     schema: {
       example: {
-        "statusCode": 409,
-        "message": "该用户已注册"
-      }
+        statusCode: 409,
+        message: '该用户已注册',
+      },
     },
   })
   async create(
@@ -61,42 +67,42 @@ export class UserController {
   @Post('login')
   @ApiOperation({ summary: '用户登录' })
   @ApiResponse({
-    status:201,
-    description:"登陆成功",
-    schema:{
-      example:{
-          "message": "登录成功",
-          "userInfo": {
-            "id": 2,
-            "loginId": "snmqwq",
-            "nickname": "尚凝梦",
-            "role": 1,
-            "headerimg": null,
-            "email": null,
-            "token": "xxxxxxx"
-          }
-      }
-    }
+    status: 201,
+    description: '登陆成功',
+    schema: {
+      example: {
+        message: '登录成功',
+        userInfo: {
+          id: 2,
+          loginId: 'snmqwq',
+          nickname: '尚凝梦',
+          role: 1,
+          headerimg: null,
+          email: null,
+          token: 'xxxxxxx',
+        },
+      },
+    },
   })
   @ApiResponse({
-    status:404,
-    description:"用户密码错误",
-    schema:{
-      example:{
-        "statusCode": 404,
-        "message": "用户密码错误"
-      }
-    }
+    status: 404,
+    description: '用户密码错误',
+    schema: {
+      example: {
+        statusCode: 404,
+        message: '用户密码错误',
+      },
+    },
   })
   @ApiResponse({
-    status:404,
-    description:"用户不存在",
-    schema:{
-      example:{
-        "statusCode": 404,
-        "message": "用户不存在"
-      }
-    }
+    status: 404,
+    description: '用户不存在',
+    schema: {
+      example: {
+        statusCode: 404,
+        message: '用户不存在',
+      },
+    },
   })
   login(@Body() loginDto: LoginUserDto) {
     return this.authService.login(loginDto);
@@ -106,14 +112,14 @@ export class UserController {
   @ApiOperation({ summary: '管理员登录' })
   async adminLogin(@Body() loginDto: LoginUserDto) {
     const res = await this.userService.findByLoginId(loginDto.loginId);
-    if(res){
-      if(res.role != 0){
+    if (res) {
+      if (res.role != 0) {
         return this.authService.login(loginDto);
-      }else{
+      } else {
         throw new HttpException('该用户不是管理员', 401);
       }
     } else {
-        throw new HttpException('用户不存在', 404);
+      throw new HttpException('用户不存在', 404);
     }
   }
 

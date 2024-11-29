@@ -22,15 +22,13 @@ export class ActiveController {
   constructor(private readonly activeService: ActiveService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard,RoleGuard)
-  @Roles(Role.Responsible,Role.Admin,Role.Teacher)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.Responsible, Role.Admin, Role.Teacher)
   @ApiOperation({ summary: '创建活动' })
   @ApiResponse({
-    status:201,
-    description:'创建成功',
-    schema:{
-      
-    }
+    status: 201,
+    description: '创建成功',
+    schema: {},
   })
   create(@Body() createActiveDto: CreateActiveDto) {
     return this.activeService.create(createActiveDto);
@@ -58,16 +56,16 @@ export class ActiveController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard,RoleGuard)
-  @Roles(Role.Admin,Role.Teacher,Role.Responsible)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.Admin, Role.Teacher, Role.Responsible)
   @ApiOperation({ summary: '更新活动' })
   update(@Param('id') id: string, @Body() updateActiveDto: UpdateActiveDto) {
     return this.activeService.update(+id, updateActiveDto);
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard,RoleGuard)
-  @Roles(Role.Admin,Role.Teacher,Role.Responsible)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.Admin, Role.Teacher, Role.Responsible)
   @ApiOperation({ summary: '删除活动' })
   remove(@Param('id') id: string) {
     return this.activeService.remove(+id);
