@@ -4,12 +4,12 @@ import { persist, createJSONStorage } from "zustand/middleware";
 const userStore = create(
 	persist(
 		(set) => ({
-			userInfo: {},
+			userInfo: null,
 			setUserInfo: (userInfo: any) => {
 				set({ userInfo });
 			},
 			clearUserInfo: () => {
-				set({ userInfo: {} });
+				set({ userInfo: null });
 			},
 		}),
 
