@@ -13,6 +13,7 @@ declare module 'vue' {
     AInput: typeof import('ant-design-vue/es')['Input']
     AInputPassword: typeof import('ant-design-vue/es')['InputPassword']
     ALayoutHeader: typeof import('ant-design-vue/es')['LayoutHeader']
+    APopover: typeof import('ant-design-vue/es')['Popover']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
