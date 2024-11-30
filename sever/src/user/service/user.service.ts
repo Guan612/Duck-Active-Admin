@@ -16,7 +16,16 @@ export class UserService {
   }
 
   async findAll() {
-    const res = await this.prisma.user.findMany();
+    const res = await this.prisma.user.findMany({
+      select: {
+        id: true,
+        loginId: true,
+        nickname: true,
+        role: true,
+        headerimg: true,
+        email: true,
+      },
+    });
     return res;
   }
 
@@ -34,6 +43,14 @@ export class UserService {
       where: {
         id: id,
       },
+      select: {
+        id: true,
+        loginId: true,
+        nickname: true,
+        role: true,
+        headerimg: true,
+        email: true,
+      }
     });
     return res;
   }
