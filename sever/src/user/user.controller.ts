@@ -110,13 +110,51 @@ export class UserController {
 
   @Post('adminLogin')
   @ApiOperation({ summary: '管理员登录' })
+  @ApiResponse({
+    status: 201,
+    description: '登录成功',
+    schema:{
+      example:{
+        "message": "登录成功",
+        "userInfo": {
+            "id": 2,
+            "loginId": "snmqwq",
+            "nickname": "尚凝梦",
+            "role": 1,
+            "headerimg": null,
+            "email": null,
+            "token": "xxxxxx"
+        }
+      }
+    }
+  })
+  @ApiResponse({
+    status: 401,
+    description: '该用户不是管理员',
+    schema: {
+      example: {
+        statusCode: 403,
+        message: '该用户不是管理员',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 404,
+    description: '密码错误',
+    schema: {
+      example:{
+        statusCode: 404,
+        message: '密码错误',
+      }
+    }
+  })
   async adminLogin(@Body() loginDto: LoginUserDto) {
     const res = await this.userService.findByLoginId(loginDto.loginId);
     if (res) {
       if (res.role != 0) {
         return this.authService.login(loginDto);
       } else {
-        throw new HttpException('该用户不是管理员', 401);
+        throw new HttpException('该用户不是管理员', 403);
       }
     } else {
       throw new HttpException('用户不存在', 404);
@@ -127,25 +165,88 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.Teacher, Role.Admin)
   @ApiOperation({ summary: '获取用户列表' })
-  @ApiBearerAuth()
+  @ApiBearerAuth()//添加token验证
+  @ApiResponse({
+    status: 200,
+    description: '获取用户列表成功',
+    schema: {
+      example: 
+        [
+          {
+              "id": 1,
+              "loginId": "yaya",
+              "nickname": null,
+              "role": 3,
+              "headerimg": null,
+              "email": null
+          },
+          {
+              "id": 2,
+              "loginId": "snmqwq",
+              "nickname": "尚凝梦",
+              "role": 1,
+              "headerimg": null,
+              "email": null
+          },
+        ]
+    }
+  })
   findAll() {
     return this.userService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '获取单个用户信息' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 201,
+    description: '获取用户信息成功',
+    schema: {
+      example: {
+        "id": 2,
+        "loginId": "snmqwq",
+        "nickname": "尚凝梦",
+        "role": 1,
+        "headerimg": null,
+        "email": null
+      }
+    }
+  })
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard,RoleGuard)
+  @Roles(Role.Teacher, Role.Admin)
   @ApiOperation({ summary: '更新用户信息' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 201,
+    description: '更新用户信息成功',
+    schema: {
+      example: {
+        "id": 2,
+        "loginId": "snmqwq",
+        "nickname": "尚凝梦",
+        "role": 1,
+      }
+    }
+  })
   update(@Param('id') id: string, @Body() updateUserDto: any) {
     return this.userService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard,RoleGuard)
+  @Roles(Role.Admin,Role.Teacher)
   @ApiOperation({ summary: '删除用户' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 201,
+    description: '删除用户成功',
+  })
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
