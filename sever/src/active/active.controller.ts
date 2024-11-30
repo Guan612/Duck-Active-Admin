@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ActiveService } from './active.service';
 import { CreateActiveDto, UpdateActiveDto } from './dto/active.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/user/guard/jwt.guard';
 import { RoleGuard } from 'src/user/guard/role.guard';
 import { Roles } from 'src/user/decorator/roles.decorator';
@@ -25,10 +25,13 @@ export class ActiveController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.Responsible, Role.Admin, Role.Teacher)
   @ApiOperation({ summary: '创建活动' })
+  @ApiBearerAuth()
   @ApiResponse({
     status: 201,
     description: '创建成功',
-    schema: {},
+    schema: {
+      example:{}
+    },
   })
   create(@Body() createActiveDto: CreateActiveDto) {
     return this.activeService.create(createActiveDto);
@@ -44,6 +47,14 @@ export class ActiveController {
   @Get()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '获取所有活动' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example:{}
+    },
+  })
   findAll() {
     return this.activeService.findAll();
   }
@@ -51,6 +62,14 @@ export class ActiveController {
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '获取单个活动' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example:{}
+    },
+  })
   findOne(@Param('id') id: string) {
     return this.activeService.findOne(+id);
   }
@@ -59,6 +78,14 @@ export class ActiveController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.Admin, Role.Teacher, Role.Responsible)
   @ApiOperation({ summary: '更新活动' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '更新成功',
+    schema: {
+      example:{}
+    },
+  })
   update(@Param('id') id: string, @Body() updateActiveDto: UpdateActiveDto) {
     return this.activeService.update(+id, updateActiveDto);
   }
@@ -67,6 +94,14 @@ export class ActiveController {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.Admin, Role.Teacher, Role.Responsible)
   @ApiOperation({ summary: '删除活动' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '删除成功',
+    schema: {
+      example:{}
+    },
+  })
   remove(@Param('id') id: string) {
     return this.activeService.remove(+id);
   }
