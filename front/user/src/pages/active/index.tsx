@@ -13,35 +13,50 @@ export default function Active() {
 	};
 	return (
 		<div className="flex flex-col items-center justify-center h-full">
-			<div>
-				<h1 className="text-2xl font-bold mb-4">活动选择</h1>
-				<Select
-					className="w-64 mx-2"
-					mode="multiple"
-					allowClear
-					placeholder="选择活动"
-					defaultValue={['a10', 'c12']}
-					onChange={handleChange}
-					options={options}
-				/>
-				<Select
-					className="w-64 mx-2"
-					mode="multiple"
-					allowClear
-					placeholder="选择类型"
-					defaultValue={['a10', 'c12']}
-					onChange={handleChange}
-					options={options}
-				/>
-				<Select
-					className="w-64 mx-2"
-					mode="multiple"
-					allowClear
-					placeholder="选择时间"
-					defaultValue={['a10', 'c12']}
-					onChange={handleChange}
-					options={options}
-				/>
+			<div className="flex flex-col">
+				<div className="text-2xl font-bold m-4 text-center">活动选择</div>
+				<div className="flex flex-col md:flex-row">
+				<div className="flex justify-center items-center mx-2">
+					<div>选择活动</div>
+					<Select
+						className="w-64 mx-1"
+						mode="multiple"
+						allowClear
+						placeholder="选择活动"
+						defaultValue={['a10', 'c12']}
+						onChange={handleChange}
+						options={options}
+					/>
+				</div>
+				
+				<div className="flex justify-center items-center mx-2">
+					<div>选择类型</div>
+					<Select
+						className="w-64 mx-1"
+						mode="multiple"
+						allowClear
+						placeholder="选择类型"
+						defaultValue={['a10', 'c12']}
+						onChange={handleChange}
+						options={options}
+					/>
+				</div>
+				
+				<div className="flex justify-center items-center mx-2">
+					<div>选择时间</div>
+					<Select
+						className="w-64 mx-1"
+						mode="multiple"
+						allowClear
+						placeholder="选择时间"
+						defaultValue={['a10', 'c12']}
+						onChange={handleChange}
+						options={options}
+					/>
+				</div>
+					
+				</div>
+				
 			</div>
 		</div>
 	);
