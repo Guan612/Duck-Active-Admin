@@ -17,6 +17,9 @@ importers:
       axios:
         specifier: ^1.7.7
         version: 1.7.7
+      echarts:
+        specifier: ^5.5.1
+        version: 5.5.1
       pinia:
         specifier: ^2.2.4
         version: 2.2.4(typescript@5.6.3)(vue@3.5.12(typescript@5.6.3))
@@ -29,6 +32,9 @@ importers:
       vue:
         specifier: ^3.5.12
         version: 3.5.12(typescript@5.6.3)
+      vue-echarts:
+        specifier: ^7.0.3
+        version: 7.0.3(@vue/runtime-core@3.5.12)(echarts@5.5.1)(vue@3.5.12(typescript@5.6.3))
       vue-router:
         specifier: ^4.4.5
         version: 4.4.5(vue@3.5.12(typescript@5.6.3))
@@ -742,6 +748,9 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
+  echarts@5.5.1:
+    resolution: {integrity: sha512-Fce8upazaAXUVUVsjgV6mBnGuqgO+JNDlcgF79Dksy4+wgGpQB2lmYoO4TSweFg/mZITdpGHomw/cNBJZj1icA==}
+
   electron-to-chromium@1.5.47:
     resolution: {integrity: sha512-zS5Yer0MOYw4rtK2iq43cJagHZ8sXN0jDHDKzB+86gSBSAI4v07S97mcq+Gs2vclAxSh1j7vOAHxSVgduiiuVQ==}
 
@@ -1407,6 +1416,9 @@ packages:
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
+  tslib@2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+
   typescript@5.6.3:
     resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
     engines: {node: '>=14.17'}
@@ -1515,6 +1527,17 @@ packages:
       '@vue/composition-api':
         optional: true
 
+  vue-demi@0.13.11:
+    resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
+    engines: {node: '>=12'}
+    hasBin: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
   vue-demi@0.14.10:
     resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
     engines: {node: '>=12'}
@@ -1524,6 +1547,16 @@ packages:
       vue: ^3.0.0-0 || ^2.6.0
     peerDependenciesMeta:
       '@vue/composition-api':
+        optional: true
+
+  vue-echarts@7.0.3:
+    resolution: {integrity: sha512-/jSxNwOsw5+dYAUcwSfkLwKPuzTQ0Cepz1LxCOpj2QcHrrmUa/Ql0eQqMmc1rTPQVrh2JQ29n2dhq75ZcHvRDw==}
+    peerDependencies:
+      '@vue/runtime-core': ^3.0.0
+      echarts: ^5.5.1
+      vue: ^2.7.0 || ^3.1.1
+    peerDependenciesMeta:
+      '@vue/runtime-core':
         optional: true
 
   vue-router@4.4.5:
@@ -1585,6 +1618,9 @@ packages:
     resolution: {integrity: sha512-a6ae//JvKDEra2kdi1qzCyrJW/WZCgFi8ydDV+eXExl95t+5R+ijnqHJbz9tmMh8FUjx3iv2fCQ4dclAQlO2UQ==}
     engines: {node: '>= 14'}
     hasBin: true
+
+  zrender@5.6.0:
+    resolution: {integrity: sha512-uzgraf4njmmHAbEUxMJ8Oxg+P3fT04O+9p7gY+wJRVxo8Ge+KmYv0WJev945EH4wFuc4OY2NLXz46FZrWS9xJg==}
 
 snapshots:
 
@@ -2246,6 +2282,11 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
+  echarts@5.5.1:
+    dependencies:
+      tslib: 2.3.0
+      zrender: 5.6.0
+
   electron-to-chromium@1.5.47: {}
 
   emoji-regex@8.0.0: {}
@@ -2889,6 +2930,8 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
+  tslib@2.3.0: {}
+
   typescript@5.6.3: {}
 
   ufo@1.5.4: {}
@@ -2992,9 +3035,23 @@ snapshots:
     dependencies:
       vue: 3.5.12(typescript@5.6.3)
 
+  vue-demi@0.13.11(vue@3.5.12(typescript@5.6.3)):
+    dependencies:
+      vue: 3.5.12(typescript@5.6.3)
+
   vue-demi@0.14.10(vue@3.5.12(typescript@5.6.3)):
     dependencies:
       vue: 3.5.12(typescript@5.6.3)
+
+  vue-echarts@7.0.3(@vue/runtime-core@3.5.12)(echarts@5.5.1)(vue@3.5.12(typescript@5.6.3)):
+    dependencies:
+      echarts: 5.5.1
+      vue: 3.5.12(typescript@5.6.3)
+      vue-demi: 0.13.11(vue@3.5.12(typescript@5.6.3))
+    optionalDependencies:
+      '@vue/runtime-core': 3.5.12
+    transitivePeerDependencies:
+      - '@vue/composition-api'
 
   vue-router@4.4.5(vue@3.5.12(typescript@5.6.3)):
     dependencies:
@@ -3054,3 +3111,7 @@ snapshots:
   yallist@4.0.0: {}
 
   yaml@2.6.0: {}
+
+  zrender@5.6.0:
+    dependencies:
+      tslib: 2.3.0
