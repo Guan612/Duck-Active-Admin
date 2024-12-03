@@ -12,7 +12,7 @@ export default function Active() {
 				<div className="text-2xl font-bold m-4 text-center">
 					活动选择
 				</div>
-				<div className="flex flex-col md:flex-row">
+				<div className="flex flex-col justify-center md:flex-row">
 					<div className="flex justify-center items-center mx-2">
 						<div>选择活动</div>
 						<Select
@@ -52,7 +52,7 @@ export default function Active() {
 						/>
 					</div>
 				</div>
-				<div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 max-w-7xl mx-auto m-2">
+				<div className="grid grid-cols-2 md:grid-cols-4  max-w-7xl mx-auto m-2">
 					{cardItems.map((index) => (
 						<div
 							className="rounded-xl m-2 shadow-lg bg-gradient-to-r from-transblue via-white to-transpink hover:shadow-xl hover:scale-105"
