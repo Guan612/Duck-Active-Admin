@@ -1,6 +1,7 @@
 import { Avatar, Button, Popover, Dropdown } from "antd";
 import useHeaderBar from "../../hooks/layout/usehaderbar";
 import { UnorderedListOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 export default function HeaderBar() {
 	const { Search, onSearch, userInfo, logOut, goLogin } = useHeaderBar();
@@ -61,15 +62,15 @@ export default function HeaderBar() {
 						</div>
 						<div className="font-bold text-2xl p-2">鸭鸭活动</div>
 						<div className="hidden md:flex flex-row ">
-							<div className="mx-2 font-bold hover:scale-110">
+							<Link to='/' className="text-white mx-2 font-bold hover:scale-110">
 								首页
-							</div>
-							<div className="mx-2 font-bold hover:scale-110">
+							</Link>
+							<Link to={'/active'} className="text-white mx-2 font-bold hover:scale-110">
 								活动
-							</div>
-							<div className="mx-2 font-bold hover:scale-110">
+							</Link>
+							<Link to={'/me'} className="text-white mx-2 font-bold hover:scale-110">
 								我的
-							</div>
+							</Link>
 						</div>
 					</div>
 
@@ -89,7 +90,7 @@ export default function HeaderBar() {
 										{userInfo.nickname || userInfo.loginId}
 									</div>
 									<Avatar
-										src="https://api.qicaiyun.top/sjtx/api.php?lx=c3"
+										src={userInfo?.headerimg || "https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"}
 										size={"large"}
 									/>
 								</div>
