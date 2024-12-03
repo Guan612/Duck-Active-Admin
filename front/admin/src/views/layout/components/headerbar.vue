@@ -1,30 +1,71 @@
 <script setup lang="ts">
+import { DownOutlined, AlignLeftOutlined } from '@ant-design/icons-vue';
 import { Button } from 'ant-design-vue';
 import { useUserStore } from '@/stores/userstore';
 import router from '@/router';
 const userstore = useUserStore()
+
+const onSearch = (value: string) => {
+    console.log(value);
+}
 </script>
 
 <template>
-    <a-layout-header class="flex flex-row bg-gradient-to-r from-transblue via-white to-transpink items-center h-1/10">
-        <div class="font-bold text-2xl p-2">123</div>
-        <div>
+    <div
+        class="flex flex-row justify-between bg-gradient-to-r from-transblue via-white to-transpink items-center h-1/10">
+        <div class="flex items-center">
+            <div class="hidden md:flex flex-col justify-center items-center m-2">
+                <img src="../../../assets/logo.svg" class="w-8 h-8" alt="">
+                <p class="text-white text-md font-bold">鸭鸭活动管理</p>
+            </div>
+            <div class="md:hidden flex flex-col justify-center items-center m-2">
+                <a-dropdown class="flex justify-center items-center">
+                    <a-button class="ant-dropdown-link" @click.prevent>
+                        <AlignLeftOutlined />
+                    </a-button>
+                    <template #overlay>
+                        <a-menu>
+                            <a-menu-item>
+                                <a href="javascript:;">1st menu item</a>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a href="javascript:;">2nd menu item</a>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a href="javascript:;">3rd menu item</a>
+                            </a-menu-item>
+                        </a-menu>
+                    </template>
+                </a-dropdown>
+            </div>
+            <div class="hidden md:flex items-center m-2">
+                <div class="m-1">用户管理</div>
+                <div class="m-1">活动管理</div>
+            </div>
+        </div>
+        <div class="flex items-center mr-2">
             <div class="flex justify-center items-center" v-if="userstore.userInfo">
                 <div class="text-white font-bold text-xl m-2">
-                    <a-popover>
+                    <a-popover placement="bottomRight">
                         <template #content>
                             <div class="flex flex-col justify-center items-center">
                                 <Button class="m-2">个人中心</Button>
                                 <Button @click="userstore.logOut">退出登录</Button>
                             </div>
                         </template>
-                        <div type="primary">{{ userstore.userInfo.nickname || userstore.userInfo.loginId }}</div>
+                        <div class="flex flex-row items-center">
+                            <div class="mx-2">{{ userstore.userInfo.nickname || userstore.userInfo.loginId }}</div>
+                            <a-avatar size="large" :src="userstore.userInfo.headerimg || ''"></a-avatar>
+                        </div>
                     </a-popover>
                 </div>
             </div>
             <div class="flex" v-else>
                 <Button @click="$router.push('/auth/login')">去登录</Button>
             </div>
+            <div>
+                
+            </div>
         </div>
-    </a-layout-header>
+    </div>
 </template>
