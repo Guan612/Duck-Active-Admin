@@ -52,13 +52,13 @@ export default function Active() {
 						/>
 					</div>
 				</div>
-				<div className="grid grid-cols-2 md:grid-cols-4  max-w-7xl mx-auto m-2">
-					{cardItems.map((index) => (
+				<div className="grid grid-cols-1 md:grid-cols-4  max-w-7xl mx-auto m-2">
+					{cardItems.map((_,index) => (
 						<div
 							className="rounded-xl m-2 shadow-lg bg-gradient-to-r from-transblue via-white to-transpink hover:shadow-xl hover:scale-105"
 							key={index}
 						>
-							<ActiveCard></ActiveCard>
+							<ActiveCard cardKey={index+1}/>
 						</div>
 					))}
 				</div>
