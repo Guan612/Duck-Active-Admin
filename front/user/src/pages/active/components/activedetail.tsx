@@ -1,10 +1,13 @@
+import { LeftOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import useActiveDetail from "../../../hooks/active/useactivedetail";
 
 export default function ActiveDetail() {
+    const {backActive} = useActiveDetail();
     return(
         <div className="flex flex-col">
             <div className="flex items-center">
-                <Button>返回</Button>
+                <Button icon={<LeftOutlined />} className="m-2 items-center" onClick={() => backActive()}>返回</Button>
                 <h1 className="text-3xl font-bold m-4">活动详情</h1>
             </div>
             
