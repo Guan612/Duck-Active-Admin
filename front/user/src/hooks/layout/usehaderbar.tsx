@@ -21,5 +21,9 @@ export default function useHeaderBar() {
 		navigate("/login");
 	};
 
-	return { Search, onSearch, userInfo, logOut, goLogin };
+	const goMe = () => {
+		navigate("/me");
+	}
+
+	return { Search, onSearch, userInfo, logOut, goLogin, goMe };
 }
