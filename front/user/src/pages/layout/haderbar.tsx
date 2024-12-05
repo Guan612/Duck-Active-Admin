@@ -4,10 +4,10 @@ import { UnorderedListOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 export default function HeaderBar() {
-	const { Search, onSearch, userInfo, logOut, goLogin } = useHeaderBar();
+	const { Search, onSearch, userInfo, logOut, goLogin,goMe } = useHeaderBar();
 	const myPop = (
 		<div className="flex flex-col justify-center items-center">
-			<Button className="m-2">个人中心</Button>
+			<Button className="m-2" onClick={goMe}>个人中心</Button>
 			<Button onClick={logOut}>退出登录</Button>
 		</div>
 	);
