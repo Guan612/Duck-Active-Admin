@@ -8,6 +8,7 @@ import Login from "../pages/login";
 import Home from "../pages/home";
 import Active from "../pages/active";
 import Me from "../pages/me";
+import ActiveDetail from "../pages/active/components/activedetail";
 
 const RequireAuth = ({ element }) => {
 	const auth = useAuth();
@@ -32,6 +33,10 @@ const routes = [
 			{
 				path: "/active",
 				element: <RequireAuth element={<Active />} />,
+			},
+			{
+				path: "/activedetail/:id",
+				element: <RequireAuth element={<ActiveDetail />} />,
 			},
 			{
 				path: "/me",
