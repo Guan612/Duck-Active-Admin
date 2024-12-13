@@ -26,9 +26,28 @@ export default function Home() {
 			<div className="flex flex-col justify-around m-2">
 				<div className="text-xl font-bold text-center">热门活动</div>
 				<div className="flex flex-col md:flex-row">
-					<div className="md:w-1/3 h-36 rounded-lg m-1 bg-teal-500">123</div>
-					<div className="md:w-1/3 h-36 rounded-lg m-1 bg-teal-500">123</div>
-					<div className="md:w-1/3 h-36 rounded-lg m-1 bg-teal-500">123</div>
+					<div className="md:w-1/3 h-36 rounded-lg m-1 bg-teal-500">
+						123
+					</div>
+					<div className="md:w-1/3 h-36 rounded-lg m-1 bg-teal-500">
+						123
+					</div>
+					<div className="md:w-1/3 h-36 rounded-lg m-1 bg-teal-500">
+						123
+					</div>
+				</div>
+
+				<div className="text-xl font-bold text-center">热门资讯</div>
+				<div className="flex flex-col md:flex-row">
+					<div className="md:w-1/3 h-36 rounded-lg m-1 bg-teal-500">
+						123
+					</div>
+					<div className="md:w-1/3 h-36 rounded-lg m-1 bg-teal-500">
+						123
+					</div>
+					<div className="md:w-1/3 h-36 rounded-lg m-1 bg-teal-500">
+						123
+					</div>
 				</div>
 			</div>
 		</div>
