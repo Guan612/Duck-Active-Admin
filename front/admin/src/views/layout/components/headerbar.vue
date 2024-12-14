@@ -39,8 +39,47 @@ const onSearch = (value: string) => {
                 </a-dropdown>
             </div>
             <div class="hidden md:flex items-center m-2">
-                <div class="m-1">用户管理</div>
-                <div class="m-1">活动管理</div>
+                <div class="flex m-1">
+                    <a href="/">信息统计</a>
+                </div>
+                <a-dropdown class="flex justify-center items-center m-1" :trigger="['click']">
+                    <a class="ant-dropdown-link" @click.prevent>
+                        用户管理
+                        <DownOutlined />
+                    </a>
+                    <template #overlay>
+                        <a-menu>
+                            <a-menu-item>
+                                <a href="/usercostadmin">用户角色管理</a>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a href="/userinfoadmin">用户信息管理</a>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a href="javascript:;">3rd menu item</a>
+                            </a-menu-item>
+                        </a-menu>
+                    </template>
+                </a-dropdown>
+                <a-dropdown class="flex justify-center items-center m-1" :trigger="['click']">
+                    <a class="ant-dropdown-link" @click.prevent>
+                        活动管理
+                        <DownOutlined />
+                    </a>
+                    <template #overlay>
+                        <a-menu>
+                            <a-menu-item>
+                                <a href="/createactiveadmin">活动发布</a>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a href="/activereviewadmin">活动审核</a>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a href="/activeadmin">活动管理</a>
+                            </a-menu-item>
+                        </a-menu>
+                    </template>
+                </a-dropdown>
             </div>
         </div>
         <div class="flex items-center mr-2">
@@ -64,7 +103,7 @@ const onSearch = (value: string) => {
                 <Button @click="$router.push('/auth/login')">去登录</Button>
             </div>
             <div>
-                
+
             </div>
         </div>
     </div>
