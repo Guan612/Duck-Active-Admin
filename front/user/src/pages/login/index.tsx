@@ -4,7 +4,7 @@ import useLogin from "../../hooks/login/uselogin";
 export default function Login() {
 	const { onFinish } = useLogin();
 	return (
-		<div className="flex flex-col md:flex-row justify-center items-center h-screen">
+		<div className="flex flex-col md:flex-row justify-center items-center h-screen mx-6">
 			<div className="flex flex-col justify-center items-center rounded-2xl shadow-lg w-full h-1/2 md:w-1/2 bg-gradient-to-r from-transblue via-white to-transpink">
 				<div className="flex flex-col h-full w-full m-2">
 					<div className="text-center text-2xl font-bold m-2">
@@ -47,7 +47,7 @@ export default function Login() {
 								placeholder="请输入密码"
 							/>
 						</Form.Item>
-						<Form.Item>
+						<Form.Item className="justify-center">
 							<Button type="primary" htmlType="submit">
 								登录
 							</Button>
