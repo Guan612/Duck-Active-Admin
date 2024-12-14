@@ -5,7 +5,7 @@ import Headerbar from './components/headerbar.vue';
 <template>
     <div class="flex flex-col h-full">
         <Headerbar></Headerbar>
-        <RouterView class=""></RouterView>
+        <RouterView></RouterView>
     </div>
 </template>
 
