@@ -7,14 +7,22 @@ import {
   Param,
   Delete,
   UseGuards,
+  HttpException,
+  Query,
 } from '@nestjs/common';
 import { ActiveService } from './active.service';
 import { CreateActiveDto, UpdateActiveDto } from './dto/active.dto';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/user/guard/jwt.guard';
 import { RoleGuard } from 'src/user/guard/role.guard';
 import { Roles } from 'src/user/decorator/roles.decorator';
 import { Role } from 'src/user/dto/user.dto';
+import { User } from 'src/user/decorator/userInfo.decorator';
 
 @Controller('active')
 @ApiTags('active')
@@ -30,7 +38,22 @@ export class ActiveController {
     status: 201,
     description: '创建成功',
     schema: {
-      example:{}
+      example: {
+        id: 3,
+        title: '学生心理健康周',
+        activitieType: 0,
+        content: '关注学生心理健康',
+        activitieImgUrl:
+          'https://pic.nximg.cn/pic/20221214/10647388_183723517109_4.jpg',
+        isOnline: 0,
+        activeAddress: '红蓝交界处',
+        activitiePeopleNum: 100,
+        activitStatus: 0,
+        startDate: '2024-12-02T00:00:00.000Z',
+        endDate: '2024-12-08T00:00:00.000Z',
+        createdAt: '2024-12-15T07:53:00.990Z',
+        updatedAt: '2024-12-15T07:53:00.990Z',
+      },
     },
   })
   create(@Body() createActiveDto: CreateActiveDto) {
@@ -40,8 +63,13 @@ export class ActiveController {
   @Post('join')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: ' 是否加入活动' })
-  join(@Body() joinActiveDto: any) {
-    return this.activeService.join(joinActiveDto);
+  @ApiBearerAuth()
+  async join(@Body('activeId') activeId: string, @User('id') userId: string) {
+    const isJoin = await this.activeService.findIsJonin(+activeId, +userId);
+    if (isJoin) {
+      throw new HttpException('已加入活动', 403);
+    }
+    return this.activeService.joinActive(+activeId, +userId);
   }
 
   @Get()
@@ -52,11 +80,26 @@ export class ActiveController {
     status: 200,
     description: '获取成功',
     schema: {
-      example:{}
+      example: {},
     },
   })
   findAll() {
     return this.activeService.findAll();
+  }
+
+  @Get('isJoin')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '获取用户是否加入活动' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example: {},
+    },
+  })
+  findIsJoin(@Query('activeId') activeId: string, @User('id') userId: string) {
+    return this.activeService.findIsJonin(+activeId, +userId);
   }
 
   @Get(':id')
@@ -67,7 +110,7 @@ export class ActiveController {
     status: 200,
     description: '获取成功',
     schema: {
-      example:{}
+      example: {},
     },
   })
   findOne(@Param('id') id: string) {
@@ -83,7 +126,7 @@ export class ActiveController {
     status: 200,
     description: '更新成功',
     schema: {
-      example:{}
+      example: {},
     },
   })
   update(@Param('id') id: string, @Body() updateActiveDto: UpdateActiveDto) {
@@ -99,7 +142,7 @@ export class ActiveController {
     status: 200,
     description: '删除成功',
     schema: {
-      example:{}
+      example: {},
     },
   })
   remove(@Param('id') id: string) {

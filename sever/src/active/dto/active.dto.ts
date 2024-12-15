@@ -51,6 +51,14 @@ export class CreateActiveDto {
   isOnline: isOnline;
 
   @ApiProperty({
+    description: '活动地点',
+    example: '活动地点1',
+  })
+  @IsOptional()
+  @IsString()
+  activeAddress: string;
+
+  @ApiProperty({
     description: '活动人数',
     example: 10,
   })
