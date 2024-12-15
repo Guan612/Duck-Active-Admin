@@ -1,11 +1,10 @@
 import { Select } from "antd";
-import useActiveCard from "../../hooks/active/useactivecard";
 import useActive from "../../hooks/active/useactive";
 import ActiveCard from "./components/activecard";
+import { ActiveDto } from "../../dto/activeDto";
 
 export default function Active() {
-	const { handleChange, options } = useActive();
-	const { cardItems } = useActiveCard();
+	const { handleChange, options, cardItems } = useActive();
 	return (
 		<div className="flex flex-col items-center justify-center h-full">
 			<div className="flex flex-col">
@@ -53,12 +52,12 @@ export default function Active() {
 					</div>
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-4  max-w-7xl mx-auto m-2">
-					{cardItems.map((cardItem) => (
+					{cardItems.map((cardItem: ActiveDto) => (
 						<div
 							className="rounded-xl m-2 shadow-lg bg-gradient-to-r from-transblue via-white to-transpink hover:shadow-xl hover:scale-105"
 							key={cardItem.id}
 						>
-							<ActiveCard cardKey={cardItem.id} cardInfo={cardItem}/>
+							<ActiveCard cardInfo={cardItem} />
 						</div>
 					))}
 				</div>
