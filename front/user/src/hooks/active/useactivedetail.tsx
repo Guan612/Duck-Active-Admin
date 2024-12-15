@@ -1,12 +1,46 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getActiveDetailAPI, addActiveAPI, isJoinAPI } from "../../api/active";
+import { useEffect, useState } from "react";
+import { ActiveDto } from "../../dto/activeDto";
+import { message } from "antd";
 export default function useActiveDetail() {
-   const navigate = useNavigate();
+	const [activeDetail, setActiveDetail] = useState<ActiveDto>({});
+	const [joinStatus, setJoinStatus] = useState(false);
 
-   const backActive = () => {
-      navigate("/active");
-   }
+	const navigate = useNavigate();
+	const detailId = useParams().id;
 
-   return {
-      backActive
-   }
+	const getActiveDetail = async () => {
+		const res = await getActiveDetailAPI(detailId);
+		setActiveDetail(res);
+	};
+
+	const backActive = () => {
+		navigate("/active");
+	};
+
+	const joinActive = async (activeId: number) => {
+		const res = await addActiveAPI({ activeId: activeId });
+		if (res) {
+			isJoinActive();
+			message.success("活动报名成功");
+		}
+	};
+
+	const isJoinActive = async () => {
+		const res = await isJoinAPI(detailId);
+		setJoinStatus(res);
+	};
+
+	useEffect(() => {
+		getActiveDetail();
+		isJoinActive();
+	}, []);
+
+	return {
+		backActive,
+		activeDetail,
+		joinActive,
+		joinStatus,
+	};
 }
