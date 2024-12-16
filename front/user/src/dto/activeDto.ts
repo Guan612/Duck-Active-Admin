@@ -9,6 +9,7 @@ export interface ActiveDto {
 	activitStatus: ActivitieStatus;
 	activitieImgUrl?: string;
 	activitiePeopleNum: number;
+	remainingNum: number;
 }
 
 export enum ActivitieType {
