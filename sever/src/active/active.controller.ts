@@ -11,7 +11,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { ActiveService } from './active.service';
-import { CreateActiveDto, UpdateActiveDto } from './dto/active.dto';
+import {
+  CreateActiveDto,
+  UpdateActiveDto,
+} from './dto/active.dto';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -22,12 +25,13 @@ import { JwtAuthGuard } from 'src/user/guard/jwt.guard';
 import { RoleGuard } from 'src/user/guard/role.guard';
 import { Roles } from 'src/user/decorator/roles.decorator';
 import { Role } from 'src/user/dto/user.dto';
-import { User } from 'src/user/decorator/userInfo.decorator';
 
 @Controller('active')
 @ApiTags('active')
 export class ActiveController {
-  constructor(private readonly activeService: ActiveService) {}
+  constructor(
+    private readonly activeService: ActiveService,
+  ) {}
 
   @Post()
   @UseGuards(JwtAuthGuard, RoleGuard)
@@ -60,17 +64,7 @@ export class ActiveController {
     return this.activeService.create(createActiveDto);
   }
 
-  @Post('join')
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: ' 是否加入活动' })
-  @ApiBearerAuth()
-  async join(@Body('activeId') activeId: string, @User('id') userId: string) {
-    const isJoin = await this.activeService.findIsJonin(+activeId, +userId);
-    if (isJoin) {
-      throw new HttpException('已加入活动', 403);
-    }
-    return this.activeService.joinActive(+activeId, +userId);
-  }
+  
 
   @Get()
   @UseGuards(JwtAuthGuard)
@@ -85,21 +79,6 @@ export class ActiveController {
   })
   findAll() {
     return this.activeService.findAll();
-  }
-
-  @Get('isJoin')
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '获取用户是否加入活动' })
-  @ApiBearerAuth()
-  @ApiResponse({
-    status: 200,
-    description: '获取成功',
-    schema: {
-      example: {},
-    },
-  })
-  findIsJoin(@Query('activeId') activeId: string, @User('id') userId: string) {
-    return this.activeService.findIsJonin(+activeId, +userId);
   }
 
   @Get(':id')
