@@ -55,7 +55,7 @@ export default function ActiveDetail() {
 						活动内容：{activeDetail.content}
 					</div>
 					<div className="text-gray-500">
-						人数：{activeDetail.activitiePeopleNum}人
+						活动总人数/参加人数：{activeDetail.activitiePeopleNum}/{activeDetail.remainingNum}人
 					</div>
 					<div className="flex justify-end mt-4">
 						<Button
