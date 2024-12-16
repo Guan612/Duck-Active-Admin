@@ -24,7 +24,7 @@ export class CreateActiveDto {
   })
   @IsOptional()
   @IsString()
-  content: string;
+  content?: string;
 
   @ApiProperty({
     description: '活动图片',
@@ -32,7 +32,7 @@ export class CreateActiveDto {
   })
   @IsOptional()
   @IsString()
-  activitieImgUrl: string;
+  activitieImgUrl?: string;
 
   @ApiProperty({
     description: '活动类型',
@@ -56,7 +56,7 @@ export class CreateActiveDto {
   })
   @IsOptional()
   @IsString()
-  activeAddress: string;
+  activeAddress?: string;
 
   @ApiProperty({
     description: '活动人数',
@@ -76,7 +76,7 @@ export class CreateActiveDto {
 
   @ApiProperty({
     description: '活动开始时间',
-    example: '2022-01-01 00:00:00',
+    example: '2024-12-06T16:00:00.000Z',
   })
   @IsNotEmpty({ message: '活动开始时间不能为空' })
   @IsDate({ message: '活动开始时间格式不正确' })
@@ -85,7 +85,7 @@ export class CreateActiveDto {
 
   @ApiProperty({
     description: '活动结束时间',
-    example: '2022-01-02 00:00:00',
+    example: '2024-12-08T16:00:00.000Z',
   })
   @IsNotEmpty({ message: '活动结束时间不能为空' })
   @IsDate({ message: '活动结束时间格式不正确' })
@@ -100,7 +100,7 @@ export class UpdateActiveDto {
   })
   @IsOptional()
   @IsString()
-  title: string;
+  title?: string;
 
   @ApiProperty({
     description: '活动详情',
@@ -108,7 +108,47 @@ export class UpdateActiveDto {
   })
   @IsOptional()
   @IsString()
-  content: string;
+  content?: string;
+
+  @ApiProperty({
+    description: '活动图片',
+    example: 'http://www.baidu.com',
+  })
+  @IsOptional()
+  @IsString()
+  activitieImgUrl?: string;
+
+  @ApiProperty({
+    description: '活动地点',
+    example: '活动地点1',
+  })
+  @IsOptional()
+  @IsString()
+  activeAddress?: string;
+
+  @ApiProperty({
+    description: '活动人数',
+    example: 10,
+  })
+  @IsOptional()
+  @IsInt()
+  activitiePeopleNum?: number;
+
+  @ApiProperty({
+    description: '活动状态',
+    example: 0,
+  })
+  @IsOptional()
+  @IsInt()
+  activitStatus?: ActivitieStatus;
+
+  @ApiProperty({
+    description: '活动报名人数',
+    example: 10,
+  })
+  @IsOptional()
+  @IsInt()
+  remainingNum?: number;
 }
 
 export enum ActivitieType {
