@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { getActiveDetailAPI, addActiveAPI, isJoinAPI } from "../../api/active";
+import { getActiveDetailAPI } from "../../api/active";
+import { addActiveAPI, isJoinAPI } from "../../api/registration";
 import { useEffect, useState } from "react";
 import { ActiveDto } from "../../dto/activeDto";
 import { message } from "antd";
@@ -20,9 +21,10 @@ export default function useActiveDetail() {
 	};
 
 	const joinActive = async (activeId: number) => {
-		const res = await addActiveAPI({ activeId: activeId });
+		const res = await addActiveAPI({ activeId: Number(activeId) });
 		if (res) {
 			isJoinActive();
+			getActiveDetail();
 			message.success("活动报名成功");
 		}
 	};
