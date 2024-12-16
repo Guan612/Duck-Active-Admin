@@ -6,46 +6,129 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  HttpException,
+  Query,
 } from '@nestjs/common';
 import { RegistrationService } from './registration.service';
 import {
   CreateRegistrationDto,
   UpdateRegistrationDto,
 } from './dto/registration.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { User } from 'src/user/decorator/userInfo.decorator';
+import { JwtAuthGuard } from 'src/user/guard/jwt.guard';
+import { ActiveService } from 'src/active/active.service';
 
 @Controller('registration')
 @ApiTags('registration')
 export class RegistrationController {
-  constructor(private readonly registrationService: RegistrationService) {}
+  constructor(
+    private readonly registrationService: RegistrationService,
+    private readonly activeService: ActiveService,
+  ) {}
 
-  @Post(':id')
-  @ApiOperation({ summary: '报名' })
-  create(@Body() createRegistrationDto: CreateRegistrationDto) {
-    return this.registrationService.create(createRegistrationDto);
+  @Post('join')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '加入活动' })
+  @ApiBearerAuth()
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        activeId: {
+          type: 'number',
+          description: '活动的 ID',
+          example: 1,
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: '报名成功',
+    schema: {
+      example: { id: 5, userId: 2, activitieId: 1, status: 0 },
+    },
+  })
+  @ApiResponse({
+    status: 403,
+    description: '已报名',
+    schema: {
+      example: {
+        statusCode: 403,
+        message: '已加入活动',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 403,
+    description: '活动不是报名状态',
+    schema: {
+      example: {
+        statusCode: 403,
+        message: '活动不是报名状态',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 403,
+    description: '活动人数已满',
+    schema: {
+      example: {
+        statusCode: 403,
+        message: '活动人数已满',
+      },
+    },
+  })
+  async join(@Body('activeId') activeId: number, @User('id') userId: string) {
+    const activeInfo = await this.activeService.findOne(activeId);
+    //判断活动是否是报名状态
+    if (activeInfo.activitStatus !== 2) {
+      throw new HttpException('活动不是报名状态', 403);
+    }
+    //判断活动人数是否已满
+    if (activeInfo.remainingNum >= activeInfo.activitiePeopleNum) {
+      throw new HttpException('活动人数已满', 403);
+    }
+    // 判断该用户是否已经报名
+    const isJoin = await this.registrationService.findIsJonin(
+      +activeId,
+      +userId,
+    );
+    if (isJoin) {
+      throw new HttpException('已加入活动', 403);
+    } else {
+      //修改活动剩余人数
+      await this.activeService.update(activeId, {
+        remainingNum: activeInfo.remainingNum + 1,
+      });
+      //判断是否是最后一个报名的人
+      if (activeInfo.remainingNum + 1 === activeInfo.activitiePeopleNum) {
+        await this.activeService.update(activeId, { activitStatus: 3 });
+      }
+      return this.registrationService.joinActive(+activeId, +userId);
+    }
   }
 
-  @Get()
-  @ApiOperation({ summary: '获取报名列表' })
-  findAll() {
-    return this.registrationService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.registrationService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateRegistrationDto: UpdateRegistrationDto,
-  ) {
-    return this.registrationService.update(+id, updateRegistrationDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.registrationService.remove(+id);
+  @Get('isJoin')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '获取用户是否加入活动' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example: true,
+    },
+  })
+  findIsJoin(@Query('activeId') activeId: string, @User('id') userId: string) {
+    return this.registrationService.findIsJonin(+activeId, +userId);
   }
 }

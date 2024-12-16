@@ -9,37 +9,37 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class RegistrationService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createRegistrationDto: CreateRegistrationDto) {
+  async findMyAddActive(userId) {
+    const res = await this.prisma.registration.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+
+    return res;
+  }
+
+  async joinActive(activeId, userId) {
     const res = await this.prisma.registration.create({
-      data: createRegistrationDto,
-    });
-    return res;
-  }
-
-  async findAll() {
-    const res = await this.prisma.registration.findMany();
-    return res;
-  }
-
-  async findOne(id: number) {
-    const res = await this.prisma.registration.findUnique({
-      where: {
-        id: id,
+      data: {
+        userId: userId,
+        activitieId: activeId,
       },
     });
     return res;
   }
 
-  update(id: number, updateRegistrationDto: UpdateRegistrationDto) {
-    return `This action updates a #${id} registration`;
-  }
-
-  async remove(id: number) {
-    const res = await this.prisma.registration.delete({
+  async findIsJonin(activeId, userId) {
+    const res = await this.prisma.registration.findMany({
       where: {
-        id: id,
+        userId: userId,
+        activitieId: activeId,
       },
     });
-    return res;
+    if (res.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
