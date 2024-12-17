@@ -64,8 +64,6 @@ export class ActiveController {
     return this.activeService.create(createActiveDto);
   }
 
-  
-
   @Get()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '获取所有活动' })
@@ -79,6 +77,34 @@ export class ActiveController {
   })
   findAll() {
     return this.activeService.findAll();
+  }
+
+  @Get('checkActiveStatus')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '检查活动状态' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '检查成功',
+    schema: {
+      example: {
+        message: '活动状态检查完成',
+      },
+    },
+  })
+  async checkActiveStatus() {
+    const res = await this.activeService.findAll();
+    const now = new Date(); // 获取当前时间
+    for (const activity of res) {
+      console.log(activity.endDate,now);
+      if (new Date(activity.endDate) < now && activity.activitStatus==2) {
+        // 检查 startdate 是否在当前时间之前
+        await this.activeService.update(activity.id, {activitStatus:3});//更新活动状态为已结束
+      }
+    }
+    return {
+      message: '活动状态检查完成',
+    }
   }
 
   @Get(':id')
