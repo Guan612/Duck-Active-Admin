@@ -12,6 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  //颁发token
   async login(LoginUserDto: LoginUserDto) {
     const user = await this.userService.findByLoginId(LoginUserDto.loginId);
     if (user) {
