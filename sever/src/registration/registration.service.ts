@@ -15,6 +15,15 @@ export class RegistrationService {
       where: {
         userId: userId,
       },
+      include:{
+        activitie:{
+          select:{
+            id:true,
+            title:true,
+            activitStatus:true,
+          }
+        }
+      }
     });
 
     return res;

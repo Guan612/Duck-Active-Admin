@@ -136,4 +136,20 @@ export class RegistrationController {
   findIsJoin(@Query('activeId') activeId: string, @User('id') userId: string) {
     return this.registrationService.findIsJonin(+activeId, +userId);
   }
+
+  @Get('myactive')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '获取我的活动' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example: {},
+    },
+  })
+  findMyActive(@User('id') userId: string) {
+    return this.registrationService.findMyAddActive(+userId)
+  }
+
 }
