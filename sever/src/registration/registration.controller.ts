@@ -89,6 +89,11 @@ export class RegistrationController {
   })
   async join(@Body('activeId') activeId: number, @User('id') userId: string) {
     const activeInfo = await this.activeService.findOne(activeId);
+    //判断活动是否是报名时间
+    const now = new Date();
+    if(activeInfo.startDate > now || activeInfo.endDate < now){
+      throw new HttpException('活动不是报名时间', 403);
+    }
     //判断活动是否是报名状态
     if (activeInfo.activitStatus !== 2) {
       throw new HttpException('活动不是报名状态', 403);
