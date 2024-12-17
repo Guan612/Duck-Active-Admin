@@ -31,7 +31,23 @@ export default function UserInfo() {
 			</div>
 
 			<div className="flex flex-col ">
+			<div className="text-xl font-bold text-center">报名的活动</div>
+			<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-7xl mx-auto m-2">
+					{cardItems.map((_, index) => (
+						<div className="rounded-xl m-1 bg-transblue hover:shadow-xl hover:scale-105">
+							<AddActiveCard key={index} />
+						</div>
+					))}
+				</div>
 				<div className="text-xl font-bold text-center">参加的活动</div>
+				<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-7xl mx-auto m-2">
+					{cardItems.map((_, index) => (
+						<div className="rounded-xl m-1 bg-transblue hover:shadow-xl hover:scale-105">
+							<AddActiveCard key={index} />
+						</div>
+					))}
+				</div>
+				<div className="text-xl font-bold text-center">已经完结的活动</div>
 				<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-7xl mx-auto m-2">
 					{cardItems.map((_, index) => (
 						<div className="rounded-xl m-1 bg-transblue hover:shadow-xl hover:scale-105">
