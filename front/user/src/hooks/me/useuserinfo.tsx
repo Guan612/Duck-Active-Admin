@@ -3,7 +3,7 @@ import { getMyActiveAPI } from "../../api/registration";
 import { useEffect, useState } from "react";
 import { ActiveDto } from "../../dto/activeDto";
 export default function useUserInfo() {
-	const[myActive,setMyActive] = useState<ActiveDto>([])
+	const[myActive,setMyActive] = useState([])
 
 	const userInfo = userStore.getState().userInfo;
 

@@ -21,10 +21,10 @@ export default function ActiveDetail() {
 			</div>
 
 			<div className="flex flex-col md:flex-row ">
-				<div className="md:w-1/2 m-2 rounded-lg">
+				<div className="md:w-1/2 m-2 rounded-lg justify-center">
 					<img
 						src={activeDetail.activitieImgUrl}
-						className="rounded-lg"
+						className="rounded-lg items-center"
 					></img>
 				</div>
 				<div className="m-4">
