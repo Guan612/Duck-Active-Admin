@@ -53,7 +53,9 @@ model Registration {
   id          Int       @id @default(autoincrement())
   userId      Int
   activitieId Int
-  status      Int       @default(0) //0：已报名，2：已同意参加，3：已拒绝参加
+  status      Int       @default(0) //0：已报名 1:已参加活动 2:活动结束 3:已取消报名 4:未参加活动
   user        User      @relation(fields: [userId], references: [id])
   activitie   Activitie @relation(fields: [activitieId], references: [id])
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
 }
