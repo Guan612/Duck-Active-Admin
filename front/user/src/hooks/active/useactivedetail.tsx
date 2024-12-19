@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { getActiveDetailAPI } from "../../api/active";
+import { checkActiveStatusAPI, getActiveDetailAPI } from "../../api/active";
 import { addActiveAPI, isJoinAPI } from "../../api/registration";
 import { useEffect, useState } from "react";
 import { ActiveDto } from "../../dto/activeDto";
@@ -34,7 +34,13 @@ export default function useActiveDetail() {
 		setJoinStatus(res);
 	};
 
+	const checkActiveStatus = async() => {
+	    const res = await checkActiveStatusAPI(detailId);
+		return res;
+	}
+
 	useEffect(() => {
+		checkActiveStatus();
 		getActiveDetail();
 		isJoinActive();
 	}, []);
