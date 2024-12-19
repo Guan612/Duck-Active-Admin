@@ -1,10 +1,10 @@
-import { Button } from "antd";
+import { Button, Select } from "antd";
 import useUserInfo from "../../../hooks/me/useuserinfo";
 import AddActiveCard from "./addactivecard";
 import useAddActiveCard from "../../../hooks/me/useaddactivecard";
 import { ActiveDto } from "../../../dto/activeDto";
 export default function UserInfo() {
-	const { userInfo,myActive } = useUserInfo();
+	const { userInfo,myActive,activeStatusOptions,handleChange } = useUserInfo();
 	const { cardItems } = useAddActiveCard();
 	return (
 		<div className="flex flex-col">
@@ -32,7 +32,17 @@ export default function UserInfo() {
 			</div>
 
 			<div className="flex flex-col ">
-			<div className="text-xl font-bold text-center">报名的活动</div>
+			
+			<div className="text-xl font-bold text-center">我的活动信息</div>
+			<Select
+				className="w-1/2 mx-auto m-2"
+				mode="multiple"
+				allowClear
+				placeholder="筛选活动状态"
+				onChange={handleChange}
+				options={activeStatusOptions}
+			/>
+			
 			<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-7xl mx-auto m-2">
 					{myActive.map((cardInfo) => (
 						<div className="rounded-xl m-1 bg-transblue hover:shadow-xl hover:scale-105" key={cardInfo.id}>
@@ -40,10 +50,6 @@ export default function UserInfo() {
 						</div>
 					))}
 				</div>
-				<div className="text-xl font-bold text-center">参加的活动</div>
-				
-				<div className="text-xl font-bold text-center">已经完结的活动</div>
-				
 			</div>
 		</div>
 	);
