@@ -1,10 +1,11 @@
-import { Select } from "antd";
+import { Select,DatePicker } from "antd";
 import useActive from "../../hooks/active/useactive";
 import ActiveCard from "./components/activecard";
 import { ActiveDto } from "../../dto/activeDto";
 
 export default function Active() {
-	const { handleChange, options, cardItems } = useActive();
+	const { RangePicker } = DatePicker;
+	const { handleChange, options, cardItems, activitieTypeOption } = useActive();
 	return (
 		<div className="flex flex-col items-center justify-center h-full">
 			<div className="flex flex-col">
@@ -12,42 +13,22 @@ export default function Active() {
 					活动选择
 				</div>
 				<div className="flex flex-col justify-center md:flex-row">
-					<div className="flex justify-center items-center mx-2">
-						<div>选择活动</div>
-						<Select
-							className="w-64 mx-1"
-							mode="multiple"
-							allowClear
-							placeholder="选择活动"
-							defaultValue={["a10", "c12"]}
-							onChange={handleChange}
-							options={options}
-						/>
-					</div>
-
-					<div className="flex justify-center items-center mx-2">
+					<div className="flex justify-center items-center m-2">
 						<div>选择类型</div>
 						<Select
 							className="w-64 mx-1"
 							mode="multiple"
 							allowClear
 							placeholder="选择类型"
-							defaultValue={["a10", "c12"]}
 							onChange={handleChange}
-							options={options}
+							options={activitieTypeOption}
 						/>
 					</div>
 
-					<div className="flex justify-center items-center mx-2">
+					<div className="flex justify-center items-center m-2">
 						<div>选择时间</div>
-						<Select
+						<RangePicker
 							className="w-64 mx-1"
-							mode="multiple"
-							allowClear
-							placeholder="选择时间"
-							defaultValue={["a10", "c12"]}
-							onChange={handleChange}
-							options={options}
 						/>
 					</div>
 				</div>
