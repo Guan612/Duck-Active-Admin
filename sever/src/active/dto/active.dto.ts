@@ -67,14 +67,6 @@ export class CreateActiveDto {
   activitiePeopleNum: number;
 
   @ApiProperty({
-    description: '活动状态',
-    example: 0,
-  })
-  @IsNotEmpty()
-  @IsInt()
-  activitStatus: ActivitieStatus;
-
-  @ApiProperty({
     description: '活动开始时间',
     example: '2024-12-06T16:00:00.000Z',
   })
