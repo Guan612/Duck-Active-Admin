@@ -5,7 +5,7 @@ export interface createActiveDto {
 	activitieType: number;
 	startDate: Date;
 	endDate: Date;
-	activitStatus: number;
+	activitStatus?: number;
 	activeAddress?: string;
 	activitiePeopleNum: number;
 }

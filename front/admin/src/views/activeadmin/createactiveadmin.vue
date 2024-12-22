@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import { PlusOutlined } from '@ant-design/icons-vue';
+import { createActiveAPI } from '@/api/active';
+import { message } from 'ant-design-vue';
 const activeState = ref({
     title: '',
     content: '',
@@ -12,8 +14,17 @@ const activeState = ref({
     activitieImgUrl: '',
 
 });
-const onFinish = values => {
-    console.log('Success:', values);
+const onFinish = async (values) => {
+    //const activeState.activitieType.value = +activeState.activitieType.value;
+    const [starttime, endtime] = activeState.value.time; // 解构 time
+    activeState.value.startDate = starttime; // 更新 starttime
+    activeState.value.endDate = endtime;     // 更新 endtime
+    delete activeState.value.time; // 删除 time
+    const res = await createActiveAPI(activeState.value);
+    if (res.code) {
+        message.success('创建成功');
+        return;
+    }
 };
 const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo); 
