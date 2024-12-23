@@ -29,6 +29,15 @@ const handleFinish = async () => {
     }
 };
 
+const uploadActiveImg = async (file) => {
+    const res = await uploadImgAPI(file);
+    if (res.url) {
+        activeState.value.activitieImgUrl = res.url;
+    } else {
+        message.error(res)
+    }
+}
+
 const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo); 
 };
@@ -70,7 +79,7 @@ const onFinishFailed = errorInfo => {
                     <a-input v-model:value="activeState.activeAddress" placeholder="请输入活动地点" />
                 </a-form-item>
                 <a-form-item label="活动海报" name="activitieImgUrl">
-                    <a-upload action="/upload.do" list-type="picture-card">
+                    <a-upload action="http://127.0.0.1:3000/uploadfile/img" list-type="picture-card">
                         <div>
                             <PlusOutlined />
                             <div style="margin-top: 2px">上传海报</div>
