@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { PlusOutlined } from '@ant-design/icons-vue';
 import { createActiveAPI } from '@/api/active';
 import { message } from 'ant-design-vue';
+
 const activeState = ref({
     title: '',
     content: '',
@@ -14,18 +15,20 @@ const activeState = ref({
     activitieImgUrl: '',
 
 });
-const onFinish = async (values) => {
-    //const activeState.activitieType.value = +activeState.activitieType.value;
+
+const handleFinish = async () => {
     const [starttime, endtime] = activeState.value.time; // 解构 time
     activeState.value.startDate = starttime; // 更新 starttime
     activeState.value.endDate = endtime;     // 更新 endtime
     delete activeState.value.time; // 删除 time
     const res = await createActiveAPI(activeState.value);
-    if (res.code) {
-        message.success('创建成功');
-        return;
+    if (res.title) {
+        message.success('活动'+res.title+'创建成功');
+    } else {
+        message.error(res)
     }
 };
+
 const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo); 
 };
@@ -34,7 +37,7 @@ const onFinishFailed = errorInfo => {
     <div class="flex flex-col">
         <h1 class="text-2xl font-bold m-2 text-center">创建活动</h1>
         <div class="w-full md:w-1/2 mx-auto p-2">
-            <a-form :model="activeState" name="basic" autocomplete="off" @finish="onFinish">
+            <a-form :model="activeState" name="basic" autocomplete="off" @finish="handleFinish">
                 <a-form-item label="活动标题" name="title">
                     <a-input v-model:value="activeState.title" placeholder="请输入活动标题" />
                 </a-form-item>
@@ -46,11 +49,11 @@ const onFinishFailed = errorInfo => {
                 </a-form-item>
                 <a-form-item label="活动类型" name="activitieType">
                     <a-select v-model:value="activeState.activitieType">
-                        <a-select-option value=0>通用</a-select-option>
-                        <a-select-option value=1>博学</a-select-option>
-                        <a-select-option value=2>笃行</a-select-option>
-                        <a-select-option value=3>尽美</a-select-option>
-                        <a-select-option value=4>明德</a-select-option>
+                        <a-select-option :value=0>通用</a-select-option>
+                        <a-select-option :value=1>博学</a-select-option>
+                        <a-select-option :value=2>笃行</a-select-option>
+                        <a-select-option :value=3>尽美</a-select-option>
+                        <a-select-option :value=4>明德</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="活动人数" name="activitiePeopleNum">
