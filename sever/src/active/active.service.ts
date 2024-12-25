@@ -27,6 +27,15 @@ export class ActiveService {
     return res;
   }
 
+  async findByCreatUser(id: number) {
+    const res = await this.prisma.activitie.findMany({
+      where: {
+        createdPeople: id,
+      },
+    });
+    return res;
+  }
+
   async update(id: number, updateActiveDto: UpdateActiveDto) {
     const res = await this.prisma.activitie.update({
       where: {

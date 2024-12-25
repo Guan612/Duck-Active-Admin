@@ -19,6 +19,7 @@ model User {
   updatedAt    DateTime       @updatedAt
   registration Registration[]
   integral     Integral[]
+  activitie    Activitie[]
 }
 
 model Activitie {
@@ -32,11 +33,13 @@ model Activitie {
   activitiePeopleNum Int //活动人数
   remainingNum       Int            @default(0) //报名人数
   activitStatus      Int            @default(0) //0：创建活动 1：审核活动 2：开始报名 3：报名结束 4：活动结束
+  createdPeople      Int
   startDate          DateTime
   endDate            DateTime
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
   registration       Registration[]
+  user               User           @relation(fields: [createdPeople], references: [id])
 }
 
 model Integral {
@@ -56,6 +59,6 @@ model Registration {
   status      Int       @default(0) //0：已报名 1:已参加活动 2:活动结束 3:已取消报名 4:未参加活动
   user        User      @relation(fields: [userId], references: [id])
   activitie   Activitie @relation(fields: [activitieId], references: [id])
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
