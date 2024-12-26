@@ -3,7 +3,7 @@ export interface createActiveDto {
 	content?: string;
 	activitieImgUrl?: string;
 	activitieType: number;
-	createdPeople:number;
+	createdPeople: number;
 	startDate: Date;
 	endDate: Date;
 	activitStatus?: number;
@@ -21,7 +21,7 @@ export interface updateActiveDto {
 	activitStatus?: number;
 	activeAddress?: string;
 	activitiePeopleNum?: number;
-	createdPeople?:number;
+	createdPeople?: number;
 }
 
 export enum ActivitieStatus {
@@ -35,3 +35,11 @@ export enum ActivitieStatus {
 	活动结束 = 5,
 }
 
+export enum ActivitieType {
+	//0：博学 1：笃行 2：尽美 3：明德
+	通用 = 0,
+	博学 = 1,
+	笃行 = 2,
+	尽美 = 3,
+	明德 = 4,
+}
