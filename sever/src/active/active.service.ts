@@ -32,7 +32,16 @@ export class ActiveService {
         },
       },
     });
-    return res;
+    if (!res) {
+      return null;
+    }
+    // 解构 user 的属性，并返回到顶级
+    const { user, ...rest } = res;
+    return {
+      ...rest,
+      nickname: user?.nickname,
+      loginId: user?.loginId,
+    };
   }
 
   async findByCreatUser(id: number) {
