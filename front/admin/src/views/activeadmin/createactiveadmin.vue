@@ -5,6 +5,9 @@ import { createActiveAPI } from '@/api/active';
 import { uploadImgAPI } from '@/api/upload';
 import { message } from 'ant-design-vue';
 import { useUserStore } from '@/stores/userstore';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const userStore = useUserStore();
 // 文件列表
