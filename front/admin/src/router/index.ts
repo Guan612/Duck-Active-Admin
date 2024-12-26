@@ -8,10 +8,12 @@ import UserCostAdmin from "@/views/useradmin/usercostadmin.vue";
 import UserInfoAdmin from "@/views/useradmin/userinfoadmin.vue";
 import CreateActiveAdmin from "@/views/activeadmin/createactiveadmin.vue";
 import ActiveReviewAdmin from "@/views/activeadmin/activereviewadmin.vue";
-import ActiveAdmin from "@/views/activeadmin/activedetailadmin.vue";
+import ActiveAdmin from "@/views/activeadmin/activeadmin.vue";
 import { message } from "ant-design-vue";
 import { useUserStore } from "@/stores/userstore";
 import Activedetailadmin from "@/views/activeadmin/activedetailadmin.vue";
+import Responsibleadmin from "@/views/activeadmin/responsibleadmin.vue";
+import Teacheradmin from "@/views/activeadmin/teacheradmin.vue";
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,12 +60,31 @@ const router = createRouter({
 					meta: { title: "活动管理", requiresAuth: true },
 				},
 				{
-					path:'/activedetailadmin/:id',
-					name:'activedetailadmin',
-					component:Activedetailadmin,
+					path: "/activedetailadmin/:id",
+					name: "activedetailadmin",
+					component: Activedetailadmin,
 					meta: { title: "活动详情", requiresAuth: true },
-
-				}
+				},
+				{
+					path: "/activeadmin/responisble",
+					name: "responisble",
+					component: Responsibleadmin,
+					meta: {
+						title: "活动负责人管理",
+						requiresAuth: true,
+						roles: [1],
+					},
+				},
+				{
+					path: "/activeadmin/teacher",
+					name: "teacher",
+					component: Teacheradmin,
+					meta: {
+						title: "活动教师管理",
+						requiresAuth: true,
+						roles: [2, 3],
+					},
+				},
 			],
 		},
 		{
@@ -89,12 +110,19 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	//token部分
 	const userStore = useUserStore();
+
 	if (to.meta.requiresAuth && !userStore.userInfo?.token) {
 		message.error("请先登录");
-		next("/auth/login");
-	} else {
-		next();
+		return next("/auth/login");
 	}
+
+	//学生管理员和老师管理使用不同的入口
+	const role = userStore.userInfo?.role;
+	if (to.meta.roles && !to.meta.roles.includes(role)) {
+		message.error("角色错误，无法进入");
+		return next("/");
+	}
+
 	next();
 });
 

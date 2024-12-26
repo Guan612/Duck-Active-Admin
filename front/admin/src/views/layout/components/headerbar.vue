@@ -5,8 +5,12 @@ import { useUserStore } from '@/stores/userstore';
 import router from '@/router';
 const userstore = useUserStore()
 
-const onSearch = (value: string) => {
-    console.log(value);
+const adminUrl = (role) => {
+    if (role == 1) {
+        return "/activeadmin/responisble"
+    } else if (role == 2 || role == 3) {
+        return '/activeadmin/teacher'
+    }
 }
 </script>
 
@@ -75,7 +79,7 @@ const onSearch = (value: string) => {
                                 <a href="/activereviewadmin">活动审核</a>
                             </a-menu-item>
                             <a-menu-item>
-                                <a href="/activeadmin">活动管理</a>
+                                <a :href="adminUrl(userstore.userInfo.role)">活动管理</a>
                             </a-menu-item>
                         </a-menu>
                     </template>
