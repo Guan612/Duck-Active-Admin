@@ -136,6 +136,20 @@ export class ActiveController {
     return this.activeService.findByCreatUser(+userId);
   }
 
+  @Get('findByStatus')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '获取活动状态' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema:{},
+  })
+  async findActiveByStatus(@Query('status') status: string) {
+    const statusArray = status.split(',').map((s) => +s.trim()); // 将字符串转换为数字数组
+    return this.activeService.findByStatus(statusArray);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '获取单个活动' })

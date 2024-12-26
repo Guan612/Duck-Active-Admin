@@ -23,6 +23,14 @@ export class ActiveService {
       where: {
         id: id,
       },
+      include: {
+        user: {
+          select: {
+            nickname: true,
+            loginId: true,
+          },
+        },
+      },
     });
     return res;
   }
@@ -31,6 +39,17 @@ export class ActiveService {
     const res = await this.prisma.activitie.findMany({
       where: {
         createdPeople: id,
+      },
+    });
+    return res;
+  }
+
+  async findByStatus(status: number[]) {
+    const res = await this.prisma.activitie.findMany({
+      where: {
+        activitStatus: {
+          in: status,
+        },
       },
     });
     return res;
@@ -54,6 +73,4 @@ export class ActiveService {
     });
     return res;
   }
-
-  
 }
