@@ -8,9 +8,10 @@ import UserCostAdmin from "@/views/useradmin/usercostadmin.vue";
 import UserInfoAdmin from "@/views/useradmin/userinfoadmin.vue";
 import CreateActiveAdmin from "@/views/activeadmin/createactiveadmin.vue";
 import ActiveReviewAdmin from "@/views/activeadmin/activereviewadmin.vue";
-import ActiveAdmin from "@/views/activeadmin/activeadmin.vue";
+import ActiveAdmin from "@/views/activeadmin/activedetailadmin.vue";
 import { message } from "ant-design-vue";
 import { useUserStore } from "@/stores/userstore";
+import Activedetailadmin from "@/views/activeadmin/activedetailadmin.vue";
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,13 @@ const router = createRouter({
 					component: ActiveAdmin,
 					meta: { title: "活动管理", requiresAuth: true },
 				},
+				{
+					path:'/activedetailadmin/:id',
+					name:'activedetailadmin',
+					component:Activedetailadmin,
+					meta: { title: "活动详情", requiresAuth: true },
+
+				}
 			],
 		},
 		{
