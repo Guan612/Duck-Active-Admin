@@ -64,6 +64,18 @@ export class ActiveService {
     return res;
   }
 
+  async findByTime(startDate,endDate){
+    const res = await this.prisma.activitie.findMany({
+      where:{
+        startDate:{
+          gte:startDate,
+          lte:endDate
+        }
+      }
+    })
+    return res
+  }
+
   async update(id: number, updateActiveDto: UpdateActiveDto) {
     const res = await this.prisma.activitie.update({
       where: {

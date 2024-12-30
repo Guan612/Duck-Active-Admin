@@ -150,6 +150,19 @@ export class ActiveController {
     return this.activeService.findByStatus(statusArray);
   }
 
+  @Get('findByTime')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '获取活动时间' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema:{},
+  })
+  async findActiveByTime(@Query('startDate') startDate: string, @Query('endDate') endDate: string) {
+    return this.activeService.findByTime(startDate, endDate);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '获取单个活动' })
