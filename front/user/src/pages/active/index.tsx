@@ -5,7 +5,7 @@ import { ActiveDto } from "../../dto/activeDto";
 
 export default function Active() {
 	const { RangePicker } = DatePicker;
-	const { handleChange, options, cardItems, activitieTypeOption } = useActive();
+	const { activeTypeHandleChange, cardItems, activitieTypeOption,activeTimeHandleChange } = useActive();
 	return (
 		<div className="flex flex-col items-center justify-center h-full">
 			<div className="flex flex-col">
@@ -20,7 +20,7 @@ export default function Active() {
 							mode="multiple"
 							allowClear
 							placeholder="选择类型"
-							onChange={handleChange}
+							onChange={activeTypeHandleChange}
 							options={activitieTypeOption}
 						/>
 					</div>
@@ -28,6 +28,7 @@ export default function Active() {
 					<div className="flex justify-center items-center m-2">
 						<div>选择时间</div>
 						<RangePicker
+							onChange={activeTimeHandleChange}
 							className="w-64 mx-1"
 						/>
 					</div>

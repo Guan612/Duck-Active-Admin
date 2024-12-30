@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
-import { getActiveListAPI } from "../../api/active";
+import { getActiveListAPI, getActiveStatusAPI } from "../../api/active";
 
 export default function useActive() {
 	const [cardItems, setCardItems] = useState([]);
 
 	const options = []; //选项
-	for (let i = 10; i < 36; i++) {
-		options.push({
-			label: i.toString(36) + i,
-			value: i.toString(36) + i,
-		});
-	}
 
-	const handleChange = (value:string[]) => {
-		console.log(`selected ${value}`);
+	const activeTypeHandleChange = async (value:number[]) => {
+		if (value.length === 0) {
+			getActiveList();
+		} else {
+		    const res = await getActiveStatusAPI(value);
+			setCardItems(res);
+		}
 	};
+
+	const activeTimeHandleChange = async (value: Date[]) => {
+	    console.log(value);
+	}
 
 	const getActiveList = async () => {
 		const res = await getActiveListAPI();
@@ -48,5 +51,9 @@ export default function useActive() {
 		getActiveList();
 	}, []);
 
-	return { activitieTypeOption,options, handleChange, cardItems };
+	return { activitieTypeOption,
+		activeTypeHandleChange,
+		activeTimeHandleChange, 
+		cardItems 
+	};
 }
