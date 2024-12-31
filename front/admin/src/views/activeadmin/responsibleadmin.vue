@@ -45,9 +45,9 @@ onMounted(() => {
                         发起审核申请
                     </a-button>
                     <a-button @click=""
-                        :disabled="!(item.activitStatus == 2 || item.activitStatus == 3)">开启报名</a-button>
+                        :disabled="!(item.activitStatus == 2 || item.activitStatus == 3)" class="" >开启报名</a-button>
+                    <a-button @click="router.push(`/activeadmin/${item.id}`)" class="mx-2">查看详情</a-button>
                 </div>
-
-            </div>
+        </div>
     </div>
 </template>

@@ -54,7 +54,7 @@ const router = createRouter({
 					meta: { title: "活动审核管理", requiresAuth: true },
 				},
 				{
-					path: "/activeadmin",
+					path: "/activeadmin/:id",
 					name: "activeadmin",
 					component: ActiveAdmin,
 					meta: { title: "活动管理", requiresAuth: true },
