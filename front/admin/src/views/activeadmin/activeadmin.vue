@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 const router = useRouter()
 
 const activedetail = ref({})
+const activeOpen = ref(false)
 const paramsid = router.currentRoute.value.params.id;
 
 const getActivedetail = async (id: string) => {
@@ -26,6 +27,11 @@ onMounted(() => {
 
 </script>
 <template>
+    <a-modal v-model:open="activeOpen" title="修改活动信息" @ok="handleOk">
+        <div class="flex flex-col">
+            
+        </div>
+    </a-modal>
     <div>学生活动管理</div>
     <div class="flex flex-col">
         <div class="flex flex-row justify-items-center items-center m-2">
@@ -53,7 +59,7 @@ onMounted(() => {
                 <div class="text-lg m-2">活动人数：{{ activedetail.activitiePeopleNum }}</div>
                 <div class="text-lg m-2">活动详情：{{ activedetail.content }}</div>
                 <div class="flex justify-end">
-                    <a-button type='primary' class="mx-2" @click="">修改活动信息</a-button>
+                    <a-button type='primary' class="mx-2" @click="activeOpen = true">修改活动信息</a-button>
                     <a-button type="primary" danger @click="">取消审核</a-button>
                 </div>
             </div>
