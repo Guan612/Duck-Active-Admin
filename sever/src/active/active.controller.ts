@@ -143,7 +143,7 @@ export class ActiveController {
   @ApiResponse({
     status: 200,
     description: '获取成功',
-    schema:{},
+    schema: {},
   })
   async findActiveByStatus(@Query('status') status: string) {
     const statusArray = status.split(',').map((s) => +s.trim()); // 将字符串转换为数字数组
@@ -157,10 +157,24 @@ export class ActiveController {
   @ApiResponse({
     status: 200,
     description: '获取成功',
-    schema:{},
+    schema: {},
   })
-  async findActiveByTime(@Query('startDate') startDate: string, @Query('endDate') endDate: string) {
+  async findActiveByTime(
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
     return this.activeService.findByTime(startDate, endDate);
+  }
+
+  @Get('newactive')
+  @ApiOperation({ summary: '获取最新活动' })
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {},
+  })
+  async findHotActive() {
+    return this.activeService.findNewActive();
   }
 
   @Get(':id')
