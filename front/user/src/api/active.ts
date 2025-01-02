@@ -11,6 +11,10 @@ export function checkActiveStatusAPI(id: string) {
 	return http.get(`/active/checkActiveStatus/${id}`);
 }
 
+export function getNewActiveAPI() {
+	return http.get("/active/newactive");
+}
+
 export function getActiveStatusAPI(statusArray: number[]) {
 	return http.get("/active/findByStatus", {
 		params: {
