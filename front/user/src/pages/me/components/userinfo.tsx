@@ -1,4 +1,4 @@
-import { Button, Modal, Select } from "antd";
+import { Button, Form, Input, Modal, Select } from "antd";
 import useUserInfo from "../../../hooks/me/useuserinfo";
 import AddActiveCard from "./addactivecard";
 import useAddActiveCard from "../../../hooks/me/useaddactivecard";
@@ -10,7 +10,7 @@ export default function UserInfo() {
     activeStatusOptions,
     changeUserInfoflag,
     handleActiveChange,
-	openChangeUserInfo,
+    openChangeUserInfo,
     isChangeUserInfoOk,
     handleChangeUserInfCancel,
   } = useUserInfo();
@@ -41,12 +41,25 @@ export default function UserInfo() {
         <Modal
           title="修改用户信息"
           open={changeUserInfoflag}
-          onOk={isChangeUserInfoOk}
           onCancel={handleChangeUserInfCancel}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <Form className="" layout="vertical">
+            <Form.Item label="修改昵称" name="nickname" className="m-2">
+              <Input placeholder="请输入新昵称" />
+            </Form.Item>
+
+            <Form.Item label="修改邮箱" name="email" className="m-2">
+              <Input placeholder="邮箱" />
+            </Form.Item>
+
+            <Form.Item label="修改登录密码" name="password" className="m-2">
+              <Input placeholder="输入旧密码" className="m-1" />
+              <Input placeholder="请输入新密码" className="m-1" />
+            </Form.Item>
+            <Form.Item>
+              <Button>确定更改</Button>
+            </Form.Item>
+          </Form>
         </Modal>
       </div>
 
