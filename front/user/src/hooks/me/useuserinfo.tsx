@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ActiveDto } from "../../dto/activeDto";
 export default function useUserInfo() {
 	const[myActive,setMyActive] = useState([])
+	const[changeUserInfoflag,setChangeUserInfoflag] = useState(false)
 
 	const userInfo = userStore.getState().userInfo;
 
@@ -12,9 +13,21 @@ export default function useUserInfo() {
 		setMyActive(res)
 	}
 
-	const handleChange = (value) => {
+	const handleActiveChange = (value) => {
 		console.log(`selected ${value}`);
 	};
+
+	const openChangeUserInfo = ()=>{
+		setChangeUserInfoflag(true)
+	}
+
+	const isChangeUserInfoOk = ()=>{
+		setChangeUserInfoflag(true)
+	}
+
+	const handleChangeUserInfCancel =()=>{
+		setChangeUserInfoflag(false)
+	}
 
 	useEffect(() => {
 	    getMyActive()
@@ -39,7 +52,7 @@ export default function useUserInfo() {
 		},
 		{
 		  value: 4,
-		  label: '为参加活动',
+		  label: '已参加活动',
 		}
 	];
 
@@ -47,6 +60,10 @@ export default function useUserInfo() {
 		myActive,
 		userInfo,
 		activeStatusOptions,
-		handleChange,
+		changeUserInfoflag,
+		openChangeUserInfo,
+		handleActiveChange,
+		isChangeUserInfoOk,
+		handleChangeUserInfCancel,
 	};
 }
