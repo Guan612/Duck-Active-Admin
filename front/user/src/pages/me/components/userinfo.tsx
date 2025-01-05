@@ -41,6 +41,7 @@ export default function UserInfo() {
         <Modal
           title="修改用户信息"
           open={changeUserInfoflag}
+		  onOk={isChangeUserInfoOk}
           onCancel={handleChangeUserInfCancel}
         >
           <Form className="" layout="vertical">
