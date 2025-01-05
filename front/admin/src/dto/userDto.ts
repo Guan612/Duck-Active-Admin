@@ -10,3 +10,10 @@ export interface registerDto {
 	email?: string;
 	headerimg?: string;
 }
+
+export enum userRole{
+	学生 = 0,
+	社团 = 1,
+	老师 = 2,
+	超级管理员 = 3,
+}

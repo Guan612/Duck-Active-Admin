@@ -8,3 +8,7 @@ export const RegisterAPI = (data:registerDto)=>{
 export const LoginAPI = (data: loginDto) => {
     return http.post("/user/adminlogin", data);
 }
+
+export const getUserListAPI = ()=>{
+    return http.get('/user')
+}
