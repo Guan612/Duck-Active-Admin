@@ -1,7 +1,7 @@
 import http from ".";
-import { loginDto } from "../dto/userDto";
+import { loginDto, registerDto } from "../dto/userDto";
 
-export const registerAPI = (data: loginDto) => {
+export const registerAPI = (data: registerDto) => {
 	return http.post("/user/register", data);
 };
 

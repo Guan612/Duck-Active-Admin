@@ -9,6 +9,7 @@ import Home from "../pages/home";
 import Active from "../pages/active";
 import Me from "../pages/me";
 import ActiveDetail from "../pages/active/components/activedetail";
+import Register from "../pages/register";
 
 const RequireAuth = ({ element }) => {
 	const auth = useAuth();
@@ -48,6 +49,10 @@ const routes = [
 		path: "/login",
 		element: <Login />,
 	},
+	{
+		path:"/register",
+		element:<Register/>
+	}
 ];
 
 export default function Router() {
