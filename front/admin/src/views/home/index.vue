@@ -6,6 +6,17 @@ import { CanvasRenderer } from 'echarts/renderers';
 import { BarChart } from 'echarts/charts';
 import { GridComponent, TooltipComponent, TitleComponent } from 'echarts/components';
 import VChart from 'vue-echarts';
+import dayjs from 'dayjs';
+import { getAllRegistrationsAPI } from '@/api/registration';
+
+const allRegistrationsData = ref([]);
+
+const getAllRegistrations = async () => {
+    const res = await getAllRegistrationsAPI();
+    allRegistrationsData.value = res;
+}
+
+// 初始化一个对象，用于存储每个月的活动数量
 
 // 注册 ECharts 模块
 use([CanvasRenderer, BarChart, GridComponent, TooltipComponent, TitleComponent]);
@@ -58,19 +69,24 @@ const chartOptions2 = ref({
         },
     ],
 })
+
+onMounted(() => {
+    getAllRegistrations()
+})
+
 </script>
 <template>
     <div class="flex flex-col">
         <div class="text-2xl font-bold m-2 text-center">活动管理统计</div>
         <div class="flex flex-col md:flex-row justify-center">
             <div class="w-full md:w-1/3 p-4 h-80">
-                <v-chart :option="chartOptions"/>
+                <v-chart :option="chartOptions" />
             </div>
             <div class="w-full md:w-1/3 p-4 h-80">
-                <v-chart :option="chartOptions2"/>
+                <v-chart :option="chartOptions2" />
             </div>
             <div class="w-full md:w-1/3 p-4 h-80">
-                <v-chart :option="chartOptions"/>
+                <v-chart :option="chartOptions" />
             </div>
         </div>
     </div>

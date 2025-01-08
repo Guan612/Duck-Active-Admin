@@ -25,6 +25,9 @@ import {
 import { User } from 'src/user/decorator/userInfo.decorator';
 import { JwtAuthGuard } from 'src/user/guard/jwt.guard';
 import { ActiveService } from 'src/active/active.service';
+import { RoleGuard } from 'src/user/guard/role.guard';
+import { Roles } from 'src/user/decorator/roles.decorator';
+import { Role } from 'src/user/dto/user.dto';
 
 @Controller('registration')
 @ApiTags('registration')
@@ -91,7 +94,7 @@ export class RegistrationController {
     const activeInfo = await this.activeService.findOne(activeId);
     //判断活动是否是报名时间
     const now = new Date();
-    if(activeInfo.startDate > now || activeInfo.endDate < now){
+    if (activeInfo.startDate > now || activeInfo.endDate < now) {
       throw new HttpException('活动不是报名时间', 403);
     }
     //判断活动是否是报名状态
@@ -137,6 +140,20 @@ export class RegistrationController {
     return this.registrationService.findIsJonin(+activeId, +userId);
   }
 
+  @Get()
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.Admin, Role.Teacher, Role.Responsible)
+  @ApiOperation({ summary: '获取所有报名信息' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {},
+  })
+  findAll() {
+    return this.registrationService.findAll();
+  }
+
   @Get('myactive')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '获取我的活动' })
@@ -149,7 +166,6 @@ export class RegistrationController {
     },
   })
   findMyActive(@User('id') userId: string) {
-    return this.registrationService.findMyAddActive(+userId)
+    return this.registrationService.findMyAddActive(+userId);
   }
-
 }

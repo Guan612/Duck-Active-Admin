@@ -15,15 +15,15 @@ export class RegistrationService {
       where: {
         userId: userId,
       },
-      include:{
-        activitie:{
-          select:{
-            id:true,
-            title:true,
-            activitStatus:true,
-          }
-        }
-      }
+      include: {
+        activitie: {
+          select: {
+            id: true,
+            title: true,
+            activitStatus: true,
+          },
+        },
+      },
     });
 
     return res;
@@ -53,5 +53,21 @@ export class RegistrationService {
     } else {
       return false;
     }
+  }
+
+  //获取所有活动数据
+  async findAll() {
+    const res = await this.prisma.registration.findMany({
+      include: {
+        activitie: {
+          select: {
+            id: true,
+            title: true,
+            activitStatus: true,
+          },
+        },
+      },
+    });
+    return res;
   }
 }
