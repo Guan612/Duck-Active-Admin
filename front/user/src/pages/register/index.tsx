@@ -1,12 +1,17 @@
-import { InboxOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  InboxOutlined,
+  LockOutlined,
+  UploadOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Button, Form, Input, Upload } from "antd";
 import useRegister from "../../hooks/register/useregister";
 
 export default function Register() {
-  const { onFinish } = useRegister();
+  const { onFinish, uploadAvata, imageUrl } = useRegister();
   return (
     <div className="flex flex-col md:flex-row justify-center items-center h-screen mx-6">
-      <div className="flex flex-col justify-center items-center rounded-2xl shadow-lg w-full h-2/3 md:w-1/2 bg-gradient-to-r from-transblue via-white to-transpink">
+      <div className="flex flex-col justify-center items-center rounded-2xl shadow-lg w-full h-3/4 md:w-1/2 bg-gradient-to-r from-transblue via-white to-transpink">
         <div className="flex flex-col h-full w-full m-2">
           <div className="text-center text-2xl font-bold m-2">
             欢迎来到活动报名网站
@@ -65,27 +70,33 @@ export default function Register() {
             >
               <Input placeholder="请输入邮箱" />
             </Form.Item>
-            <Form.Item label="上传头像">
+            <Form.Item label="上传头像" name="avatar" valuePropName="fileList">
               <Upload
                 name="avatar"
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
-                action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                //beforeUpload={beforeUpload}
-                //onChange={handleChange}
+                action="http://127.0.0.1:3000/uploadfile/avter"
+                onChange={uploadAvata}
+                fileList={
+                  imageUrl
+                    ? [{ uid: "-1", name: "avatar.png", url: imageUrl }]
+                    : []
+                } // 添加 uid 和 name 字段
               >
-                {/* {imageUrl ? (
-                    <img
-                      src={imageUrl}
-                      alt="avatar"
-                      style={{
-                        width: "100%",
-                      }}
-                    />
-                  ) : (
-                    uploadButton
-                  )} */}
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt="avatar"
+                    style={{
+                      width: "100%",
+                    }}
+                  />
+                ) : (
+                  <Button icon={<UploadOutlined />} className="p-2">
+                    上传头像
+                  </Button>
+                )}
               </Upload>
             </Form.Item>
             <Form.Item className="flex justify-center">
