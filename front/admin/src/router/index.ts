@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { message } from "ant-design-vue";
+import { useUserStore } from "@/stores/userstore";
+
 import Layout from "@/views/layout/index.vue";
 import Home from "@/views/home/index.vue";
 import Auth from "@/views/auth/index.vue";
@@ -9,11 +12,11 @@ import UserInfoAdmin from "@/views/useradmin/userinfoadmin.vue";
 import CreateActiveAdmin from "@/views/activeadmin/createactiveadmin.vue";
 import ActiveReviewAdmin from "@/views/activeadmin/activereviewadmin.vue";
 import ActiveAdmin from "@/views/activeadmin/activeadmin.vue";
-import { message } from "ant-design-vue";
-import { useUserStore } from "@/stores/userstore";
 import Activedetailadmin from "@/views/activeadmin/activedetailadmin.vue";
 import Responsibleadmin from "@/views/activeadmin/responsibleadmin.vue";
 import Teacheradmin from "@/views/activeadmin/teacheradmin.vue";
+import Teacherstatistics from "@/views/Infostatistics/teacherstatistics.vue";
+import Studentstatistics from "@/views/Infostatistics/studentstatistics.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +31,26 @@ const router = createRouter({
           name: "home",
           component: Home,
           meta: { title: "首页" },
+        },
+        {
+          path:'/teacherinfo',
+          name:"teacherinfo",
+          compoment:Teacherstatistics,
+          meta:{
+            title:"教师信息统计",
+            requiresAuth: true,
+            roles: [2, 3],
+          }
+        },
+        {
+          path:'/studeninfo',
+          name:"studentinfo",
+          compoment:Studentstatistics,
+          meta:{
+            title:"社团活动信息统计",
+            requiresAuth: true,
+            roles: [1],
+          }
         },
         {
           path: "/usercostadmin",

@@ -12,6 +12,14 @@ const adminUrl = (role) => {
         return '/activeadmin/teacher'
     }
 }
+
+const  infoUrl = (role)=>{
+    if(role==1){
+        return '/studeninfo'
+    } else if (role==2||role==3){
+        return '/teacherinfo'
+    }
+}
 </script>
 
 <template>
@@ -44,7 +52,7 @@ const adminUrl = (role) => {
             </div>
             <div class="hidden md:flex items-center m-2">
                 <div class="flex m-1">
-                    <a href="/">信息统计</a>
+                    <a :href="infoUrl(userstore.userInfo.role)">信息统计</a>
                 </div>
                 <a-dropdown class="flex justify-center items-center m-1" :trigger="['click']">
                     <a class="ant-dropdown-link" @click.prevent>
