@@ -1,7 +1,112 @@
 <script setup lang="ts">
+import { CanvasRenderer } from 'echarts/renderers';
+import { BarChart, PieChart } from 'echarts/charts';
+import { use } from 'echarts/core';
+import { GridComponent, TooltipComponent, TitleComponent, LegendComponent } from 'echarts/components';
+import VChart from 'vue-echarts';
+import dayjs from 'dayjs';
+import { getActiveByCreatUserAPI } from '@/api/active';
+import { onMounted, ref, watch } from 'vue';
 
+const activeList = ref([]);
+const monthlyStats = ref<{ [key: string]: number }>({});
+const participationRate = ref<number>(0);
+const chartOptions = ref({});
+const chartOptions2 = ref({});
+
+// 获取活动数据
+const getActiveByCreatUser = async () => {
+  const res = await getActiveByCreatUserAPI();
+  activeList.value = res;
+  updateCharts();
+};
+
+// 更新图表数据
+const updateCharts = () => {
+  // 统计每个月的活动数量
+  monthlyStats.value = {};
+  activeList.value.forEach(entry => {
+    const date = dayjs(entry.createdAt);
+    const month = date.format('YYYY-MM'); // 使用 dayjs 格式化日期为 "YYYY-MM"
+    if (!monthlyStats.value[month]) {
+      monthlyStats.value[month] = 0;
+    }
+    monthlyStats.value[month]++;
+  });
+
+  // 更新条形图配置
+  chartOptions.value = {
+    title: {
+      text: '每月活动数量',
+      left: 'center',
+    },
+    tooltip: {
+      trigger: 'axis',
+    },
+    xAxis: {
+      type: 'category',
+      data: Object.keys(monthlyStats.value), // 月份
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        name: '活动数量',
+        type: 'bar',
+        data: Object.values(monthlyStats.value), // 每个月的活动数量
+      },
+    ],
+  };
+
+  // 计算参加率
+  participationRate.value = 0;
+  activeList.value.forEach(entry => {
+    const rate = (entry.activitiePeopleNum - entry.remainingNum) / entry.activitiePeopleNum;
+    participationRate.value += rate;
+  });
+
+  // 更新饼状图配置
+  chartOptions2.value = {
+    title: {
+      text: '总参加率',
+      left: 'center',
+    },
+    tooltip: {
+      trigger: 'item',
+    },
+    series: [
+      {
+        name: '参加率',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: participationRate.value, name: '已参加' },
+          { value: 1 - participationRate.value, name: '未参加' },
+        ],
+      },
+    ],
+  };
+};
+
+// 注册 ECharts 模块
+use([CanvasRenderer, BarChart, PieChart, GridComponent, TooltipComponent, TitleComponent, LegendComponent]);
+
+onMounted(() => {
+  getActiveByCreatUser();
+});
 </script>
 
 <template>
-    <div>学生信息</div>
+  <div class="flex flex-col">
+    <div class="text-2xl font-bold m-2 text-center">活动管理统计</div>
+    <div class="flex flex-col md:flex-row justify-center">
+      <div class="w-full md:w-1/2 p-4 h-80">
+        <v-chart :option="chartOptions" />
+      </div>
+      <div class="w-full md:w-1/2 p-4 h-80">
+        <v-chart :option="chartOptions2" />
+      </div>
+    </div>
+  </div>
 </template>
