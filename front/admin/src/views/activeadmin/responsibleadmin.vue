@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getActiveByCreatUser, updateActiveAPI } from '@/api/active';
+import { getActiveByCreatUserAPI, updateActiveAPI } from '@/api/active';
 import { ActivitieStatus } from '@/dto/activeDto';
 import { message } from 'ant-design-vue';
 import { onMounted, ref } from 'vue';
@@ -9,7 +9,7 @@ const activeList = ref([]);
 const router = useRouter();
 
 const getActiveList = async () => {
-    const res = await getActiveByCreatUser();
+    const res = await getActiveByCreatUserAPI();
     activeList.value = res;
 }
 

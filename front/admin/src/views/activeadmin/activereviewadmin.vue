@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
 import { message } from 'ant-design-vue';
-import { updateActiveAPI, getActiveByCreatUser, getActiveStatusAPI } from '@/api/active';
+import { updateActiveAPI, getActiveByCreatUserAPI, getActiveStatusAPI } from '@/api/active';
 import { ActivitieStatus } from '@/dto/activeDto';
 import { useUserStore } from '@/stores/userstore';
 import { useRouter } from 'vue-router';
@@ -16,7 +16,7 @@ const activeList = ref([]);
 //根据不同角色显示不同功能区
 const getActiveList = async () => {
     if (userRole === 1) {
-        const res = await getActiveByCreatUser()
+        const res = await getActiveByCreatUserAPI()
         activeList.value = res;
     } else if (userRole === 2 || userRole === 3) {
         const res = await getActiveStatusAPI([1]);

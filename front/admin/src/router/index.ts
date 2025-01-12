@@ -35,7 +35,7 @@ const router = createRouter({
         {
           path:'/teacherinfo',
           name:"teacherinfo",
-          compoment:Teacherstatistics,
+          component:Teacherstatistics,
           meta:{
             title:"教师信息统计",
             requiresAuth: true,
@@ -45,7 +45,7 @@ const router = createRouter({
         {
           path:'/studeninfo',
           name:"studentinfo",
-          compoment:Studentstatistics,
+          component:Studentstatistics,
           meta:{
             title:"社团活动信息统计",
             requiresAuth: true,

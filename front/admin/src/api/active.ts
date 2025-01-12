@@ -13,7 +13,7 @@ export function getActiveDetailAPI(id: string) {
 	return http.get(`/active/${id}`);
 }
 
-export function getActiveByCreatUser() {
+export function getActiveByCreatUserAPI() {
 	return http.get("/active/findByCreatUser");
 }
 

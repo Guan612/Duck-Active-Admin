@@ -5,7 +5,7 @@ import { useUserStore } from '@/stores/userstore';
 import router from '@/router';
 const userstore = useUserStore()
 
-const adminUrl = (role) => {
+const adminUrl = (role: number) => {
     if (role == 1) {
         return "/activeadmin/responisble"
     } else if (role == 2 || role == 3) {
@@ -13,10 +13,10 @@ const adminUrl = (role) => {
     }
 }
 
-const  infoUrl = (role)=>{
-    if(role==1){
+const infoUrl = (role: number) => {
+    if (role == 1) {
         return '/studeninfo'
-    } else if (role==2||role==3){
+    } else if (role == 2 || role == 3) {
         return '/teacherinfo'
     }
 }
