@@ -8,17 +8,34 @@ import dayjs from 'dayjs';
 import { getActiveByCreatUserAPI } from '@/api/active';
 import { onMounted, ref, watch } from 'vue';
 
-const activeList = ref([]);
+interface ActiveItem {
+  createdAt: string;
+  activitiePeopleNum: number;
+  remainingNum: number;
+}
+
+const activeList = ref<ActiveItem[]>([]);
 const monthlyStats = ref<{ [key: string]: number }>({});
 const participationRate = ref<number>(0);
 const chartOptions = ref({});
 const chartOptions2 = ref({});
+const loading = ref(false);
+const error = ref('');
 
 // 获取活动数据
 const getActiveByCreatUser = async () => {
-  const res = await getActiveByCreatUserAPI();
-  activeList.value = res;
-  updateCharts();
+  try {
+    loading.value = true;
+    error.value = '';
+    const res = await getActiveByCreatUserAPI();
+    activeList.value = res;
+    updateCharts();
+  } catch (err) {
+    error.value = '获取数据失败，请稍后重试';
+    console.error(err);
+  } finally {
+    loading.value = false;
+  }
 };
 
 // 更新图表数据
@@ -59,12 +76,13 @@ const updateCharts = () => {
     ],
   };
 
-  // 计算参加率
-  participationRate.value = 0;
+  // 计算平均参加率
+  let totalRate = 0;
   activeList.value.forEach(entry => {
     const rate = (entry.activitiePeopleNum - entry.remainingNum) / entry.activitiePeopleNum;
-    participationRate.value += rate;
+    totalRate += rate;
   });
+  participationRate.value = activeList.value.length > 0 ? totalRate / activeList.value.length : 0;
 
   // 更新饼状图配置
   chartOptions2.value = {
@@ -100,12 +118,22 @@ onMounted(() => {
 <template>
   <div class="flex flex-col">
     <div class="text-2xl font-bold m-2 text-center">活动管理统计</div>
-    <div class="flex flex-col md:flex-row justify-center">
+    
+    <div v-if="loading" class="text-center py-4">加载中...</div>
+    <div v-else-if="error" class="text-red-500 text-center py-4">{{ error }}</div>
+    <div v-else-if="activeList.length === 0" class="text-center py-4">暂无数据</div>
+    <div v-else class="flex flex-col md:flex-row justify-center">
       <div class="w-full md:w-1/2 p-4 h-80">
-        <v-chart :option="chartOptions" />
+        <v-chart 
+          :option="chartOptions" 
+          autoresize
+        />
       </div>
       <div class="w-full md:w-1/2 p-4 h-80">
-        <v-chart :option="chartOptions2" />
+        <v-chart 
+          :option="chartOptions2" 
+          autoresize
+        />
       </div>
     </div>
   </div>
