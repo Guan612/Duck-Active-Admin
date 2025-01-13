@@ -8,7 +8,7 @@ import { Button, Form, Input, Upload } from "antd";
 import useRegister from "../../hooks/register/useregister";
 
 export default function Register() {
-  const { onFinish, uploadAvata, imageUrl } = useRegister();
+  const { onFinish, uploadAvatar, imageUrl } = useRegister();
   return (
     <div className="flex flex-col md:flex-row justify-center items-center h-screen mx-6">
       <div className="flex flex-col justify-center items-center rounded-2xl shadow-lg w-full h-3/4 md:w-1/2 bg-gradient-to-r from-transblue via-white to-transpink">
@@ -77,7 +77,7 @@ export default function Register() {
                 className="avatar-uploader"
                 showUploadList={false}
                 action="http://127.0.0.1:3000/uploadfile/avter"
-                onChange={uploadAvata}
+                onChange={uploadAvatar}
                 fileList={
                   imageUrl
                     ? [{ uid: "-1", name: "avatar.png", url: imageUrl }]
