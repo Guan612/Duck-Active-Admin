@@ -1,14 +1,11 @@
-import {
-  InboxOutlined,
-  LockOutlined,
-  UploadOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Button, Form, Input, Upload } from "antd";
+import { LockOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Upload, message } from "antd";
 import useRegister from "../../hooks/register/useregister";
+import type { UploadFile } from 'antd/es/upload/interface';
 
 export default function Register() {
-  const { onFinish, uploadAvatar, imageUrl } = useRegister();
+  const { onFinish, uploadAvatar, beforeUpload, imageUrl, file } = useRegister();
+
   return (
     <div className="flex flex-col md:flex-row justify-center items-center h-screen mx-6">
       <div className="flex flex-col justify-center items-center rounded-2xl shadow-lg w-full h-3/4 md:w-1/2 bg-gradient-to-r from-transblue via-white to-transpink">
@@ -18,7 +15,7 @@ export default function Register() {
           </div>
           <Form
             layout="vertical"
-            onFinish={onFinish}
+            onFinish={(values) => onFinish({ ...values, avatar: file })}
             className="m-2 p-2 justify-center items-center"
           >
             <div className="flex flex-col md:flex-row">
@@ -70,27 +67,33 @@ export default function Register() {
             >
               <Input placeholder="请输入邮箱" />
             </Form.Item>
-            <Form.Item label="上传头像" name="avatar" valuePropName="fileList">
+
+            <Form.Item 
+              label="上传头像" 
+              name="avatar"
+              valuePropName="avatar"
+              getValueFromEvent={(e) => {
+                if (e && e.file && e.file.response) {
+                  return e.file.response.url;
+                }
+                return null;
+              }}
+            >
               <Upload
-                name="avatar"
+                name="file"
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}
                 action="http://127.0.0.1:3000/uploadfile/avter"
+                beforeUpload={beforeUpload}
+                fileList={file ? [file] : []}
                 onChange={uploadAvatar}
-                fileList={
-                  imageUrl
-                    ? [{ uid: "-1", name: "avatar.png", url: imageUrl }]
-                    : []
-                } // 添加 uid 和 name 字段
               >
-                {imageUrl ? (
+                {imageUrl || file ? (
                   <img
-                    src={imageUrl}
+                    src={imageUrl || file?.thumbUrl}
                     alt="avatar"
-                    style={{
-                      width: "100%",
-                    }}
+                    style={{ width: "100%" }}
                   />
                 ) : (
                   <Button icon={<UploadOutlined />} className="p-2">
@@ -99,6 +102,7 @@ export default function Register() {
                 )}
               </Upload>
             </Form.Item>
+
             <Form.Item className="flex justify-center">
               <Button type="primary" htmlType="submit" className="w-28">
                 注册
