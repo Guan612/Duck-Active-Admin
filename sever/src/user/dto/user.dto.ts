@@ -48,6 +48,14 @@ export class CreateUserDto {
   @IsOptional()
   @IsString({ message: '昵称格式不正确' })
   nickname?: string;
+
+  @ApiProperty({
+    description: '用户的头像',
+    example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHE9zbArNH9InG95HMoBd9ibcynQ85VmvGcw&s',
+  })
+  @IsOptional()
+  @IsString({ message: '头像格式不正确' })
+  headerimg?: string;
 }
 
 export class LoginUserDto {

@@ -1,10 +1,9 @@
 import { LockOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Upload, message } from "antd";
 import useRegister from "../../hooks/register/useregister";
-import type { UploadFile } from 'antd/es/upload/interface';
 
 export default function Register() {
-  const { onFinish, uploadAvatar, beforeUpload, imageUrl, file } = useRegister();
+  const { onFinish, uploadAvatar, beforeUpload, imageUrl } = useRegister();
 
   return (
     <div className="flex flex-col md:flex-row justify-center items-center h-screen mx-6">
@@ -15,7 +14,7 @@ export default function Register() {
           </div>
           <Form
             layout="vertical"
-            onFinish={(values) => onFinish({ ...values, avatar: file })}
+            onFinish={onFinish} // 直接调用 Hook 提供的 onFinish 方法
             className="m-2 p-2 justify-center items-center"
           >
             <div className="flex flex-col md:flex-row">
@@ -68,17 +67,7 @@ export default function Register() {
               <Input placeholder="请输入邮箱" />
             </Form.Item>
 
-            <Form.Item 
-              label="上传头像" 
-              name="avatar"
-              valuePropName="avatar"
-              getValueFromEvent={(e) => {
-                if (e && e.file && e.file.response) {
-                  return e.file.response.url;
-                }
-                return null;
-              }}
-            >
+            <Form.Item label="上传头像" name="headerimg">
               <Upload
                 name="file"
                 listType="picture-card"
@@ -86,19 +75,23 @@ export default function Register() {
                 showUploadList={false}
                 action="http://127.0.0.1:3000/uploadfile/avter"
                 beforeUpload={beforeUpload}
-                fileList={file ? [file] : []}
                 onChange={uploadAvatar}
               >
-                {imageUrl || file ? (
+                {imageUrl ? (
                   <img
-                    src={imageUrl || file?.thumbUrl}
+                    src={imageUrl}
                     alt="avatar"
-                    style={{ width: "100%" }}
+                    style={{
+                      width: "100%",
+                      borderRadius: "8px",
+                      objectFit: "cover",
+                    }}
                   />
                 ) : (
-                  <Button icon={<UploadOutlined />} className="p-2">
-                    上传头像
-                  </Button>
+                  <div>
+                    <UploadOutlined />
+                    <div style={{ marginTop: 8 }}>上传头像</div>
+                  </div>
                 )}
               </Upload>
             </Form.Item>
@@ -109,6 +102,7 @@ export default function Register() {
               </Button>
             </Form.Item>
           </Form>
+
           <div className="text-center text-sm">
             已有账号？
             <a className="text-blue-500" href="/login">

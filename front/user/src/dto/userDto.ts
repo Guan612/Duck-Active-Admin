@@ -8,5 +8,6 @@ export interface registerDto {
 	password: string;
 	nickname?: string;
 	email?: string;
+	headerimg?: string;
 	// role: string;
 }
