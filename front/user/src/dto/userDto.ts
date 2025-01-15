@@ -23,6 +23,9 @@ export interface UserInfo {
 }
 
 export interface updateUserDto {
+  oldPassword?: string;
+  newPassword?: string;
+  confirmPassword?: string;
   password?: string;
   email?: string;
   nickname?: string;

@@ -59,12 +59,68 @@ export default function UserInfo() {
               <Input placeholder="邮箱" />
             </Form.Item>
 
-            <Form.Item label="修改登录密码" name="password" className="m-2">
-              <Input placeholder="输入旧密码" className="m-1" />
-              <Input placeholder="请输入新密码" className="m-1" />
+            <Form.Item 
+              label="旧密码" 
+              name="oldPassword"
+              dependencies={['newPassword']}
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (getFieldValue('newPassword') && !value) {
+                      return Promise.reject(new Error('修改密码需要输入旧密码'));
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
+              className="m-2"
+            >
+              <Input.Password placeholder="输入旧密码（修改密码时必填）" />
+            </Form.Item>
+
+            <Form.Item
+              label="新密码"
+              name="newPassword"
+              dependencies={['oldPassword']}
+              rules={[
+                { min: 6, message: '密码至少6位' },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (getFieldValue('oldPassword') && !value) {
+                      return Promise.reject(new Error('修改密码需要输入新密码'));
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
+              className="m-2"
+            >
+              <Input.Password placeholder="请输入新密码（修改密码时必填）" />
+            </Form.Item>
+
+            <Form.Item
+              label="确认新密码"
+              name="confirmPassword"
+              dependencies={['newPassword']}
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (getFieldValue('newPassword') && !value) {
+                      return Promise.reject(new Error('请确认新密码'));
+                    }
+                    if (value && getFieldValue('newPassword') !== value) {
+                      return Promise.reject(new Error('两次输入的密码不一致'));
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
+              className="m-2"
+            >
+              <Input.Password placeholder="请确认新密码（修改密码时必填）" />
             </Form.Item>
             <Form.Item>
-              <Button>确定更改</Button>
+              <Button htmlType="submit" type="primary">确定更改</Button>
             </Form.Item>
           </Form>
         </Modal>

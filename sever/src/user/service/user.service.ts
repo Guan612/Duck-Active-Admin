@@ -61,6 +61,14 @@ export class UserService {
         id: id,
       },
       data: updateUserDto,
+      select: {
+        id: true,
+        loginId: true,
+        nickname: true,
+        role: true,
+        headerimg: true,
+        email: true,
+      }
     });
     return res;
   }

@@ -4,6 +4,7 @@ import { updateUserInfoAPI } from "../../api/user";
 import { useEffect, useState } from "react";
 import { ActiveDto } from "../../dto/activeDto";
 import { updateUserDto, UserInfo } from "../../dto/userDto";
+import { message } from "antd";
 export default function useUserInfo() {
 	const[myActive,setMyActive] = useState<ActiveDto[]>([])
 	const[changeUserInfoflag,setChangeUserInfoflag] = useState(false)
@@ -11,8 +12,8 @@ export default function useUserInfo() {
 	const userInfo = userStore.getState().userInfo;
 
 	const getMyActive = async () => {
-		const res: { data: ActiveDto[] } = await getMyActiveAPI();
-		setMyActive(res.data)
+		const res = await getMyActiveAPI();
+		setMyActive(res)
 	}
 
 	const handleActiveChange = (value: number) => {
@@ -25,18 +26,31 @@ export default function useUserInfo() {
 
 	const isChangeUserInfoOk = async (formData: updateUserDto) => {
 		try {
-			await updateUserInfoAPI(userInfo.id, formData);
+			// 移除不需要的字段
+			const updateData = { ...formData };
+			if (!updateData.oldPassword && !updateData.newPassword) {
+				delete updateData.oldPassword;
+				delete updateData.newPassword;
+				delete updateData.confirmPassword;
+			}
+
+			const updatedUser = await updateUserInfoAPI(userInfo.id, updateData);
+			
 			// 更新store中的用户信息
 			userStore.setState((state: { userInfo: UserInfo }) => ({
 				...state,
 				userInfo: {
 					...state.userInfo,
-					...formData
+					...updatedUser
 				}
 			}));
+			
 			setChangeUserInfoflag(false);
+			message.success('更新用户数据成功');
 		} catch (error) {
 			console.error('修改用户信息失败:', error);
+			message.error(error.message || '修改用户信息失败');
+			throw error;
 		}
 	}
 

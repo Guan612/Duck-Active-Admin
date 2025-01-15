@@ -10,7 +10,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { UserService } from './service/user.service';
-import { CreateUserDto, LoginUserDto, Role } from './dto/user.dto';
+import { CreateUserDto, LoginUserDto, Role, UpdateUserDto } from './dto/user.dto';
 import { HashPasswordPipe } from './pipe/hash-password.pipe';
 import { CheckUserExistsPipe } from './pipe/check-user-exists.pipe';
 import {
@@ -218,8 +218,7 @@ export class UserController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard,RoleGuard)
-  @Roles(Role.Teacher, Role.Admin)
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '更新用户信息' })
   @ApiBearerAuth()
   @ApiResponse({
@@ -234,7 +233,37 @@ export class UserController {
       }
     }
   })
-  update(@Param('id') id: string, @Body() updateUserDto: any) {
+  async update(
+    @Param('id') id: string,
+    @Body(HashPasswordPipe) updateUserDto: UpdateUserDto,
+  ) {
+    // 如果有密码修改
+    if (updateUserDto.oldPassword && updateUserDto.newPassword) {
+      // 验证旧密码
+      const user = await this.userService.findOne(+id);
+      try {
+        await this.authService.login({
+          loginId: user.loginId,
+          password: updateUserDto.oldPassword
+        });
+      } catch (error) {
+        throw new HttpException('旧密码验证失败', 401);
+      }
+
+      // 确保新密码和确认密码一致
+      if (updateUserDto.newPassword !== updateUserDto.confirmPassword) {
+        throw new HttpException('新密码和确认密码不一致', 400);
+      }
+
+      // 只保留新密码
+      updateUserDto.password = updateUserDto.newPassword;
+    }
+
+    // 移除不需要的字段
+    delete updateUserDto.oldPassword;
+    delete updateUserDto.newPassword;
+    delete updateUserDto.confirmPassword;
+
     return this.userService.update(+id, updateUserDto);
   }
 

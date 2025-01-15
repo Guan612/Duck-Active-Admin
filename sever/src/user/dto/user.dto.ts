@@ -79,12 +79,24 @@ export class LoginUserDto {
 export class UpdateUserDto {
   @IsOptional()
   @IsString()
+  oldPassword?: string;
+
+  @IsOptional()
+  @IsString()
+  @MinLength(6, { message: '密码长度不能低于6位' })
+  newPassword?: string;
+
+  @IsOptional()
+  @IsString()
+  confirmPassword?: string;
+
+  @IsOptional()
+  @IsString()
   password?: string;
 
   @IsOptional()
   @IsString()
   headerimg?: string;
-
 
   @IsOptional()
   @IsEmail()
