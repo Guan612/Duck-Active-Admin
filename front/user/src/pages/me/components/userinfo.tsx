@@ -41,10 +41,16 @@ export default function UserInfo() {
         <Modal
           title="修改用户信息"
           open={changeUserInfoflag}
-		  onOk={isChangeUserInfoOk}
           onCancel={handleChangeUserInfCancel}
         >
-          <Form className="" layout="vertical">
+          <Form 
+            className="" 
+            layout="vertical"
+            onFinish={(values) => {
+              isChangeUserInfoOk(values);
+              handleChangeUserInfCancel();
+            }}
+          >
             <Form.Item label="修改昵称" name="nickname" className="m-2">
               <Input placeholder="请输入新昵称" />
             </Form.Item>
@@ -76,7 +82,7 @@ export default function UserInfo() {
         />
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-7xl mx-auto m-2">
-          {myActive.map((cardInfo) => (
+          {myActive?.map((cardInfo) => (
             <div
               className="rounded-xl m-1 bg-transblue hover:shadow-xl hover:scale-105"
               key={cardInfo.id}

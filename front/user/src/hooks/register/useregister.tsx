@@ -7,7 +7,6 @@ import type { AxiosResponse } from "axios";
 
 interface RegisterResponse {
   loginId: string;
-  avatar?: string;
 }
 
 export default function useRegister() {
@@ -24,7 +23,7 @@ export default function useRegister() {
       console.log("Register payload:", payload);
       const res: AxiosResponse<RegisterResponse> = await registerAPI(payload);
       if (res) {
-        message.success(`${res.data.loginId} 注册成功`);
+        message.success(`${res.loginId} 注册成功`);
         navigate("/login");
       }
     } catch (error) {

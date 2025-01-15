@@ -78,6 +78,15 @@ export class LoginUserDto {
 
 export class UpdateUserDto {
   @IsOptional()
+  @IsString()
+  password?: string;
+
+  @IsOptional()
+  @IsString()
+  headerimg?: string;
+
+
+  @IsOptional()
   @IsEmail()
   email?: string;
 

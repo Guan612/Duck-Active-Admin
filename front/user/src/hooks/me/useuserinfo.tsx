@@ -1,19 +1,21 @@
 import userStore from "../../stores/userstore";
 import { getMyActiveAPI } from "../../api/registration";
+import { updateUserInfoAPI } from "../../api/user";
 import { useEffect, useState } from "react";
 import { ActiveDto } from "../../dto/activeDto";
+import { updateUserDto, UserInfo } from "../../dto/userDto";
 export default function useUserInfo() {
-	const[myActive,setMyActive] = useState([])
+	const[myActive,setMyActive] = useState<ActiveDto[]>([])
 	const[changeUserInfoflag,setChangeUserInfoflag] = useState(false)
 
 	const userInfo = userStore.getState().userInfo;
 
 	const getMyActive = async () => {
-		const res = await getMyActiveAPI();
-		setMyActive(res)
+		const res: { data: ActiveDto[] } = await getMyActiveAPI();
+		setMyActive(res.data)
 	}
 
-	const handleActiveChange = (value) => {
+	const handleActiveChange = (value: number) => {
 		console.log(`selected ${value}`);
 	};
 
@@ -21,8 +23,21 @@ export default function useUserInfo() {
 		setChangeUserInfoflag(true)
 	}
 
-	const isChangeUserInfoOk = ()=>{
-		setChangeUserInfoflag(true)
+	const isChangeUserInfoOk = async (formData: updateUserDto) => {
+		try {
+			await updateUserInfoAPI(userInfo.id, formData);
+			// 更新store中的用户信息
+			userStore.setState((state: { userInfo: UserInfo }) => ({
+				...state,
+				userInfo: {
+					...state.userInfo,
+					...formData
+				}
+			}));
+			setChangeUserInfoflag(false);
+		} catch (error) {
+			console.error('修改用户信息失败:', error);
+		}
 	}
 
 	const handleChangeUserInfCancel =()=>{
