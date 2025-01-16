@@ -12,6 +12,7 @@ import {
 import { UserService } from './service/user.service';
 import { CreateUserDto, LoginUserDto, Role, UpdateUserDto } from './dto/user.dto';
 import { HashPasswordPipe } from './pipe/hash-password.pipe';
+import { UpdatePasswordPipe } from './pipe/update-password.pipe';
 import { CheckUserExistsPipe } from './pipe/check-user-exists.pipe';
 import {
   ApiBasicAuth,
@@ -235,7 +236,7 @@ export class UserController {
   })
   async update(
     @Param('id') id: string,
-    @Body(HashPasswordPipe) updateUserDto: UpdateUserDto,
+    @Body(UpdatePasswordPipe) updateUserDto: UpdateUserDto,
   ) {
     // 如果有密码修改
     if (updateUserDto.oldPassword && updateUserDto.newPassword) {

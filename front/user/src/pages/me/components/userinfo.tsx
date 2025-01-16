@@ -11,7 +11,9 @@ export default function UserInfo() {
     changeUserInfoflag,
     handleActiveChange,
     openChangeUserInfo,
-    isChangeUserInfoOk,
+    updateNickname,
+    updateEmail,
+    updatePassword,
     handleChangeUserInfCancel,
   } = useUserInfo();
   const { cardItems } = useAddActiveCard();
@@ -42,87 +44,111 @@ export default function UserInfo() {
           title="修改用户信息"
           open={changeUserInfoflag}
           onCancel={handleChangeUserInfCancel}
+          footer={null}
         >
-          <Form 
-            className="" 
-            layout="vertical"
-            onFinish={(values) => {
-              isChangeUserInfoOk(values);
-              handleChangeUserInfCancel();
-            }}
-          >
-            <Form.Item label="修改昵称" name="nickname" className="m-2">
-              <Input placeholder="请输入新昵称" />
-            </Form.Item>
-
-            <Form.Item label="修改邮箱" name="email" className="m-2">
-              <Input placeholder="邮箱" />
-            </Form.Item>
-
-            <Form.Item 
-              label="旧密码" 
-              name="oldPassword"
-              dependencies={['newPassword']}
-              rules={[
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (getFieldValue('newPassword') && !value) {
-                      return Promise.reject(new Error('修改密码需要输入旧密码'));
-                    }
-                    return Promise.resolve();
-                  },
-                }),
-              ]}
-              className="m-2"
+          <div className="flex flex-col gap-4">
+            <Form
+              layout="vertical"
+              onFinish={(values) => {
+                updateNickname(values.nickname);
+                handleChangeUserInfCancel();
+              }}
             >
-              <Input.Password placeholder="输入旧密码（修改密码时必填）" />
-            </Form.Item>
+              <Form.Item label="修改昵称" name="nickname" className="m-2">
+                <Input placeholder="请输入新昵称" />
+              </Form.Item>
+              <Form.Item>
+                <Button htmlType="submit" type="primary">更新昵称</Button>
+              </Form.Item>
+            </Form>
 
-            <Form.Item
-              label="新密码"
-              name="newPassword"
-              dependencies={['oldPassword']}
-              rules={[
-                { min: 6, message: '密码至少6位' },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (getFieldValue('oldPassword') && !value) {
-                      return Promise.reject(new Error('修改密码需要输入新密码'));
-                    }
-                    return Promise.resolve();
-                  },
-                }),
-              ]}
-              className="m-2"
+            <Form
+              layout="vertical"
+              onFinish={(values) => {
+                updateEmail(values.email);
+                handleChangeUserInfCancel();
+              }}
             >
-              <Input.Password placeholder="请输入新密码（修改密码时必填）" />
-            </Form.Item>
+              <Form.Item label="修改邮箱" name="email" className="m-2">
+                <Input placeholder="邮箱" />
+              </Form.Item>
+              <Form.Item>
+                <Button htmlType="submit" type="primary">更新邮箱</Button>
+              </Form.Item>
+            </Form>
 
-            <Form.Item
-              label="确认新密码"
-              name="confirmPassword"
-              dependencies={['newPassword']}
-              rules={[
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (getFieldValue('newPassword') && !value) {
-                      return Promise.reject(new Error('请确认新密码'));
-                    }
-                    if (value && getFieldValue('newPassword') !== value) {
-                      return Promise.reject(new Error('两次输入的密码不一致'));
-                    }
-                    return Promise.resolve();
-                  },
-                }),
-              ]}
-              className="m-2"
+            <Form
+              layout="vertical"
+              onFinish={(values) => {
+                updatePassword(values.oldPassword, values.newPassword,values.confirmPassword);
+                handleChangeUserInfCancel();
+              }}
             >
-              <Input.Password placeholder="请确认新密码（修改密码时必填）" />
-            </Form.Item>
-            <Form.Item>
-              <Button htmlType="submit" type="primary">确定更改</Button>
-            </Form.Item>
-          </Form>
+              <Form.Item 
+                label="旧密码" 
+                name="oldPassword"
+                dependencies={['newPassword']}
+                rules={[
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (getFieldValue('newPassword') && !value) {
+                        return Promise.reject(new Error('修改密码需要输入旧密码'));
+                      }
+                      return Promise.resolve();
+                    },
+                  }),
+                ]}
+                className="m-2"
+              >
+                <Input.Password placeholder="输入旧密码（修改密码时必填）" />
+              </Form.Item>
+
+              <Form.Item
+                label="新密码"
+                name="newPassword"
+                dependencies={['oldPassword']}
+                rules={[
+                  { min: 6, message: '密码至少6位' },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (getFieldValue('oldPassword') && !value) {
+                        return Promise.reject(new Error('修改密码需要输入新密码'));
+                      }
+                      return Promise.resolve();
+                    },
+                  }),
+                ]}
+                className="m-2"
+              >
+                <Input.Password placeholder="请输入新密码（修改密码时必填）" />
+              </Form.Item>
+
+              <Form.Item
+                label="确认新密码"
+                name="confirmPassword"
+                dependencies={['newPassword']}
+                rules={[
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (getFieldValue('newPassword') && !value) {
+                        return Promise.reject(new Error('请确认新密码'));
+                      }
+                      if (value && getFieldValue('newPassword') !== value) {
+                        return Promise.reject(new Error('两次输入的密码不一致'));
+                      }
+                      return Promise.resolve();
+                    },
+                  }),
+                ]}
+                className="m-2"
+              >
+                <Input.Password placeholder="请确认新密码（修改密码时必填）" />
+              </Form.Item>
+              <Form.Item>
+                <Button htmlType="submit" type="primary">更新密码</Button>
+              </Form.Item>
+            </Form>
+          </div>
         </Modal>
       </div>
 
@@ -139,12 +165,12 @@ export default function UserInfo() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-7xl mx-auto m-2">
           {myActive?.map((cardInfo) => (
-            <div
-              className="rounded-xl m-1 bg-transblue hover:shadow-xl hover:scale-105"
-              key={cardInfo.id}
-            >
-              <AddActiveCard myActive={cardInfo} />
-            </div>
+              <div
+                className="rounded-xl m-1 bg-transblue hover:shadow-xl hover:scale-105"
+                key={cardInfo.id}
+              >
+                <AddActiveCard myActive={cardInfo} />
+              </div>
           ))}
         </div>
       </div>
