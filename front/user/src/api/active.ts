@@ -3,6 +3,11 @@ export function getActiveListAPI() {
 	return http.get("/active");
 }
 
+export function getShowActiveListAPI() {
+	return http.get("/active/showActive");
+}
+
+
 export function getActiveDetailAPI(id: string) {
 	return http.get(`/active/${id}`);
 }

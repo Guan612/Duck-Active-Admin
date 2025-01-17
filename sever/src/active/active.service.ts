@@ -18,6 +18,17 @@ export class ActiveService {
     return res;
   }
 
+  async findShowActive(){
+    const res = await this.prisma.activitie.findMany({
+      where: {
+        activitStatus:{
+          in: [2,3,4,5]
+        }
+      },
+    });
+    return res;
+  }
+
   async findOne(id: number) {
     const res = await this.prisma.activitie.findUnique({
       where: {

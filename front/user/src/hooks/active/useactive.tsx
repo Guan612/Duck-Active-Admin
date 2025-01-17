@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getActiveListAPI, getActiveStatusAPI } from "../../api/active";
+import { getActiveListAPI, getActiveStatusAPI,getShowActiveListAPI } from "../../api/active";
 
 export default function useActive() {
 	const [cardItems, setCardItems] = useState([]);
@@ -20,7 +20,7 @@ export default function useActive() {
 	}
 
 	const getActiveList = async () => {
-		const res = await getActiveListAPI();
+		const res = await getShowActiveListAPI();
 		setCardItems(res);
 	};
 

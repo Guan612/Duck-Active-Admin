@@ -75,6 +75,22 @@ export class ActiveController {
     return this.activeService.findAll();
   }
 
+  @Get('showActive')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '获取所有活动' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example: {},
+    },
+  })
+  findShowActive() {
+    return this.activeService.findShowActive();
+  }
+
+
   @Get('checkActiveStatus/:id')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '检查活动状态' })
