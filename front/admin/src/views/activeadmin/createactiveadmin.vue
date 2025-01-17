@@ -18,7 +18,7 @@ const activeState = ref({
     content: '',
     time: '',
     activitieType: 0,
-    activitiePeopleNum: 0,
+    activitiePeopleNum: 1,
     isOnline: 0,
     activeAddress: '',
     activitieImgUrl: '',
@@ -40,7 +40,7 @@ const handleFinish = async () => {
             content: '',
             time: '',
             activitieType: 0,
-            activitiePeopleNum: 0,
+            activitiePeopleNum: 1,
             isOnline: 0,
             activeAddress: '',
             activitieImgUrl: '',
@@ -114,7 +114,7 @@ const onFinishFailed = errorInfo => {
                 </a-form-item>
                 <a-form-item label="活动人数" name="activitiePeopleNum">
                     <a-input-number v-model:value="activeState.activitiePeopleNum" placeholder="请输入活动人数"
-                        class="w-1/3" />
+                        class="w-1/3" min="1" />
                 </a-form-item>
                 <a-form-item label="是否线上" name="isOnline">
                     <a-radio-group v-model:value="activeState.isOnline">
