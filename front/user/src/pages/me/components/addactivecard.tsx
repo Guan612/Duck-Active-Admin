@@ -1,5 +1,5 @@
 import { RegistrationStatus } from "../../../dto/registrationDto"
-
+import { ActiveDto } from "../../../dto/activeDto"
 export default function AddActiveCard({myActive}) {
   return(
     <div>
