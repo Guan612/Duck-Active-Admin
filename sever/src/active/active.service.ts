@@ -87,6 +87,15 @@ export class ActiveService {
     return res;
   }
 
+  async findByType(type: number[]) {
+    const res = await this.prisma.activitie.findMany({
+      where: {
+        activitieType: {in: type}
+      },
+    });
+    return res;
+  }
+
   async findNewActive() {
     const res = await this.prisma.activitie.findMany({
       where: {

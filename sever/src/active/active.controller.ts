@@ -77,7 +77,7 @@ export class ActiveController {
 
   @Get('showActive')
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '获取所有活动' })
+  @ApiOperation({ summary: '获取所有学生活动' })
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
@@ -180,6 +180,20 @@ export class ActiveController {
     @Query('endDate') endDate: string,
   ) {
     return this.activeService.findByTime(startDate, endDate);
+  }
+
+  @Get('findByType')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '获取活动类型' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {},
+  })
+  async findActiveByType(@Query('type') type: string) {
+    const typeArray = type.split(',').map((s) => +s.trim());
+    return this.activeService.findByType(typeArray);
   }
 
   @Get('newactive')
