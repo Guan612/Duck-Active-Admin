@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { use } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 import { BarChart } from 'echarts/charts';
@@ -52,94 +52,89 @@ const generateChartData = () => {
 
     monthlyData.value = monthlyStats;
     monthlyActivityCounts.value = activityCounts;
+
+    // 更新图表配置
+    const months = Object.keys(monthlyStats).sort();
+    chartOptions.value = {
+        title: {
+            text: '每月活动总人数和报名人数',
+            left: 'center',
+        },
+        tooltip: {
+            trigger: 'axis',
+        },
+        xAxis: {
+            type: 'category',
+            data: months,
+        },
+        yAxis: {
+            type: 'value',
+        },
+        series: [
+            {
+                name: '未报名人数',
+                type: 'bar',
+                stack: 'total',
+                data: months.map(month => monthlyStats[month].registeredPeople),
+            },
+            {
+                name: '报名人数',
+                type: 'bar',
+                stack: 'total',
+                data: months.map(month => monthlyStats[month].totalPeople - monthlyStats[month].registeredPeople),
+            },
+        ],
+    };
+
+    chartOptions2.value = {
+        title: {
+            text: '每月活动数量',
+            left: 'center',
+        },
+        tooltip: {
+            trigger: 'axis',
+        },
+        xAxis: {
+            type: 'category',
+            data: months,
+        },
+        yAxis: {
+            type: 'value',
+        },
+        series: [
+            {
+                name: '活动数量',
+                type: 'bar',
+                data: months.map(month => activityCounts[month]),
+            },
+        ],
+    };
 };
 
-// 图表配置1：堆叠柱状图（总人数和报名人数）
+const chartOptions = ref({});
+const chartOptions2 = ref({});
 
-const months = Object.keys(monthlyData.value).sort();
-const totalPeople = months.map((month) => monthlyData.value[month].totalPeople);
-const registeredPeople = months.map((month) => monthlyData.value[month].registeredPeople);
 
-const chartOptions = ref({
-    title: {
-        text: '每月活动总人数和报名人数',
-        left: 'center',
-    },
-    tooltip: {
-        trigger: 'axis',
-    },
-    xAxis: {
-        type: 'category',
-        data: months,
-    },
-    yAxis: {
-        type: 'value',
-    },
-    series: [
-        {
-            name: '总人数',
-            type: 'bar',
-            stack: 'total',
-            data: totalPeople,
-        },
-        {
-            name: '报名人数',
-            type: 'bar',
-            stack: 'total',
-            data: registeredPeople,
-        },
-    ],
+onMounted(async () => {
+    await getAllRegistrations();
+    await getActiveList();
+    generateChartData();
 });
 
-
-// 图表配置2：柱状图（每月活动数量）
-
-const months2 = Object.keys(monthlyActivityCounts.value).sort();
-const activityCounts = months.map((month) => monthlyActivityCounts.value[month]);
-
-const chartOptions2 = ref( {
-    title: {
-        text: '每月活动数量',
-        left: 'center',
-    },
-    tooltip: {
-        trigger: 'axis',
-    },
-    xAxis: {
-        type: 'category',
-        data: months2,
-    },
-    yAxis: {
-        type: 'value',
-    },
-    series: [
-        {
-            name: '活动数量',
-            type: 'bar',
-            data: activityCounts,
-        },
-    ],
+watch([allRegistrationsData, allActiveData], () => {
+    generateChartData();
 });
-
-
-onMounted(() => {
-    getAllRegistrations()
-    getActiveList()
-})
 
 </script>
 <template>
     <div class="flex flex-col">
         <div class="text-2xl font-bold m-2 text-center">活动管理统计</div>
         <div class="flex flex-col md:flex-row justify-center">
-            <div class="w-full md:w-1/3 p-4 h-80">
-                <v-chart :option="chartOptions" />
+            <div class="w-full md:w-1/3 p-4" style="height: 400px">
+                <v-chart :option="chartOptions" autoresize />
             </div>
-            <div class="w-full md:w-1/3 p-4 h-80">
-                <v-chart :option="chartOptions2" />
-            </div>
-            <div class="w-full md:w-1/3 p-4 h-80">
-                <v-chart :option="chartOptions" />
+            <div class="w-full md:w-1/3 p-4" style="height: 400px">
+                <v-chart :option="chartOptions2" autoresize />
             </div>
         </div>
     </div>
