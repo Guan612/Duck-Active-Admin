@@ -45,10 +45,10 @@ model Activitie {
 model Integral {
   id            Int  @id @default(autoincrement())
   userId        Int
-  LearnedPoints Int  @default(0) //博学
-  ActionPoints  Int  @default(0) //笃行
-  BeautyPoints  Int  @default(0) //尽美
-  MoralPoints   Int  @default(0) //明德
+  learnedPoints Int  @default(0) //博学
+  actionPoints  Int  @default(0) //笃行
+  beautyPoints  Int  @default(0) //尽美
+  moralPoints   Int  @default(0) //明德
   user          User @relation(fields: [userId], references: [id])
 }
 
