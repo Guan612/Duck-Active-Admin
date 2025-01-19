@@ -84,9 +84,6 @@ const infoUrl = (role: number) => {
                                 <a href="/createactiveadmin">活动发布</a>
                             </a-menu-item>
                             <a-menu-item>
-                                <a href="/activereviewadmin">活动审核</a>
-                            </a-menu-item>
-                            <a-menu-item>
                                 <a :href="adminUrl(userstore.userInfo.role)">活动管理</a>
                             </a-menu-item>
                         </a-menu>

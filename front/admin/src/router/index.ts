@@ -10,7 +10,6 @@ import Register from "@/views/auth/register/index.vue";
 import UserCostAdmin from "@/views/useradmin/usercostadmin.vue";
 import UserInfoAdmin from "@/views/useradmin/userinfoadmin.vue";
 import CreateActiveAdmin from "@/views/activeadmin/createactiveadmin.vue";
-import ActiveReviewAdmin from "@/views/activeadmin/activereviewadmin.vue";
 import ActiveAdmin from "@/views/activeadmin/activeadmin.vue";
 import Activedetailadmin from "@/views/activeadmin/activedetailadmin.vue";
 import Responsibleadmin from "@/views/activeadmin/responsibleadmin.vue";
@@ -77,12 +76,6 @@ const router = createRouter({
           name: "createactiveadmin",
           component: CreateActiveAdmin,
           meta: { title: "创建活动", requiresAuth: true },
-        },
-        {
-          path: "/activereviewadmin",
-          name: "activereviewadmin",
-          component: ActiveReviewAdmin,
-          meta: { title: "活动审核管理", requiresAuth: true },
         },
         {
           path: "/activeadmin/:id",
