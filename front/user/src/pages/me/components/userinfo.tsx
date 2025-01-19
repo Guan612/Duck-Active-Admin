@@ -182,16 +182,16 @@ export default function UserInfo() {
           options={activeStatusOptions}
         />
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-7xl mx-auto m-2">
-          {myActive?.map((cardInfo) => (
-            <div
-              className="rounded-xl m-1 bg-transblue hover:shadow-xl hover:scale-105"
-              key={cardInfo.id}
-            >
-              <AddActiveCard myActive={cardInfo} />
-            </div>
-          ))}
-        </div>
+<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl mx-auto m-2 min-h-[200px]">
+  {myActive?.map((cardInfo) => (
+    <div
+      className="rounded-xl m-1 bg-transblue hover:shadow-xl hover:scale-105 h-full"
+      key={cardInfo.id}
+    >
+      <AddActiveCard myActive={cardInfo} />
+    </div>
+  ))}
+</div>
       </div>
     </div>
   );
