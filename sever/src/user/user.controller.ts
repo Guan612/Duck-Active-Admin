@@ -119,8 +119,8 @@ export class UserController {
         "message": "登录成功",
         "userInfo": {
             "id": 2,
-            "loginId": "snmqwq",
-            "nickname": "尚凝梦",
+            "loginId": "jiqiren",
+            "nickname": "机器人协会",
             "role": 1,
             "headerimg": null,
             "email": null,
