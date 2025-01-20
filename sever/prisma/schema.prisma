@@ -34,6 +34,7 @@ model Activitie {
   remainingNum       Int            @default(0) //报名人数
   activitStatus      Int            @default(0) //0：创建活动 1：审核活动 2：开始报名 3：报名结束 4：活动结束
   createdPeople      Int
+  point              Int            @default(1)
   startDate          DateTime
   endDate            DateTime
   createdAt          DateTime       @default(now())
