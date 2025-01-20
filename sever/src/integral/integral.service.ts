@@ -17,12 +17,26 @@ export class IntegralService {
     return `This action returns all integral`;
   }
 
+  async findByUserId(userid: number) {
+    const res = await this.prisma.integral.findUnique({
+      where: {
+        userId: userid,
+      },
+    });
+    return res;
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} integral`;
   }
 
-  update(id: number, updateIntegralDto) {
-    return `This action updates a #${id} integral`;
+  async update(id: number, updateIntegralDto) {
+    const res = this.prisma.integral.update({
+      where: {
+        userId: id,
+      },
+      data: updateIntegralDto,
+    });
   }
 
   remove(id: number) {
