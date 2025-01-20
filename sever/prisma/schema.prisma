@@ -44,7 +44,7 @@ model Activitie {
 
 model Integral {
   id            Int  @id @default(autoincrement())
-  userId        Int
+  userId        Int  @unique
   learnedPoints Int  @default(0) //博学
   actionPoints  Int  @default(0) //笃行
   beautyPoints  Int  @default(0) //尽美
