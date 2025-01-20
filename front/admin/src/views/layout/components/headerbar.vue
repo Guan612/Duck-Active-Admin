@@ -67,9 +67,6 @@ const infoUrl = (role: number) => {
                             <a-menu-item>
                                 <a href="/userinfoadmin">用户信息管理</a>
                             </a-menu-item>
-                            <a-menu-item>
-                                <a href="javascript:;">3rd menu item</a>
-                            </a-menu-item>
                         </a-menu>
                     </template>
                 </a-dropdown>
@@ -89,6 +86,9 @@ const infoUrl = (role: number) => {
                         </a-menu>
                     </template>
                 </a-dropdown>
+                <div class="flex m-1">
+                    <a href="/responsintegral">积分管理</a>
+                </div>
             </div>
         </div>
         <div class="flex items-center mr-2">
@@ -110,9 +110,6 @@ const infoUrl = (role: number) => {
             </div>
             <div class="flex" v-else>
                 <Button @click="$router.push('/auth/login')">去登录</Button>
-            </div>
-            <div>
-
             </div>
         </div>
     </div>
