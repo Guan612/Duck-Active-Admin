@@ -19,6 +19,7 @@ const activeState = ref({
     time: '',
     activitieType: 0,
     activitiePeopleNum: 1,
+    point: 1,
     isOnline: 0,
     activeAddress: '',
     activitieImgUrl: '',
@@ -41,6 +42,7 @@ const handleFinish = async () => {
             time: '',
             activitieType: 0,
             activitiePeopleNum: 1,
+            point: 1,
             isOnline: 0,
             activeAddress: '',
             activitieImgUrl: '',
@@ -103,7 +105,7 @@ const onFinishFailed = errorInfo => {
                 <a-form-item label="活动时间" name="time" :rules="[{ required: true, message: '请选择活动时间' }]">
                     <a-range-picker v-model:value="activeState.time" />
                 </a-form-item>
-                <a-form-item label="活动类型" name="activitieType">
+                <a-form-item label="活动类型" name="activitieType" :rules="[{ required: true, message: '请输入活动类型' }]">
                     <a-select v-model:value="activeState.activitieType">
                         <a-select-option :value=0>通用</a-select-option>
                         <a-select-option :value=1>博学</a-select-option>
@@ -112,9 +114,12 @@ const onFinishFailed = errorInfo => {
                         <a-select-option :value=4>明德</a-select-option>
                     </a-select>
                 </a-form-item>
+                <a-form-item label="活动分数" name="point" :rules="[{ required: true, message: '请输入活动分数' }]">
+                    <a-input-number v-model:value="activeState.point" placeholder="请输入活动分数" class="w-1/3" min="1" />
+                </a-form-item>
                 <a-form-item label="活动人数" name="activitiePeopleNum">
-                    <a-input-number v-model:value="activeState.activitiePeopleNum" placeholder="请输入活动人数"
-                        class="w-1/3" min="1" />
+                    <a-input-number v-model:value="activeState.activitiePeopleNum" placeholder="请输入活动人数" class="w-1/3"
+                        min="1" />
                 </a-form-item>
                 <a-form-item label="是否线上" name="isOnline">
                     <a-radio-group v-model:value="activeState.isOnline">
