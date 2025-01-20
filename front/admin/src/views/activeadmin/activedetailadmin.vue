@@ -24,7 +24,7 @@ const pass = async (id: number) => {
     const res = await updateActiveAPI(id, { activitStatus: 2 });
     if (res) {
         message.success('审核通过');
-        router.push('/activereviewadmin')
+        router.push('/activeadmin/teacher')
     }
 }
 
@@ -32,7 +32,7 @@ const reject = async (id: number) => {
     const res = await updateActiveAPI(id, { activitStatus: 6 });
     if (res) {
         message.success('审核拒绝');
-        router.push('/activereviewadmin')
+        router.push('/activeadmin/teacher')
     }
 }
 
@@ -43,7 +43,8 @@ onMounted(() => {
 <template>
     <div class="flex flex-col">
         <div class="flex flex-row justify-items-center items-center m-2">
-            <a-button class="flex m-2 items-center" type="primary" @click="$router.push('/activereviewadmin')">
+            <div>教师活动管理</div>
+            <a-button class="flex m-2 items-center" type="primary" @click="$router.push('/activeadmin/teacher')">
                 <template #icon>
                     <LeftOutlined />
                 </template>

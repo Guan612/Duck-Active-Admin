@@ -34,16 +34,21 @@ onMounted(() => {
 </script>
 <template>
     <div class='flex flex-col'>
-        <div v-for="item in activeList" :key="item.id"
+        <div v-if="activeList.length > 0">
+            <div v-for="item in activeList" :key="item.id"
                 class="flex flex-col md:flex-row justify-between items-center bg-transblue rounded-lg m-2 p-2">
-            <div class="flex flex-col">
-                <div>{{ item.title }}</div>
-                <div>开始时间：{{ dayjs(item.startDate).format("YYYY-MM-DD") }}</div>
+                <div class="flex flex-col">
+                    <div>{{ item.title }}</div>
+                    <div>开始时间：{{ dayjs(item.startDate).format("YYYY-MM-DD") }}</div>
+                </div>
+                <div class="flex">
+                    <a-button @click="router.push(`/activedetailadmin/${item.id}`)" class="mx-2">详情</a-button>
+                    <a-button @click="qucikPass(item.id)">快速通过</a-button>
+                </div>
             </div>
-             <div class="flex">
-                <a-button @click="router.push(`/activedetailadmin/${item.id}`)" class="mx-2">详情</a-button>
-                <a-button @click="qucikPass(item.id)">快速通过</a-button>
-            </div>
+        </div>
+        <div v-else>
+            <div class="text-center font-bold text-2xl items-center">暂未有待审核的活动</div>
         </div>
     </div>
 </template>
