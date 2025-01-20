@@ -154,6 +154,22 @@ export class RegistrationController {
     return this.registrationService.findAll();
   }
 
+  @Get('findByActiveId/:id')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.Admin, Role.Teacher, Role.Responsible)
+  @ApiOperation({ summary: '查找活动id' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example: {},
+    },
+  })
+  findByActiveId(@Param('id') id: string) {
+    return this.registrationService.findByActiveId(+id);
+  }
+
   @Get('myactive')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '获取我的活动' })
