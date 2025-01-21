@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getActiceByActiveIdAPI, getActiveByCreatUserAPI } from '@/api/active';
+import { addpointAPI } from '@/api/integral'
 import { ActivitieStatus } from '@/dto/activeDto';
 import { onMounted, ref } from 'vue';
 
@@ -9,8 +10,8 @@ const getActiveList = async () => {
     activeList.value = res
 }
 
-const addPotin = async (activeid: number, point: number) => {
-    const addPepleRes = await getActiceByActiveIdAPI(activeid)
+const addPotin = async (activeid) => {
+    const res = await addpointAPI(activeid)
 }
 
 const getActivitieStatusText = (status: number): string => {
@@ -34,7 +35,8 @@ onMounted(() => {
                 </div>
                 <div>
                     <div class="">
-                        <a-button type='primary' class="mx-2" :disabled="!(item.activitStatus == 4)">加分该活动</a-button>
+                        <a-button type='primary' class="mx-2" @click="addPotin(item.id)"
+                            :disabled="!(item.activitStatus == 4)">加分该活动</a-button>
                     </div>
                 </div>
             </div>

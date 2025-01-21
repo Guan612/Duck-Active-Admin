@@ -41,6 +41,20 @@ export class IntegralController {
     return this.integralService.create({ userid: +userid });
   }
 
+  @Post('addpoint/:id')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.Admin, Role.Responsible, Role.Teacher)
+  @ApiOperation({ summary: '给活动参与者加分' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '加分成功',
+    schema: {},
+  })
+  async addActivityPoints(@Param('id') activityId: string) {
+    return this.integralService.addActivityPoints(+activityId);
+  }
+
   @Get('findByUser')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '查找用户积分' })

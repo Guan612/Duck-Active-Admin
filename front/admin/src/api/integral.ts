@@ -4,6 +4,6 @@ export const getAllIntegralAPI = () => {
 	return http.get("/integral");
 };
 
-export const updateIntegralAPI = (id: string) => {
-	return http.patch(`/integral/${id}`);
+export const addpointAPI = (id: string) => {
+	return http.post(`/integral/addpoint/${id}`);
 };
