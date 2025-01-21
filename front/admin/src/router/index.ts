@@ -17,6 +17,7 @@ import Teacheradmin from "@/views/activeadmin/teacheradmin.vue";
 import Teacherstatistics from "@/views/infostatistics/teacherstatistics.vue";
 import Studentstatistics from "@/views/infostatistics/studentstatistics.vue";
 import Responsiblepointadmin from "@/views/integraladmin/responsiblepointadmin.vue";
+import Teacherpointadmin from "@/views/integraladmin/teacherpointadmin.vue";
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -115,9 +116,19 @@ const router = createRouter({
 					name: "integral",
 					component: Responsiblepointadmin,
 					meta: {
-						title: "积分管理",
+						title: "学生积分管理",
 						requiresAuth: true,
-						roles: [1, 2, 3],
+						roles: [1],
+					},
+				},
+				{
+					path: "/teacherintegral",
+					name: "teacherintegral",
+					component: Teacherpointadmin,
+					meta: {
+						title: "教师积分管理",
+						requiresAuth: true,
+						roles: [2, 3],
 					},
 				},
 			],

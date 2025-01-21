@@ -13,8 +13,19 @@ export class IntegralService {
     return res;
   }
 
-  findAll() {
-    return `This action returns all integral`;
+  async findAll() {
+    const res = await this.prisma.integral.findMany({
+      include: {
+        user: {
+          select: {
+            loginId: true,
+            nickname: true,
+          },
+        },
+      },
+    });
+
+    return res;
   }
 
   async findByUserId(userid: number) {
@@ -49,8 +60,8 @@ export class IntegralService {
       where: { id: activityId },
       select: {
         activitieType: true,
-        point: true
-      }
+        point: true,
+      },
     });
 
     if (!activity) {
@@ -61,11 +72,11 @@ export class IntegralService {
     const participants = await this.prisma.registration.findMany({
       where: {
         activitieId: activityId,
-        status: 1 // 只处理已参加活动的用户
+        status: 1, // 只处理已参加活动的用户
       },
       select: {
-        userId: true
-      }
+        userId: true,
+      },
     });
 
     // 3. 根据活动类型更新积分
@@ -94,7 +105,7 @@ export class IntegralService {
 
     // 4. 批量更新参与者积分
     await this.prisma.$transaction(
-      participants.map(participant => 
+      participants.map((participant) =>
         this.prisma.integral.upsert({
           where: { userId: participant.userId },
           update: updateData,
@@ -103,10 +114,10 @@ export class IntegralService {
             learnedPoints: updateData.learnedPoints?.increment || 0,
             actionPoints: updateData.actionPoints?.increment || 0,
             beautyPoints: updateData.beautyPoints?.increment || 0,
-            moralPoints: updateData.moralPoints?.increment || 0
-          }
-        })
-      )
+            moralPoints: updateData.moralPoints?.increment || 0,
+          },
+        }),
+      ),
     );
 
     return { success: true, updatedCount: participants.length };

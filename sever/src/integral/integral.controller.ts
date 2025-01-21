@@ -84,7 +84,7 @@ export class IntegralController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(Role.Admin, Role.Teacher, Role.Responsible)
+  @Roles(Role.Admin, Role.Teacher)
   @ApiOperation({ summary: '更新分数' })
   @ApiBearerAuth()
   @ApiResponse({
