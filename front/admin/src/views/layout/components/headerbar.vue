@@ -3,6 +3,7 @@ import { DownOutlined, AlignLeftOutlined } from '@ant-design/icons-vue';
 import { Button } from 'ant-design-vue';
 import { useUserStore } from '@/stores/userstore';
 import router from '@/router';
+import { rollupVersion } from 'vite';
 const userstore = useUserStore()
 
 const adminUrl = (role: number) => {
@@ -18,6 +19,14 @@ const infoUrl = (role: number) => {
         return '/studeninfo'
     } else if (role == 2 || role == 3) {
         return '/teacherinfo'
+    }
+}
+
+const pointUrl = (role: number) => {
+    if (role == 1) {
+        return "/responsintegral"
+    } else if (role == 2 || role == 3) {
+        return '/teacherintegral'
     }
 }
 </script>
@@ -87,7 +96,7 @@ const infoUrl = (role: number) => {
                     </template>
                 </a-dropdown>
                 <div class="flex m-1">
-                    <a href="/responsintegral">积分管理</a>
+                    <a :href="pointUrl(userstore.userInfo.role)">积分管理</a>
                 </div>
             </div>
         </div>

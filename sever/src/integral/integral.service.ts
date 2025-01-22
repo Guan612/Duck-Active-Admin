@@ -48,6 +48,7 @@ export class IntegralService {
       },
       data: updateIntegralDto,
     });
+    return res;
   }
 
   remove(id: number) {

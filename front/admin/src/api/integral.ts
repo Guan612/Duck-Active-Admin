@@ -7,3 +7,7 @@ export const getAllIntegralAPI = () => {
 export const addpointAPI = (id: string) => {
 	return http.post(`/integral/addpoint/${id}`);
 };
+
+export const updateIntegralAPI = (id: number, data: any) => {
+  return http.patch(`/integral/${id}`, data);
+};
