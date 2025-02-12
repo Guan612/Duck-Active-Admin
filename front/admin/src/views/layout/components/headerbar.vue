@@ -3,6 +3,7 @@ import { DownOutlined, AlignLeftOutlined } from '@ant-design/icons-vue';
 import { Button } from 'ant-design-vue';
 import { useUserStore } from '@/stores/userstore';
 import router from '@/router';
+import { rollupVersion } from 'vite';
 const userstore = useUserStore()
 
 const adminUrl = (role: number) => {
@@ -18,6 +19,14 @@ const infoUrl = (role: number) => {
         return '/studeninfo'
     } else if (role == 2 || role == 3) {
         return '/teacherinfo'
+    }
+}
+
+const pointUrl = (role: number) => {
+    if (role == 1) {
+        return "/responsintegral"
+    } else if (role == 2 || role == 3) {
+        return '/teacherintegral'
     }
 }
 </script>
@@ -67,9 +76,6 @@ const infoUrl = (role: number) => {
                             <a-menu-item>
                                 <a href="/userinfoadmin">用户信息管理</a>
                             </a-menu-item>
-                            <a-menu-item>
-                                <a href="javascript:;">3rd menu item</a>
-                            </a-menu-item>
                         </a-menu>
                     </template>
                 </a-dropdown>
@@ -84,14 +90,14 @@ const infoUrl = (role: number) => {
                                 <a href="/createactiveadmin">活动发布</a>
                             </a-menu-item>
                             <a-menu-item>
-                                <a href="/activereviewadmin">活动审核</a>
-                            </a-menu-item>
-                            <a-menu-item>
                                 <a :href="adminUrl(userstore.userInfo.role)">活动管理</a>
                             </a-menu-item>
                         </a-menu>
                     </template>
                 </a-dropdown>
+                <div class="flex m-1">
+                    <a :href="pointUrl(userstore.userInfo.role)">积分管理</a>
+                </div>
             </div>
         </div>
         <div class="flex items-center mr-2">
@@ -113,9 +119,6 @@ const infoUrl = (role: number) => {
             </div>
             <div class="flex" v-else>
                 <Button @click="$router.push('/auth/login')">去登录</Button>
-            </div>
-            <div>
-
             </div>
         </div>
     </div>

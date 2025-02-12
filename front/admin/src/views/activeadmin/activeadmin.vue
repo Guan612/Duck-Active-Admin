@@ -35,7 +35,7 @@ onMounted(() => {
     <div>学生活动管理</div>
     <div class="flex flex-col">
         <div class="flex flex-row justify-items-center items-center m-2">
-            <a-button class="flex m-2 items-center" type="primary" @click="$router.push('/activereviewadmin')">
+            <a-button class="flex m-2 items-center" type="primary" @click="$router.push('/activeadmin/responisble')">
                 <template #icon>
                     <LeftOutlined />
                 </template>

@@ -17,6 +17,10 @@ export function getActiveByCreatUserAPI() {
 	return http.get("/active/findByCreatUser");
 }
 
+export function getActiceByActiveIdAPI(id: number) {
+	return http.get(`/active/findByActiveId/${id}`);
+}
+
 export function getActiveStatusAPI(statusArray: number[]) {
 	return http.get("/active/findByStatus", {
 		params: {

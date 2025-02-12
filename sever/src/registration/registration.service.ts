@@ -55,6 +55,14 @@ export class RegistrationService {
     }
   }
 
+  //通过活动id查找活动
+  async findByActiveId(activeId) {
+    const res = await this.prisma.registration.findMany({
+      where: { activitieId: activeId },
+    });
+    return res;
+  }
+
   //获取所有活动数据
   async findAll() {
     const res = await this.prisma.registration.findMany({

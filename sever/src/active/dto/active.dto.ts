@@ -67,12 +67,20 @@ export class CreateActiveDto {
   activitiePeopleNum: number;
 
   @ApiProperty({
-    description:'创建人id',
-    example: 1
+    description: '创建人id',
+    example: 1,
   })
   @IsNotEmpty()
   @IsInt()
-  createdPeople:number;
+  createdPeople: number;
+
+  @ApiProperty({
+    description: '活动分数',
+    example: 1,
+  })
+  @IsNotEmpty()
+  @IsInt()
+  point: number;
 
   @ApiProperty({
     description: '活动开始时间',
@@ -149,6 +157,14 @@ export class UpdateActiveDto {
   @IsOptional()
   @IsInt()
   remainingNum?: number;
+
+  @ApiProperty({
+    description: '活动分数',
+    example: 1,
+  })
+  @IsOptional()
+  @IsInt()
+  point?: number;
 }
 
 export enum ActivitieType {

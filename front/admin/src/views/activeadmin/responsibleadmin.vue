@@ -32,7 +32,8 @@ onMounted(() => {
 </script>
 <template>
     <div class="flex flex-col">
-        <div v-for="item in activeList" :key="item.id"
+        <div v-if="activeList.length > 0">
+            <div v-for="item in activeList" :key="item.id"
                 class="flex flex-col md:flex-row justify-between items-center bg-transblue rounded-lg m-2 p-2">
                 <div>
                     <div class="font-bold text-xl">{{ item.title }}</div>
@@ -44,10 +45,15 @@ onMounted(() => {
                         :disabled="!(item.activitStatus == 0 || item.activitStatus == 6)" class="mx-2">
                         发起审核申请
                     </a-button>
-                    <a-button @click=""
-                        :disabled="!(item.activitStatus == 2 || item.activitStatus == 3)" class="" >开启报名</a-button>
+                    <a-button @click="" :disabled="!(item.activitStatus == 2 || item.activitStatus == 3)"
+                        class="">开启报名</a-button>
                     <a-button @click="router.push(`/activeadmin/${item.id}`)" class="mx-2">查看详情</a-button>
                 </div>
+            </div>
+        </div>
+        <div v-else>
+            <div class="text-center font-bold text-2xl items-center">暂时没有需要申请的活动</div>
+            <div class="text-center"><a href="/createactiveadmin">去创建活动</a></div>
         </div>
     </div>
 </template>

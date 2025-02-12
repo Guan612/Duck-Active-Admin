@@ -34,6 +34,7 @@ model Activitie {
   remainingNum       Int            @default(0) //报名人数
   activitStatus      Int            @default(0) //0：创建活动 1：审核活动 2：开始报名 3：报名结束 4：活动结束
   createdPeople      Int
+  point              Int            @default(1)
   startDate          DateTime
   endDate            DateTime
   createdAt          DateTime       @default(now())
@@ -44,11 +45,11 @@ model Activitie {
 
 model Integral {
   id            Int  @id @default(autoincrement())
-  userId        Int
-  LearnedPoints Int  @default(0) //博学
-  ActionPoints  Int  @default(0) //笃行
-  BeautyPoints  Int  @default(0) //尽美
-  MoralPoints   Int  @default(0) //明德
+  userId        Int  @unique
+  learnedPoints Int  @default(0) //博学
+  actionPoints  Int  @default(0) //笃行
+  beautyPoints  Int  @default(0) //尽美
+  moralPoints   Int  @default(0) //明德
   user          User @relation(fields: [userId], references: [id])
 }
 
