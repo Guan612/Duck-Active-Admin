@@ -47,7 +47,7 @@ export default function HaderBar() {
 						</li>
 					</ul>
 				</div>
-				<a className="btn btn-ghost text-xl">daisyUI</a>
+				<a className="btn btn-ghost text-xl">鸭鸭活动管理</a>
 			</div>
 			<div className="navbar-center hidden lg:flex">
 				<ul className="menu menu-horizontal px-1">
@@ -73,7 +73,37 @@ export default function HaderBar() {
 				</ul>
 			</div>
 			<div className="navbar-end">
-				<a className="btn">Button</a>
+				<input
+					type="text"
+					placeholder="Search"
+					className="input input-bordered hidden md:flex md:w-50 mx-2"
+				/>
+				<div className="dropdown dropdown-end">
+					<div
+						tabIndex={0}
+						role="button"
+						className="btn btn-ghost btn-circle avatar"
+					>
+						<div className="w-10 rounded-full">
+							<img
+								alt="Tailwind CSS Navbar component"
+								src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+							/>
+						</div>
+					</div>
+					<ul
+						tabIndex={0}
+						className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+					>
+						<li>
+							<a>个人中心</a>
+						</li>
+
+						<li>
+							<a>登出</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	);

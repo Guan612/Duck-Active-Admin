@@ -7,7 +7,7 @@ import Me from "../pages/me";
 const routes = [
 	{
 		path: "/",
-		elemnet: <Layout />,
+		element: <Layout />,
 		children: [
 			{
 				path: "/",
