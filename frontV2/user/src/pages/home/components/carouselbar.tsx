@@ -1,6 +1,7 @@
 export default function CarouselBar() {
 	return (
 		<div className="flex flex-col justify-center items-center">
+			<div className="flex font-bold text-3xl m-3">鸭鸭活动管理</div>
 			<div className="carousel w-full md:w-2/3 m-2">
 				<div id="item1" className="carousel-item w-full">
 					<img
