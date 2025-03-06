@@ -1,20 +1,47 @@
-export default function ActiveCard() {
+import dayjs from "dayjs";
+import { ActiveDto } from "../../dto/activeDto";
+import useActiveCard from "../../hooks/active/useActiveCard";
+
+interface CardProps {
+  cardInfo: ActiveDto;
+}
+
+export default function ActiveCard({ cardInfo }: CardProps) {
+  const { goActiveDetail } = useActiveCard();
+  
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
-      <figure>
+    <div className="card bg-base-100 shadow-xl">
+      <div className="text-xl font-bold text-center p-4 border-b">
+        {cardInfo.title}
+      </div>
+      <figure className="px-4 pt-4">
         <img
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-          alt="Shoes"
+          src={cardInfo.cover}
+          alt={cardInfo.title}
+          className="rounded-xl w-full h-48 object-cover"
         />
       </figure>
-      <div className="card-body">
-        <h2 className="card-title">Card Title</h2>
-        <p>
-          A card component has a figure, a body part, and inside body there are
-          title and actions parts
-        </p>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
+      <div className="card-body p-4">
+        <div className="flex justify-between items-start">
+          <div className="space-y-2">
+            <div className="badge badge-outline">
+              {cardInfo.type}
+            </div>
+            <p className="text-sm">
+              <span className="font-semibold">地点：</span>
+              {cardInfo.activeAddress}
+            </p>
+            <p className="text-sm">
+              <span className="font-semibold">时间：</span>
+              {dayjs(cardInfo.startTime).format("YYYY-MM-DD")}
+            </p>
+          </div>
+          <button 
+            className="btn btn-primary btn-sm"
+            onClick={() => goActiveDetail(cardInfo.id)}
+          >
+            详情
+          </button>
         </div>
       </div>
     </div>
