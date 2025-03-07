@@ -1,7 +1,12 @@
+import useActiveDetail from "../../hooks/active/useactivedetail";
+
 export default function ActiveDetail() {
+  const { backActive } = useActiveDetail();
   return (
     <div className="flex flex-col">
-      <button className="btn btn-primary w-1/12">返回</button>
+      <button className="btn btn-primary w-1/12" onClick={() => backActive()}>
+        返回
+      </button>
       <h1>活动详情</h1>
       <img
         className="w-1/2 mx-auto my-4"
@@ -12,6 +17,7 @@ export default function ActiveDetail() {
       <p>描述</p>
       <p>时间</p>
       <p>地点</p>
+      <button className="btn btn-primary w-1/12 mx-auto">报名</button>
     </div>
   );
 }

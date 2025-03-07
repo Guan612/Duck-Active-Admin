@@ -1,6 +1,12 @@
+import { DayPicker } from "react-day-picker";
+import { zhCN } from "react-day-picker/locale";
 import ActiveCard from "./components/activecard";
+import { useState } from "react";
 
 export default function Active() {
+  const today = new Date();
+  const [date, setDate] = useState();
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col md:flex-row m-2 justify-around items-center">
@@ -13,42 +19,26 @@ export default function Active() {
           <option>Velvet</option>
         </select>
         <button
-          popoverTarget="cally-popover1"
+          popoverTarget="rdp-popover"
           className="input input-border"
-          id="cally1"
-          style="anchorName:--cally1"
+          style={{ anchorName: "--rdp" } as React.CSSProperties}
         >
-          Pick a date
+          {date ? date.toLocaleDateString() : "选择开始日期"}
         </button>
         <div
-          popover
-          id="cally-popover1"
-          className="dropdown bg-base-100 rounded-box shadow-lg"
-          style="positionAnchor:--cally1"
+          popover="auto"
+          id="rdp-popover"
+          className="dropdown"
+          style={{ positionAnchor: "--rdp" } as React.CSSProperties}
         >
-          <calendar-date
-            class="cally"
-          >
-            <svg
-              aria-label="Previous"
-              className="fill-current size-4"
-              slot="previous"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path d="M15.75 19.5 8.25 12l7.5-7.5"></path>
-            </svg>
-            <svg
-              aria-label="Next"
-              className="fill-current size-4"
-              slot="next"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path d="m8.25 4.5 7.5 7.5-7.5 7.5"></path>
-            </svg>
-            <calendar-month></calendar-month>
-          </calendar-date>
+          <DayPicker
+            className="react-day-picker"
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            locale={zhCN}
+            captionLayout="dropdown"
+          />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4  max-w-7xl mx-auto m-2">
