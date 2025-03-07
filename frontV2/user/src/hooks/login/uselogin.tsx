@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { loginAPI } from "../../api/user";
 import userStore from "../../stores/userstore";
-import { message } from "antd";
+//import { message } from "antd";
 import { loginDto } from "../../dto/userDto";
 
 const useLogin = () => {
@@ -12,7 +12,7 @@ const useLogin = () => {
 			const { userInfo } = await loginAPI(values);
 			setUserInfo(userInfo);
 			navigate("/");
-			message.success(`欢迎你，${userInfo.nickname ?? userInfo.loginId}`);
+			//message.success(`欢迎你，${userInfo.nickname ?? userInfo.loginId}`);
 		} catch (error) {
 			console.error("Login failed:", error);
 		}

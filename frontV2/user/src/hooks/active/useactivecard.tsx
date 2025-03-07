@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { ActivitieType } from "../../dto/activeDto";
 export default function useActiveCard() {
 	const navigate = useNavigate();

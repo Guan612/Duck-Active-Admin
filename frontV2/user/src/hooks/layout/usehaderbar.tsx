@@ -1,10 +1,10 @@
-import { Input, message } from "antd";
-import { useNavigate } from "react-router-dom";
+//import { Input, message } from "antd";
+import { useNavigate } from "react-router";
 import userStore from "../../stores/userstore";
 
 export default function useHeaderBar() {
 	const navigate = useNavigate(); //使用跳转函数
-	const { Search } = Input;
+	//onst { Search } = Input;
 	const { clearUserInfo } = userStore();
 	const onSearch = (value: string) => {
 		console.log(value);
@@ -13,7 +13,7 @@ export default function useHeaderBar() {
 
 	const logOut = () => {
 		clearUserInfo();
-		message.success("退出登录成功");
+		//message.success("退出登录成功");
 		navigate("/login");
 	};
 

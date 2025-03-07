@@ -4,7 +4,7 @@ import { updateUserInfoAPI } from "../../api/user";
 import { useEffect, useState } from "react";
 import { ActiveDto } from "../../dto/activeDto";
 import { UserInfo } from "../../dto/userDto";
-import { message } from "antd";
+//import { message } from "antd";
 import type { AxiosError } from "axios";
 export default function useUserInfo() {
   const [myActive, setMyActive] = useState<ActiveDto[]>([]);
@@ -20,7 +20,7 @@ export default function useUserInfo() {
       }
     } catch (error: unknown) {
       console.error("获取活动信息失败:", error);
-      message.error(error.response?.data?.message || "获取活动信息失败");
+      //message.error(error.response?.data?.message || "获取活动信息失败");
     }
   };
 
@@ -42,11 +42,11 @@ export default function useUserInfo() {
           ...updatedUser,
         },
       }));
-      message.success("昵称更新成功");
+      //message.success("昵称更新成功");
     } catch (error: unknown) {
       const err = error as AxiosError;
       console.error("修改昵称失败:", err);
-      message.error(err.response?.data?.message || "修改昵称失败");
+      //message.error(err.response?.data?.message || "修改昵称失败");
       throw err;
     }
   };
@@ -61,11 +61,11 @@ export default function useUserInfo() {
           ...updatedUser,
         },
       }));
-      message.success("邮箱更新成功");
+      //message.success("邮箱更新成功");
     } catch (error: unknown) {
       const err = error as AxiosError;
       console.error("修改邮箱失败:", err);
-      message.error(err.response?.data?.message || "修改邮箱失败");
+      //message.error(err.response?.data?.message || "修改邮箱失败");
       throw err;
     }
   };
@@ -88,11 +88,11 @@ export default function useUserInfo() {
           ...updatedUser,
         },
       }));
-      message.success("密码更新成功");
+      //message.success("密码更新成功");
     } catch (error: unknown) {
       const err = error as AxiosError;
       console.error("修改密码失败:", err);
-      message.error(err.response?.data?.message || "修改密码失败");
+      //message.error(err.response?.data?.message || "修改密码失败");
       throw err;
     }
   };

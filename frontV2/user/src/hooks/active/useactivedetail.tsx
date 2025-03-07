@@ -1,9 +1,8 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import { checkActiveStatusAPI, getActiveDetailAPI } from "../../api/active";
 import { addActiveAPI, isJoinAPI } from "../../api/registration";
 import { useEffect, useState } from "react";
 import { ActiveDto } from "../../dto/activeDto";
-import { message } from "antd";
 export default function useActiveDetail() {
 	const [activeDetail, setActiveDetail] = useState<ActiveDto>({});
 	const [joinStatus, setJoinStatus] = useState(false);
@@ -25,7 +24,6 @@ export default function useActiveDetail() {
 		if (res) {
 			isJoinActive();
 			getActiveDetail();
-			message.success("活动报名成功");
 		}
 	};
 
