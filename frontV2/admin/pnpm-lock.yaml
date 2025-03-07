@@ -11,6 +11,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.0.9
         version: 4.0.9(vite@6.2.0(@types/node@22.13.9)(jiti@2.4.2)(lightningcss@1.29.1))
+      cally:
+        specifier: ^0.8.0
+        version: 0.8.0
       daisyui:
         specifier: ^5.0.0
         version: 5.0.0
@@ -676,6 +679,9 @@ packages:
     resolution: {integrity: sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==}
     engines: {node: '>=12'}
 
+  atomico@1.79.2:
+    resolution: {integrity: sha512-mshhLRMeIltNYbnQnqgnrvJ/uDa8XDfTQcjw3ymOygQqwHIQ4Sp0LcNYMCbACkV3DtV+eDXb9szwU4qMUuGwYQ==}
+
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
@@ -693,6 +699,9 @@ packages:
   bundle-name@4.1.0:
     resolution: {integrity: sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q==}
     engines: {node: '>=18'}
+
+  cally@0.8.0:
+    resolution: {integrity: sha512-jvQ2QMrsZM/ZPG/LWTkJEUPrp/ew1uS2KjKA/E6ru7mVvTMY2JgSagci9IghLmuamFh1pDajrxXAX4Qgo4FHbw==}
 
   caniuse-lite@1.0.30001702:
     resolution: {integrity: sha512-LoPe/D7zioC0REI5W73PeR1e1MLCipRGq/VkovJnd6Df+QVqT+vT33OXCp8QUd7kA7RZrHWxb1B36OQKI/0gOA==}
@@ -1838,6 +1847,8 @@ snapshots:
 
   ansi-styles@6.2.1: {}
 
+  atomico@1.79.2: {}
+
   balanced-match@1.0.2: {}
 
   birpc@0.2.19: {}
@@ -1856,6 +1867,10 @@ snapshots:
   bundle-name@4.1.0:
     dependencies:
       run-applescript: 7.0.0
+
+  cally@0.8.0:
+    dependencies:
+      atomico: 1.79.2
 
   caniuse-lite@1.0.30001702: {}
 

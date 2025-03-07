@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.9",
+    "cally": "^0.8.0",
     "daisyui": "^5.0.0",
     "pinia": "^3.0.1",
     "tailwindcss": "^4.0.9",
