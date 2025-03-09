@@ -5,6 +5,7 @@ import Home from "../pages/home";
 import Me from "../pages/me";
 import Active from "../pages/active";
 import ActiveDetail from "../pages/active/activedetail";
+import Login from "../pages/login";
 
 const routes = [
 	{
@@ -16,8 +17,8 @@ const routes = [
 				element: <Home />,
 			},
 			{
-				path:"/active",
-				element:<Active/>,
+				path: "/active",
+				element: <Active />,
 			},
 			{
 				path: "/activedetail/:id",
@@ -28,6 +29,10 @@ const routes = [
 				element: <Me />,
 			},
 		],
+	},
+	{
+		path: "/login",
+		element: <Login />,
 	},
 ];
 
