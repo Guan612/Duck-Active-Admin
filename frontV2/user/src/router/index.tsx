@@ -6,6 +6,7 @@ import Me from "../pages/me";
 import Active from "../pages/active";
 import ActiveDetail from "../pages/active/activedetail";
 import Login from "../pages/login";
+import Register from "../pages/register";
 
 const routes = [
 	{
@@ -33,6 +34,10 @@ const routes = [
 	{
 		path: "/login",
 		element: <Login />,
+	},
+	{
+		path:"/register",
+		element:<Register />
 	},
 ];
 
