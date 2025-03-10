@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router";
 import useLogin from "../../hooks/login/uselogin";
-import { Toaster } from 'react-hot-toast';
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -9,9 +8,6 @@ export default function Login() {
 
 	return (
 		<div className="flex justify-center items-center h-screen">
-			<div>
-				<Toaster />
-			</div>
 			<div className="p-8 rounded-lg shadow-md">
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<fieldset className="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">

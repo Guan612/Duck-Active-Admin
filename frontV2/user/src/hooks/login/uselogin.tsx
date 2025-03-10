@@ -21,15 +21,12 @@ const useLogin = () => {
 	const onSubmit = async (data: loginDto) => {
 		try {
 			setIsSubmitting(true);
-			console.log(data);
-
 			const { userInfo } = await loginAPI(data);
 			setUserInfo(userInfo);
-			toast.success("登录成功");
+			toast.success("欢迎你，"+ userInfo.nickname || userInfo.loginId);
 			navigate("/");
 		} catch (error) {
 			console.error(error);
-			toast.error("登录失败，请检查用户名和密码");
 		} finally {
 			setIsSubmitting(false);
 		}
