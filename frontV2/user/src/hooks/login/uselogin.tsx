@@ -1,27 +1,47 @@
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { loginAPI } from "../../api/user";
 import userStore from "../../stores/userstore";
-//import { message } from "antd";
 import { loginDto } from "../../dto/userDto";
+import { useState } from "react";
 
 const useLogin = () => {
-	const navigate = useNavigate(); //使用跳转函数
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+	const navigate = useNavigate();
+
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	const { setUserInfo } = userStore();
-	const onFinish = async (values: loginDto) => {
+
+	const onSubmit = async (data: loginDto) => {
 		try {
-			const { userInfo } = await loginAPI(values);
+			setIsSubmitting(true);
+			console.log(data);
+
+			const { userInfo } = await loginAPI(data);
 			setUserInfo(userInfo);
+			toast.success("登录成功");
 			navigate("/");
-			//message.success(`欢迎你，${userInfo.nickname ?? userInfo.loginId}`);
 		} catch (error) {
-			console.error("Login failed:", error);
+			console.error(error);
+			toast.error("登录失败，请检查用户名和密码");
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
-	const onFinishFailed = (errorInfo: any) => {
-		console.log("Failed:", errorInfo);
-	};
 
-	return { onFinish, onFinishFailed };
+	return {
+		onSubmit,
+		handleSubmit,
+		register,
+		errors,
+		isSubmitting,
+	};
 };
 
-export default useLogin; // 导出useLogin函数
+export default useLogin;
