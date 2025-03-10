@@ -1,6 +1,6 @@
 import axios from "axios";
-//import userStore from "../stores/userstore";
-//import { message } from "antd";
+import userStore from "../stores/userstore";
+import { toast } from "react-hot-toast";
 
 const http = axios.create({
 	baseURL: "http://localhost:3000/",
@@ -9,14 +9,14 @@ const http = axios.create({
 
 http.interceptors.request.use(
 	async (config) => {
-		// const userInfo = userStore.getState().userInfo; // 直接访问 zustand store 的状态
-		// if (!userInfo) {
-		// 	return config;
-		// }
-		// const token = userInfo.token;
-		// if (token) {
-		// 	config.headers.Authorization = `Bearer ${token}`;
-		// }
+		const userInfo = userStore.getState().userInfo; // 直接访问 zustand store 的状态
+		if (!userInfo) {
+			return config;
+		}
+		const token = userInfo.token;
+		if (token) {
+			config.headers.Authorization = `Bearer ${token}`;
+		}
 		return config;
 	},
 	(error) => {
@@ -31,7 +31,7 @@ http.interceptors.response.use(
 	},
 	(error) => {
 		console.log(error);
-		//message.error(error.response?.data?.message || "未知错误");
+		toast.error(error.response?.data?.message || "未知错误");
 		return Promise.reject(error);
 	}
 );
