@@ -1,19 +1,17 @@
-//import { Input, message } from "antd";
 import { useNavigate } from "react-router";
 import userStore from "../../stores/userstore";
+import toast from "react-hot-toast";
 
 export default function useHeaderBar() {
 	const navigate = useNavigate(); //使用跳转函数
-	//onst { Search } = Input;
+
 	const { clearUserInfo } = userStore();
-	const onSearch = (value: string) => {
-		console.log(value);
-	};
+	
 	const userInfo = userStore.getState().userInfo;
 
 	const logOut = () => {
 		clearUserInfo();
-		//message.success("退出登录成功");
+		toast.success("退出登录成功"); 
 		navigate("/login");
 	};
 
@@ -25,5 +23,5 @@ export default function useHeaderBar() {
 		navigate("/me");
 	}
 
-	return { Search, onSearch, userInfo, logOut, goLogin, goMe };
+	return { userInfo, logOut, goLogin, goMe };
 }
