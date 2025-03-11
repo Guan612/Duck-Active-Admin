@@ -43,7 +43,7 @@ export default function Active() {
 					/>
 				</div>
 			</div>
-			<div className="grid grid-cols-1 md:grid-cols-4  max-w-7xl mx-auto m-2">
+			<div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-2 max-w-7xl mx-auto m-2">
 				{cardItems.map((cardItem) => {
 					return <ActiveCard key={cardItem.id} cardItem={cardItem} />;
 				})}
