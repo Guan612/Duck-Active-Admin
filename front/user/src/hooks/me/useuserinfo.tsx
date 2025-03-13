@@ -2,12 +2,11 @@ import userStore from "../../stores/userstore";
 import { getMyActiveAPI } from "../../api/registration";
 import { updateUserInfoAPI } from "../../api/user";
 import { useEffect, useState } from "react";
-import { ActiveDto } from "../../dto/activeDto";
 import { UserInfo } from "../../dto/userDto";
 import { message } from "antd";
 import type { AxiosError } from "axios";
 export default function useUserInfo() {
-  const [myActive, setMyActive] = useState<ActiveDto[]>([]);
+  const [myActive, setMyActive] = useState([]);
   const [changeUserInfoflag, setChangeUserInfoflag] = useState(false);
 
   const userInfo = userStore.getState().userInfo;
@@ -15,8 +14,8 @@ export default function useUserInfo() {
   const getMyActive = async () => {
     try {
       const res = await getMyActiveAPI();
-      if (res.data) {
-        setMyActive(res.data as ActiveDto[]);
+      if (res.length) {
+        setMyActive(res);
       }
     } catch (error: unknown) {
       console.error("获取活动信息失败:", error);
