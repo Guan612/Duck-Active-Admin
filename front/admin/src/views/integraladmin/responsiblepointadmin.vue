@@ -3,6 +3,7 @@ import { getActiceByActiveIdAPI, getActiveByCreatUserAPI } from '@/api/active';
 import { addpointAPI } from '@/api/integral'
 import { ActivitieStatus } from '@/dto/activeDto';
 import { onMounted, ref } from 'vue';
+import { PlusOutlined } from '@ant-design/icons-vue';
 
 const activeList = ref([]);
 const getActiveList = async () => {
@@ -18,32 +19,52 @@ const getActivitieStatusText = (status: number): string => {
     return ActivitieStatus[status] ?? '未知状态';
 };
 
+const getStatusColor = (status: number) => {
+    const colors = {
+        4: 'blue',
+        3: 'green',
+        2: 'orange',
+        1: 'red'
+    }
+    return colors[status] || 'gray';
+}
+
 onMounted(() => {
     getActiveList()
 })
 </script>
 
 <template>
-    <div>学生积分管理</div>
-    <div class="flex flex-col">
-        <div v-if="activeList.length > 0">
+    <div class="p-4 bg-white rounded-lg shadow-sm">
+        <a-page-header title="学生积分管理" class="p-0 mb-6" :style="{ borderBottom: '1px solid #f0f0f0' }" />
+
+        <a-empty v-if="activeList.length === 0" description="暂无需要加分的活动"
+            class="!flex flex-col items-center justify-center py-12">
+            <template #extra>
+                <a-button type="primary" href="/createactiveadmin">前往创建活动</a-button>
+            </template>
+        </a-empty>
+
+        <div v-else class="flex flex-col gap-4">
             <div v-for="item in activeList" :key="item.id"
-                class="flex flex-col md:flex-row justify-between items-center bg-transblue rounded-lg m-2 p-2">
-                <div>
-                    <div class="font-bold text-xl">{{ item.title }}</div>
-                    <div class="">{{ getActivitieStatusText(item.activitStatus) }}</div>
-                </div>
-                <div>
-                    <div class="">
-                        <a-button type='primary' class="mx-2" @click="addPotin(item.id)"
-                            :disabled="!(item.activitStatus == 4)">加分该活动</a-button>
+                class="flex flex-col md:flex-row items-start md:items-center p-4 bg-gray-50 rounded-md border border-gray-200 hover:bg-gray-100 transition-colors">
+                <div class="flex-1 flex flex-col md:flex-row items-start md:items-center gap-4 mb-2 md:mb-0">
+                    <div class="flex flex-col">
+                        <span class="text-lg font-medium text-gray-800">{{ item.title }}</span>
+                        <div class="flex items-center gap-2 mt-1">
+                            <a-tag :color="getStatusColor(item.activitStatus)" class="!m-0 !px-2 !py-1 !text-xs">
+                                {{ getActivitieStatusText(item.activitStatus) }}
+                            </a-tag>
+                        </div>
                     </div>
                 </div>
+
+                <a-button type="primary" size="small" class="!h-8 md:ml-auto" :disabled="item.activitStatus !== 4"
+                    @click="addPotin(item.id)">
+                    加分该活动
+                    <template #icon><plus-outlined /></template>
+                </a-button>
             </div>
-        </div>
-        <div v-else>
-            <div class="text-center font-bold text-2xl items-center">暂时没有需要加分的活动</div>
-            <div class="text-center"><a href="/createactiveadmin">去创建活动</a></div>
         </div>
     </div>
 </template>
