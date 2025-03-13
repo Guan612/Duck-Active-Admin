@@ -4,10 +4,10 @@ import { updateUserInfoAPI } from "../../api/user";
 import { useEffect, useState } from "react";
 import { ActiveDto } from "../../dto/activeDto";
 import { UserInfo } from "../../dto/userDto";
-//import { message } from "antd";
+import { toast } from "react-hot-toast";
 import type { AxiosError } from "axios";
 export default function useUserInfo() {
-  const [myActive, setMyActive] = useState<ActiveDto[]>([]);
+  const [myActive, setMyActive] = useState([]);
   const [changeUserInfoflag, setChangeUserInfoflag] = useState(false);
 
   const userInfo = userStore.getState().userInfo;
@@ -15,12 +15,12 @@ export default function useUserInfo() {
   const getMyActive = async () => {
     try {
       const res = await getMyActiveAPI();
-      if (res.data) {
-        setMyActive(res.data as ActiveDto[]);
+      if (res.length) {
+        setMyActive(res);
       }
     } catch (error: unknown) {
       console.error("获取活动信息失败:", error);
-      //message.error(error.response?.data?.message || "获取活动信息失败");
+      toast.error(error.response?.data?.message || "获取活动信息失败");
     }
   };
 
@@ -42,7 +42,7 @@ export default function useUserInfo() {
           ...updatedUser,
         },
       }));
-      //message.success("昵称更新成功");
+      toast.success("昵称更新成功");
     } catch (error: unknown) {
       const err = error as AxiosError;
       console.error("修改昵称失败:", err);
@@ -61,7 +61,7 @@ export default function useUserInfo() {
           ...updatedUser,
         },
       }));
-      //message.success("邮箱更新成功");
+      toast.success("邮箱更新成功");
     } catch (error: unknown) {
       const err = error as AxiosError;
       console.error("修改邮箱失败:", err);
