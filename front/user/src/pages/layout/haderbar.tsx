@@ -15,39 +15,37 @@ export default function HeaderBar() {
 	const { onSearch, userInfo, logOut, goLogin, goMe } = useHeaderBar();
 	const [menuVisible, setMenuVisible] = useState(false);
 
-	const userMenu = (
-		<Menu
-			items={[
-				{
-					key: "1",
-					label: (
-						<Button
-							type="text"
-							block
-							onClick={goMe}
-							className="text-left"
-						>
-							个人中心
-						</Button>
-					),
-				},
-				{
-					key: "2",
-					label: (
-						<Button
-							type="text"
-							danger
-							block
-							onClick={logOut}
-							className="text-left"
-						>
-							退出登录
-						</Button>
-					),
-				},
-			]}
-		/>
-	);
+	const userMenu = {
+		items: [
+			{
+				key: "1",
+				label: (
+					<Button
+						type="text"
+						block
+						onClick={goMe}
+						className="text-left"
+					>
+						个人中心
+					</Button>
+				),
+			},
+			{
+				key: "2",
+				label: (
+					<Button
+						type="text"
+						danger
+						block
+						onClick={logOut}
+						className="text-left"
+					>
+						退出登录
+					</Button>
+				),
+			},
+		],
+	};
 
 	const navItems = [
 		{ key: "1", path: "/", label: "首页" },
@@ -96,7 +94,7 @@ export default function HeaderBar() {
 
 					{/* 用户信息 */}
 					{userInfo ? (
-						<Dropdown overlay={userMenu} trigger={["click"]}>
+						<Dropdown menu={userMenu} trigger={["click"]}>
 							<button className="flex items-center gap-2 hover:bg-gray-100 px-3 py-1 rounded-full transition-colors h-10">
 								<Avatar
 									src={userInfo?.headerimg}
@@ -104,7 +102,7 @@ export default function HeaderBar() {
 									className="border-2 border-blue-200"
 									size={32}
 								/>
-								<span className="text-gray-700 font-medium hidden lg:block">
+								<span className="text-gray-700 font-bold hidden lg:block">
 									{userInfo.nickname || userInfo.loginId}
 								</span>
 							</button>
