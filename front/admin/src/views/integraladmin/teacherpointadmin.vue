@@ -3,6 +3,7 @@ import { getAllIntegralAPI, updateIntegralAPI } from '@/api/integral';
 import { onMounted, ref } from 'vue';
 import type { IntegralItem } from '@/dto/integralDto';
 import { message } from 'ant-design-vue';
+import { SaveOutlined } from '@ant-design/icons-vue';
 
 const integralList = ref<IntegralItem[]>([])
 
@@ -33,17 +34,87 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>教师积分管理</div>
-  <div class="flex flex-col">
-    <div v-for="item in integralList" class="flex bg-transblue m-1 p-1 rounded-lg">
-      <div class="font-bold mx-2">{{ item.user.nickname || item.user.loginId }}</div>
-      <div class="flex flex-row justify-center items-center">
-        <div>笃行：<a-input-number v-model:value="item.actionPoints" type="number" class="w-16" /></div>
-        <div>尽美：<a-input-number v-model:value="item.beautyPoints" type="number" class="w-16" /></div>
-        <div>博学：<a-input-number v-model:value="item.learnedPoints" type="number" class="w-16" /></div>
-        <div>明德：<a-input-number v-model:value="item.moralPoints" type="number" class="w-16" /></div>
+  <div class="p-4 bg-white rounded-lg shadow-sm">
+    <a-page-header
+      title="教师积分管理"
+      class="p-0 mb-6"
+      :style="{ borderBottom: '1px solid #f0f0f0' }"
+    />
+
+    <a-empty
+      v-if="integralList.length === 0"
+      description="暂无积分管理数据"
+      class="!flex flex-col items-center justify-center py-12"
+    />
+    <div v-else class="flex flex-col gap-4">
+      <div
+        v-for="item in integralList"
+        :key="item.userId"
+        class="flex flex-col md:flex-row items-start md:items-center p-4 bg-gray-50 rounded-md border border-gray-200 hover:bg-gray-100 transition-colors"
+      >
+        <!-- 用户信息 -->
+        <div class="flex-1 flex items-center gap-4 mb-2 md:mb-0">
+          <a-tag color="blue" class="!text-sm !px-3 !py-1.5">
+            {{ item.user.nickname || item.user.loginId }}
+          </a-tag>
+        </div>
+
+        <!-- 积分输入区域 -->
+        <div class="flex-1 grid grid-cols-2 md:grid-cols-4 gap-3 w-full md:w-auto">
+          <div class="flex items-center gap-2">
+            <span class="text-gray-600 text-sm min-w-[40px]">笃行:</span>
+            <a-input-number
+              v-model:value="item.actionPoints"
+              :min="0"
+              class="!w-full md:!w-32 !h-8"
+              controls
+            />
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-gray-600 text-sm min-w-[40px]">尽美:</span>
+            <a-input-number
+              v-model:value="item.beautyPoints"
+              :min="0"
+              class="!w-full md:!w-32 !h-8"
+              controls
+            />
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-gray-600 text-sm min-w-[40px]">博学:</span>
+            <a-input-number
+              v-model:value="item.learnedPoints"
+              :min="0"
+              class="!w-full md:!w-32 !h-8"
+              controls
+            />
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-gray-600 text-sm min-w-[40px]">明德:</span>
+            <a-input-number
+              v-model:value="item.moralPoints"
+              :min="0"
+              class="!w-full md:!w-32 !h-8"
+              controls
+            />
+          </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <a-button
+          type="primary"
+          class="!h-8 md:ml-4 mt-2 md:mt-0 !text-sm"
+          @click="updateIntegral(item)"
+        >
+          <template #icon><SaveOutlined /></template>
+          提交修改
+        </a-button>
       </div>
-      <button @click="updateIntegral(item)" class="ml-4 px-2 bg-blue-500 text-white rounded">提交</button>
     </div>
   </div>
 </template>
+
+<!-- <style scoped>
+.ant-input-number-focused {
+  @apply !border-blue-500 !shadow-sm;
+}
+</style> -->
