@@ -1,108 +1,151 @@
-import { Avatar, Button, Popover, Dropdown } from "antd";
+import { Avatar, Button, Popover, Dropdown, Layout, Input, Menu } from "antd";
 import useHeaderBar from "../../hooks/layout/usehaderbar";
-import { UnorderedListOutlined } from "@ant-design/icons";
+import {
+	UnorderedListOutlined,
+	UserOutlined,
+	SearchOutlined,
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+
+const { Header } = Layout;
+const { Search } = Input;
 
 export default function HeaderBar() {
-	const { Search, onSearch, userInfo, logOut, goLogin,goMe } = useHeaderBar();
-	const myPop = (
-		<div className="flex flex-col justify-center items-center">
-			<Button className="m-2" onClick={goMe}>个人中心</Button>
-			<Button onClick={logOut}>退出登录</Button>
-		</div>
+	const { onSearch, userInfo, logOut, goLogin, goMe } = useHeaderBar();
+	const [menuVisible, setMenuVisible] = useState(false);
+
+	const userMenu = (
+		<Menu
+			items={[
+				{
+					key: "1",
+					label: (
+						<Button
+							type="text"
+							block
+							onClick={goMe}
+							className="text-left"
+						>
+							个人中心
+						</Button>
+					),
+				},
+				{
+					key: "2",
+					label: (
+						<Button
+							type="text"
+							danger
+							block
+							onClick={logOut}
+							className="text-left"
+						>
+							退出登录
+						</Button>
+					),
+				},
+			]}
+		/>
 	);
 
-	const flexMenu = [
-		{
-			key: "1",
-			label: (
-				<a
-					rel="noopener noreferrer"
-					href="/"
-				>
-					首页
-				</a>
-			),
-		},
-		{
-			key: "2",
-			label: (
-				<a
-					rel="noopener noreferrer"
-					href="/active"
-				>
-					活动
-				</a>
-			),
-		},
-		{
-			key: "3",
-			label: (
-				<a
-					rel="noopener noreferrer"
-					href="/me"
-				>
-					我的
-				</a>
-			),
-		},
+	const navItems = [
+		{ key: "1", path: "/", label: "首页" },
+		{ key: "2", path: "/active", label: "活动探索" },
+		{ key: "3", path: "/me", label: "个人中心" },
 	];
+
 	return (
-		<div>
-			<div className="flex flex-row bg-gradient-to-r from-transblue via-white to-transpink items-center">
-				<div className="m-3 flex flex-row items-center w-full justify-between">
-					<div className="flex items-center">
-						<div className="md:hidden flex flex-row">
-							<Dropdown menu={{ items: flexMenu }}>
-								<Button
-									type="dashed"
-									icon={<UnorderedListOutlined />}
-								></Button>
-							</Dropdown>
+		<Header className="bg-white/80 backdrop-blur-sm shadow-sm z-50 sticky top-0 px-4 md:px-8 h-16">
+			<div className="max-w-7xl mx-auto flex items-center justify-between h-full">
+				{/* 左侧导航 */}
+				<div className="flex items-center gap-6">
+					<Link to="/" className="flex items-center gap-2">
+						<div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+							鸭鸭活动
 						</div>
-						<div className="font-bold text-2xl p-2">鸭鸭活动</div>
-						<div className="hidden md:flex flex-row ">
-							<Link to='/' className="text-white mx-2 font-bold hover:scale-110">
-								首页
+					</Link>
+
+					{/* 桌面导航 */}
+					<nav className="hidden md:flex items-center gap-4 ml-6">
+						{navItems.map((item) => (
+							<Link
+								key={item.key}
+								to={item.path}
+								className="text-gray-600 hover:text-blue-600 transition-colors font-medium"
+							>
+								{item.label}
 							</Link>
-							<Link to={'/active'} className="text-white mx-2 font-bold hover:scale-110">
-								活动
-							</Link>
-							<Link to={'/me'} className="text-white mx-2 font-bold hover:scale-110">
-								我的
-							</Link>
-						</div>
+						))}
+					</nav>
+				</div>
+
+				{/* 右侧功能区 */}
+				<div className="flex items-stretch gap-4">
+					{/* 搜索栏 */}
+					<div className="hidden md:flex items-center w-64">
+						<Search
+							placeholder="搜索活动..."
+							enterButton={
+								<SearchOutlined className="text-gray-500" />
+							}
+							onSearch={onSearch}
+							className="rounded-full h-10"
+						/>
 					</div>
 
-					<div className="flex justify-center items-center">
-						<div className="hidden md:flex mx-2">
-							<Search
-								placeholder="输入以搜索"
-								enterButton
-								onSearch={onSearch}
-								size="large"
-							/>
+					{/* 用户信息 */}
+					{userInfo ? (
+						<Dropdown overlay={userMenu} trigger={["click"]}>
+							<button className="flex items-center gap-2 hover:bg-gray-100 px-3 py-1 rounded-full transition-colors h-10">
+								<Avatar
+									src={userInfo?.headerimg}
+									icon={<UserOutlined />}
+									className="border-2 border-blue-200"
+									size={32}
+								/>
+								<span className="text-gray-700 font-medium hidden lg:block">
+									{userInfo.nickname || userInfo.loginId}
+								</span>
+							</button>
+						</Dropdown>
+					) : (
+						<Button
+							type="primary"
+							shape="round"
+							onClick={goLogin}
+							className="h-10 flex items-center"
+						>
+							登录/注册
+						</Button>
+					)}
+
+					{/* 移动端菜单按钮 */}
+					<div className="md:hidden flex items-center">
+						<div className="md:hidden">
+							<Dropdown
+								menu={{
+									items: navItems.map((item) => ({
+										key: item.key,
+										label: (
+											<Link to={item.path}>
+												{item.label}
+											</Link>
+										),
+									})),
+								}}
+							>
+								<Button
+									type="text"
+									icon={
+										<UnorderedListOutlined className="text-xl" />
+									}
+								/>
+							</Dropdown>
 						</div>
-						{userInfo ? (
-							<Popover content={myPop}>
-								<div className="flex justify-center items-center">
-									<div className="mx-1 font-bold text-white">
-										{userInfo.nickname || userInfo.loginId}
-									</div>
-									<Avatar
-										src={userInfo?.headerimg || "https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"}
-										size={"large"}
-									/>
-								</div>
-							</Popover>
-						) : (
-							<div className="mx-1">
-								<Button onClick={goLogin}>去登录</Button>
-							</div>
-						)}
 					</div>
 				</div>
 			</div>
-		</div>
+		</Header>
 	);
 }
