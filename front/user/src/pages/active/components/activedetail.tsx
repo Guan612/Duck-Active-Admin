@@ -1,75 +1,118 @@
 import dayjs from "dayjs";
-import { LeftOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { LeftOutlined, CheckCircleOutlined, EnvironmentOutlined, CalendarOutlined, TagOutlined } from "@ant-design/icons";
+import { Button, Card, Tag, Typography, Grid, Image, Space } from "antd";
 import useActiveDetail from "../../../hooks/active/useactivedetail";
 import { ActivitieStatus, ActivitieType } from "../../../dto/activeDto";
 
+const { Title, Text } = Typography;
+const { useBreakpoint } = Grid;
+
 export default function ActiveDetail() {
-	const { backActive, activeDetail, joinActive, joinStatus } =
-		useActiveDetail();
-	return (
-		<div className="flex flex-col">
-			<div className="flex items-center">
-				<Button
+  const { backActive, activeDetail, joinActive, joinStatus } = useActiveDetail();
+  const screens = useBreakpoint();
+
+  const statusColorMap = {
+    2: "green",
+    3: "red",
+    1: "blue"
+  };
+  return (
+    <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
+      <Card className="rounded-2xl shadow-sm mb-6">
+        <Button
 					icon={<LeftOutlined />}
-					className="m-2 items-center"
-					onClick={() => backActive()}
+          onClick={backActive}
+          className="mb-4 flex items-center"
+          type="text"
 				>
-					返回
+          返回活动列表
 				</Button>
-				<h1 className="text-3xl font-bold m-4">活动详情</h1>
-			</div>
-
-			<div className="flex flex-col md:flex-row ">
-				<div className="md:w-1/2 m-2 rounded-lg justify-center">
-					<img
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="lg:w-1/2">
+            <Image
 						src={activeDetail.activitieImgUrl}
-						className="rounded-lg items-center"
-					></img>
+              className="rounded-xl object-cover"
+              height={screens.md ? 400 : 240}
+              preview={false}
+            />
 				</div>
-				<div className="m-4">
-					<div className="flex flex-row justify-between items-center">
-						<div className="font-bold text-xl">
-							{activeDetail.title}
-						</div>
-						<div className="font-bold">
-							{ActivitieStatus[activeDetail.activitStatus] ||
-								"未知状态"}
-						</div>
+          <div className="flex-1">
+            <Space className="mb-4" align="start">
+              <Tag
+                color={statusColorMap[activeDetail.activitStatus] || 'blue'}
+                className="text-sm px-3 py-1 rounded-full"
+						>
+                {ActivitieStatus[activeDetail.activitStatus] || "未知状态"}
+              </Tag>
+              <Title level={3} className="m-0">
+                {activeDetail.title}
+              </Title>
+            </Space>
+
+            <div className="grid gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-center">
+                  <TagOutlined className="text-lg mr-2 text-purple-500" />
+                  <Text strong>类型：</Text>
+                  <Tag color="geekblue" className="ml-2">
+                    {ActivitieType[activeDetail.activitieType] || "未知类型"}
+                  </Tag>
 					</div>
 
-					<div className="text-gray-500">
-						活动类型：
-						{ActivitieType[activeDetail.activitieType] ||
-							"未知类型"}
-					</div>
-					<div className="text-gray-500">
-						活动时间：
-						{dayjs(activeDetail.startDate).format("YYYY-MM-DD")}至
-						{dayjs(activeDetail.endDate).format("YYYY-MM-DD")}
-					</div>
-					<div className="text-gray-500">
-						活动地点：{activeDetail.activeAddress}
-					</div>
-					<div className="text-gray-500 max-w-2xl">
-						活动内容：{activeDetail.content}
-					</div>
-					<div className="text-gray-500">
-						活动总人数/参加人数：{activeDetail.activitiePeopleNum}/{activeDetail.remainingNum}人
-					</div>
-					<div className="flex justify-end mt-4">
-						<Button
-							type="primary"
-							disabled={
-								activeDetail.activitStatus != 2 || joinStatus
-							}
-							onClick={() => joinActive(activeDetail.id)}
-						>
-							{joinStatus ? "已报名" : "报名活动"}
-						</Button>
-					</div>
+                <div className="flex items-center">
+                  <CalendarOutlined className="text-lg mr-2 text-orange-500" />
+                  <Text strong>时间：</Text>
+                  <Text className="ml-2">
+                    {dayjs(activeDetail.startDate).format("YYYY/MM/DD HH:mm")} -
+                    {dayjs(activeDetail.endDate).format("YYYY/MM/DD HH:mm")}
+                  </Text>
 				</div>
+
+                <div className="flex items-center">
+                  <EnvironmentOutlined className="text-lg mr-2 text-red-500" />
+                  <Text strong>地点：</Text>
+                  <Text className="ml-2" ellipsis>
+                    {activeDetail.activeAddress}
+                  </Text>
 			</div>
+
+                <div className="flex items-center">
+                  <CheckCircleOutlined className="text-lg mr-2 text-green-500" />
+                  <Text strong>人数：</Text>
+                  <Text className="ml-2">
+                    <span className="text-blue-600">{activeDetail.remainingNum}</span>
+                    <span className="mx-1">/</span>
+                    <span>{activeDetail.activitiePeopleNum}</span>
+                  </Text>
 		</div>
+              </div>
+
+              <Card
+                title="活动详情"
+                bordered={false}
+                className="rounded-xl bg-gray-50"
+              >
+                <Text className="text-gray-700 whitespace-pre-wrap">
+                  {activeDetail.content}
+                </Text>
+              </Card>
+
+              <div className="flex justify-end mt-6">
+                <Button
+                  type="primary"
+                  size="large"
+                  icon={joinStatus ? <CheckCircleOutlined /> : null}
+                  disabled={activeDetail.activitStatus != 2 || joinStatus}
+                  onClick={() => joinActive(activeDetail.id)}
+                  className="min-w-[120px] h-12 text-lg rounded-full"
+                >
+                  {joinStatus ? "已报名" : "立即参加"}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
 	);
 }

@@ -1,39 +1,78 @@
 import dayjs from "dayjs";
-import { Button, Image } from "antd";
+import { Button, Card, Tag, Typography } from "antd";
+import {
+	EnvironmentOutlined,
+	ClockCircleOutlined,
+	AppstoreOutlined,
+	ArrowRightOutlined,
+} from "@ant-design/icons";
 import useActiveCard from "../../../hooks/active/useactivecard";
 import { ActiveDto, ActivitieType } from "../../../dto/activeDto";
+
+const { Meta } = Card;
+const { Text } = Typography;
+
 export default function ActiveCard({ cardInfo }: { cardInfo: ActiveDto }) {
 	const { goActiveDetail } = useActiveCard();
+
 	return (
-		<div className="flex flex-col m-2">
-			<div className="text-xl font-bold text-center">
-				{cardInfo.title}
-			</div>
-			<div className="">
+		<Card
+			hoverable
+			className="rounded-xl overflow-hidden w-full h-full shadow-md hover:shadow-xl transition-all duration-300"
+			cover={
 				<img
-					className="rounded-lg"
+					alt={cardInfo.title}
 					src={cardInfo.activitieImgUrl}
-				></img>
-			</div>
-			<div className="flex justify-between items-center">
-				<div>
-					<div className="">
-						类型：
-						{ActivitieType[cardInfo.activitieType] || "未知类型"}
+					className="h-48 object-cover"
+				/>
+			}
+		>
+			<div className="flex flex-col gap-3">
+				<Tag
+					color="geekblue"
+					className="self-start text-sm px-3 py-1 rounded-full"
+				>
+					<AppstoreOutlined className="mr-1" />
+					{ActivitieType[cardInfo.activitieType] || "未知类型"}
+				</Tag>
+
+				<Meta
+					title={
+						<Text
+							ellipsis={{ tooltip: cardInfo.title }}
+							className="text-lg font-bold text-gray-800"
+						>
+							{cardInfo.title}
+						</Text>
+					}
+				/>
+
+				<div className="flex flex-col gap-2 text-gray-600">
+					<div className="flex items-center">
+						<EnvironmentOutlined className="mr-2 text-red-500" />
+						<Text ellipsis>{cardInfo.activeAddress}</Text>
 					</div>
-					<div className="">地点：{cardInfo.activeAddress}</div>
-					<div className="">
-						开始时间：
-						{dayjs(cardInfo.startDate).format("YYYY-MM-DD")}
+					<div className="flex items-center">
+						<ClockCircleOutlined className="mr-2 text-green-500" />
+						<span>
+							{dayjs(cardInfo.startDate).format(
+								"YYYY-MM-DD HH:mm"
+							)}
+						</span>
 					</div>
 				</div>
+
 				<Button
-					className="font-bold"
+					type="primary"
+					shape="round"
+					icon={<ArrowRightOutlined />}
 					onClick={() => goActiveDetail(cardInfo.id)}
+					className="mt-4 self-end flex items-center"
+					size="middle"
 				>
-					详情
+					查看详情
 				</Button>
 			</div>
-		</div>
+		</Card>
 	);
 }

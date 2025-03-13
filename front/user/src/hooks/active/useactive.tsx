@@ -9,6 +9,8 @@ export default function useActive() {
 	const [selectedTypes, setSelectedTypes] = useState<number[]>([]);
 	const [selectedDates, setSelectedDates] = useState<Date[] | null>(null);
 
+	const totalCount = cardItems.length;
+
 	const activeTypeHandleChange = async (types: number[]) => {
 		setSelectedTypes(types);
 		applyFilters(types, selectedDates);
@@ -77,6 +79,7 @@ export default function useActive() {
 		activitieTypeOption,
 		activeTypeHandleChange,
 		activeTimeHandleChange, 
-		cardItems 
+		cardItems,
+		totalCount 
 	};
 }
