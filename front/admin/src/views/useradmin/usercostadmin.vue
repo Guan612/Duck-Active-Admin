@@ -73,3 +73,11 @@ onMounted(() => {
         </div>
     </div>
 </template>
+
+<style scoped>
+@media (max-width: 768px) {
+    .ant-tag {
+        @apply !w-full !justify-center;
+    }
+}
+</style>

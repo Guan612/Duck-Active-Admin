@@ -113,8 +113,8 @@ onMounted(() => {
   </div>
 </template>
 
-<!-- <style scoped>
+<style scoped>
 .ant-input-number-focused {
   @apply !border-blue-500 !shadow-sm;
 }
-</style> -->
+</style>

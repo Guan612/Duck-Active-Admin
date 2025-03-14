@@ -68,3 +68,11 @@ onMounted(() => {
         </div>
     </div>
 </template>
+
+<style scoped>
+@media (max-width: 768px) {
+    .ant-empty {
+        @apply !px-0;
+    }
+}
+</style>
