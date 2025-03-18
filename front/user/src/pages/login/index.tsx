@@ -1,63 +1,93 @@
-import { Button, Form, Input, Radio } from "antd";
+import { Button, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import useLogin from "../../hooks/login/uselogin";
+import { motion } from "framer-motion";
+
 export default function Login() {
-  const { onFinish } = useLogin();
-  return (
-    <div className="flex flex-col md:flex-row justify-center items-center h-screen mx-6">
-      <div className="flex flex-col justify-center items-center rounded-2xl shadow-lg w-full h-1/2 md:w-1/2 bg-gradient-to-r from-transblue via-white to-transpink">
-        <div className="flex flex-col h-full w-full m-2">
-          <div className="text-center text-2xl font-bold m-2">
-            欢迎来到活动报名网站
-          </div>
-          <Form
-            layout="vertical"
-            onFinish={onFinish}
-            className="m-2 p-2 justify-center items-center"
-          >
-            <Form.Item
-              label="登录ID"
-              name="loginId"
-              rules={[
-                {
-                  required: true,
-                  message: "登录ID为必填项",
-                },
-              ]}
-            >
-              <Input prefix={<UserOutlined />} placeholder="请输入登录ID" />
-            </Form.Item>
-            <Form.Item
-              label="密码"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "密码为必填项",
-                },
-              ]}
-              hasFeedback
-            >
-              <Input.Password
-                prefix={<LockOutlined />}
-                type="password"
-                placeholder="请输入密码"
-              />
-            </Form.Item>
-            <Form.Item className="flex justify-center">
-              <Button type="primary" htmlType="submit" className="w-28">
-                登录
-              </Button>
-            </Form.Item>
-          </Form>
-          <div className="text-center text-sm">
-            没有账号？
-            <a className="text-blue-500" href="/register">
-              点击注册
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+	const { onFinish } = useLogin();
+
+	return (
+		<div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+			<motion.div
+				initial={{ opacity: 0, y: 20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.6 }}
+				className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden"
+			>
+				{/* 头部装饰条 */}
+				<div className="h-2 bg-gradient-to-r from-blue-500 to-purple-500" />
+
+				<div className="p-8 space-y-6">
+					<div className="text-center space-y-2">
+						<h1 className="text-3xl font-bold text-gray-800">
+							活动报名系统
+						</h1>
+						<p className="text-gray-500">开启你的精彩活动体验</p>
+					</div>
+
+					<Form
+						layout="vertical"
+						onFinish={onFinish}
+						className="space-y-4"
+					>
+						<Form.Item
+							label="账号"
+							name="loginId"
+							rules={[
+								{ required: true, message: "请输入登录账号" },
+							]}
+						>
+							<Input
+								size="large"
+								prefix={
+									<UserOutlined className="text-gray-400" />
+								}
+								placeholder="请输入账号"
+								className="hover:border-blue-400 focus:border-blue-500"
+							/>
+						</Form.Item>
+
+						<Form.Item
+							label="密码"
+							name="password"
+							rules={[
+								{ required: true, message: "请输入登录密码" },
+							]}
+						>
+							<Input.Password
+								size="large"
+								prefix={
+									<LockOutlined className="text-gray-400" />
+								}
+								placeholder="请输入密码"
+								className="hover:border-blue-400 focus:border-blue-500"
+							/>
+						</Form.Item>
+
+						<Form.Item>
+							<Button
+								type="primary"
+								htmlType="submit"
+								block
+								size="large"
+								className="hover:shadow-md transition-all"
+							>
+								立即登录
+							</Button>
+						</Form.Item>
+					</Form>
+
+					<div className="text-center text-sm text-gray-500">
+						还没有账号？{" "}
+						<a
+							href="/register"
+							className="text-blue-500 hover:text-blue-600 font-medium underline underline-offset-2"
+						>
+							快速注册
+						</a>
+					</div>
+				</div>
+			</motion.div>
+		</div>
+	);
 }
