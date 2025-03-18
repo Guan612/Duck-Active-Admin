@@ -1,116 +1,138 @@
-import { LockOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Upload, message } from "antd";
+import { LockOutlined, UploadOutlined, UserOutlined, MailOutlined, SmileOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Upload } from "antd";
 import useRegister from "../../hooks/register/useregister";
+import { motion } from "framer-motion";
 
 export default function Register() {
   const { onFinish, uploadAvatar, beforeUpload, imageUrl } = useRegister();
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center h-screen mx-6">
-      <div className="flex flex-col justify-center items-center rounded-2xl shadow-lg w-full h-3/4 md:w-1/2 bg-gradient-to-r from-transblue via-white to-transpink">
-        <div className="flex flex-col h-full w-full m-2">
-          <div className="text-center text-2xl font-bold m-2">
-            欢迎来到活动报名网站
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden"
+      >
+        <div className="h-2 bg-gradient-to-r from-blue-500 to-purple-500" />
+        <div className="p-8 space-y-6">
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-bold text-gray-800">新用户注册</h1>
+            <p className="text-gray-500">加入我们，发现更多精彩活动</p>
           </div>
-          <Form
-            layout="vertical"
-            onFinish={onFinish} // 直接调用 Hook 提供的 onFinish 方法
-            className="m-2 p-2 justify-center items-center"
-          >
-            <div className="flex flex-col md:flex-row">
-              <Form.Item
-                label="登录ID"
-                name="loginId"
-                className="mx-2"
-                rules={[
-                  {
-                    required: true,
-                    message: "登录ID为必填项",
-                  },
-                ]}
-              >
-                <Input prefix={<UserOutlined />} placeholder="请输入登录ID" />
-              </Form.Item>
-              <Form.Item label="昵称" name="nickname">
-                <Input placeholder="请输入昵称" />
-              </Form.Item>
-            </div>
 
+          <Form layout="vertical" onFinish={onFinish} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Form.Item
-              label="密码"
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "密码为必填项",
-                },
-              ]}
-              hasFeedback
+                label="登录账号"
+                name="loginId"
+                rules={[{ required: true, message: "请输入登录账号" }]}
+              >
+                <Input
+                  size="large"
+                  prefix={<UserOutlined className="text-gray-400" />}
+                  placeholder="请输入账号"
+                />
+              </Form.Item>
+              <Form.Item
+                label="用户昵称"
+                name="nickname"
+                rules={[{ required: true, message: "请输入昵称" }]}
             >
-              <Input.Password
-                prefix={<LockOutlined />}
-                type="password"
-                placeholder="请输入密码"
+                <Input
+                  size="large"
+                  prefix={<SmileOutlined className="text-gray-400" />}
+                  placeholder="请输入昵称"
               />
             </Form.Item>
+            </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Form.Item
+                label="设置密码"
+                name="password"
+                rules={[{ required: true, message: "请输入密码" }]}
+                hasFeedback
+              >
+                <Input.Password
+                  size="large"
+                  prefix={<LockOutlined className="text-gray-400" />}
+                  placeholder="至少8位字符"
+                />
+              </Form.Item>
+              <Form.Item
+                label="电子邮箱"
+                name="email"
+                rules={[
+                  { required: true, message: "请输入邮箱" },
+                  { type: "email", message: "邮箱格式不正确" }
+                ]}
+              >
+                <Input
+                  size="large"
+                  prefix={<MailOutlined className="text-gray-400" />}
+                  placeholder="example@domain.com"
+                  />
+              </Form.Item>
+            </div>
             <Form.Item
-              label="邮箱"
-              name="email"
-              rules={[
-                {
-                  type: "email",
-                  message: "请输入正确的邮箱格式",
-                },
-              ]}
+              label="用户头像"
+              name="headerimg"
+              extra="支持JPG/PNG格式，大小不超过2MB"
             >
-              <Input placeholder="请输入邮箱" />
-            </Form.Item>
-
-            <Form.Item label="上传头像" name="headerimg">
               <Upload
                 name="file"
                 listType="picture-card"
-                className="avatar-uploader"
+                className="avatar-uploader w-full"
                 showUploadList={false}
                 action="http://127.0.0.1:3000/uploadfile/avter"
                 beforeUpload={beforeUpload}
                 onChange={uploadAvatar}
               >
-                {imageUrl ? (
-                  <img
-                    src={imageUrl}
-                    alt="avatar"
-                    style={{
-                      width: "100%",
-                      borderRadius: "8px",
-                      objectFit: "cover",
-                    }}
-                  />
-                ) : (
-                  <div>
-                    <UploadOutlined />
-                    <div style={{ marginTop: 8 }}>上传头像</div>
-                  </div>
-                )}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="w-full h-full flex items-center justify-center rounded-lg border-2 border-dashed border-gray-200 hover:border-blue-300 transition-all"
+                >
+                  {imageUrl ? (
+                    <img
+                      src={imageUrl}
+                      alt="avatar"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  ) : (
+                    <div className="text-center text-gray-400">
+                      <UploadOutlined className="text-2xl mb-2" />
+                      <p className="m-0">点击上传头像</p>
+          </div>
+                  )}
+                </motion.div>
               </Upload>
             </Form.Item>
 
-            <Form.Item className="flex justify-center">
-              <Button type="primary" htmlType="submit" className="w-28">
-                注册
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                block
+                size="large"
+                className="hover:shadow-md transition-all"
+              >
+                立即注册
               </Button>
             </Form.Item>
-          </Form>
 
-          <div className="text-center text-sm">
-            已有账号？
-            <a className="text-blue-500" href="/login">
-              点击登录
-            </a>
-          </div>
-        </div>
+            <div className="text-center text-sm text-gray-500">
+              已有账号？{" "}
+              <a
+                href="/login"
+                className="text-blue-500 hover:text-blue-600 font-medium underline underline-offset-2"
+              >
+                立即登录
+              </a>
       </div>
+          </Form>
+    </div>
+      </motion.div>
     </div>
   );
 }
