@@ -1,4 +1,14 @@
-import { Button, Form, Input, Modal, Select, Tabs, Card, Avatar, Tag } from "antd";
+import {
+	Button,
+	Form,
+	Input,
+	Modal,
+	Select,
+	Tabs,
+	Card,
+	Avatar,
+	Tag,
+} from "antd";
 import useUserInfo from "../../../hooks/me/useuserinfo";
 import AddActiveCard from "./addactivecard";
 import useAddActiveCard from "../../../hooks/me/useaddactivecard";
@@ -33,7 +43,7 @@ export default function UserInfo() {
 					/>
 					<div className="flex-1 space-y-2 text-center md:text-left">
 						<h1 className="text-3xl font-bold text-gray-800">
-						{userInfo?.nickname || userInfo?.loginId}
+							{userInfo?.nickname || userInfo?.loginId}
 							{userInfo?.nickname && (
 								<Tag color="blue" className="ml-2">
 									{userInfo?.loginId}
@@ -45,16 +55,16 @@ export default function UserInfo() {
 								<MailOutlined className="mr-2" />
 								{userInfo?.email || "未绑定邮箱"}
 							</p>
-					</div>
+						</div>
 						<Button
 							type="primary"
 							icon={<EditOutlined />}
 							onClick={openChangeUserInfo}
 							className="mt-4"
-					>
+						>
 							编辑资料
-									</Button>
-						</div>
+						</Button>
+					</div>
 				</div>
 			</Card>
 
@@ -66,7 +76,7 @@ export default function UserInfo() {
 				footer={null}
 				width={800}
 				className="rounded-lg"
-						>
+			>
 				<Tabs defaultActiveKey="1" className="p-4">
 					<Tabs.TabPane tab="修改昵称" key="1">
 						<Form
@@ -125,7 +135,7 @@ export default function UserInfo() {
 									values.oldPassword,
 									values.newPassword,
 									values.confirmPassword
-	);
+								);
 								handleChangeUserInfCancel();
 							}}
 						>
@@ -145,7 +155,7 @@ export default function UserInfo() {
 														"修改密码需要输入旧密码"
 													)
 												);
-}
+											}
 											return Promise.resolve();
 										},
 									}),
@@ -198,16 +208,13 @@ export default function UserInfo() {
 												!value
 											) {
 												return Promise.reject(
-													new Error(
-														"请确认新密码"
-													)
+													new Error("请确认新密码")
 												);
 											}
 											if (
 												value &&
-												getFieldValue(
-													"newPassword"
-												) !== value
+												getFieldValue("newPassword") !==
+													value
 											) {
 												return Promise.reject(
 													new Error(
@@ -235,9 +242,7 @@ export default function UserInfo() {
 
 			{/* 活动信息部分 */}
 			<Card
-				title={
-					<div className="text-xl font-bold">我的活动管理</div>
-				}
+				title={<div className="text-xl font-bold">我的活动管理</div>}
 				className="rounded-2xl shadow-lg"
 				extra={
 					<Select
@@ -250,7 +255,10 @@ export default function UserInfo() {
 					/>
 				}
 			>
-				<div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+				<div
+					className={`grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3
+          			${myActive?.length >= 6 ? "max-h-[600px] overflow-y-auto pr-2" : ""}`}
+				>
 					{myActive?.map((cardInfo) => (
 						<Card.Grid
 							key={cardInfo.id}
