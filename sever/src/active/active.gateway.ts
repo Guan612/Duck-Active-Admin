@@ -4,7 +4,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway(3001, { namespace: '/active', cors: { origin: '*' } })
 export class ActiveGateway {
@@ -12,9 +12,7 @@ export class ActiveGateway {
   server: Server;
 
   @SubscribeMessage('startActivity')
-  handleStartActivity(@MessageBody() data: { id: number }) {
-    // 处理活动开始逻辑
-    console.log(`活动 ${data.id} 开始`);
-    this.server.emit('activityStarted', { id: data.id });
+  handleStartActivity(@MessageBody() data, client: Socket) {
+    this.server.emit('startActivity', data);
   }
 }
