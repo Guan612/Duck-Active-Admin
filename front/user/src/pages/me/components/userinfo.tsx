@@ -251,22 +251,19 @@ export default function UserInfo() {
 						placeholder="状态筛选"
 						onChange={handleActiveChange}
 						options={activeStatusOptions}
-						className="min-w-[200px]"
+						className="min-w-[180px]"
 					/>
 				}
 			>
 				<div
-					className={`grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3
-          			${myActive?.length >= 6 ? "max-h-[600px] overflow-y-auto pr-2" : ""}`}
+					className={`grid gap-4 grid-cols-1 md:grid-cols-2
+    				${myActive?.length >= 5 ? "h-[38vh] overflow-y-auto pr-3" : ""}
+    				grid-auto-rows min-max(200px, auto)`}
 				>
 					{myActive?.map((cardInfo) => (
-						<Card.Grid
-							key={cardInfo.id}
-							className="hover:shadow-xl transition-all duration-300 cursor-pointer rounded-xl overflow-hidden"
-							style={{ width: "100%" }}
-						>
+						<div key={cardInfo.id}>
 							<AddActiveCard myActive={cardInfo} />
-						</Card.Grid>
+						</div>
 					))}
 				</div>
 			</Card>

@@ -12,6 +12,9 @@ export default function ActiveDetail() {
   const screens = useBreakpoint();
 
   const statusColorMap = {
+    4: "orange", // 停止报名
+    5: "purple", // 活动结束
+    6: "gray", // 活动取消
     2: "green",
     3: "red",
     1: "blue"

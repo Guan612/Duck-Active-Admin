@@ -7,7 +7,6 @@ export function getShowActiveListAPI() {
 	return http.get("/active/showActive");
 }
 
-
 export function getActiveDetailAPI(id: string) {
 	return http.get(`/active/${id}`);
 }
@@ -31,18 +30,21 @@ export function getActiveStatusAPI(statusArray: number[]) {
 export function getActiveByTypeAPI(typeArray: number[]) {
 	return http.get("/active/findByType", {
 		params: {
-			type: typeArray.join(","), 
-		}
+			type: typeArray.join(","),
+		},
 	});
 }
 
-
 export function getActiveByTimeAPI(dates: Date[]) {
-  const [startDate, endDate] = dates;
-  return http.get("/active/findByTime", {
-    params: {
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString()
-    },
-  });
+	const [startDate, endDate] = dates;
+	return http.get("/active/findByTime", {
+		params: {
+			startDate: startDate.toISOString(),
+			endDate: endDate.toISOString(),
+		},
+	});
+}
+
+export function signInActiveAPI(id: number) {
+	return http.get(`/active/signInActive/${id}`);
 }
