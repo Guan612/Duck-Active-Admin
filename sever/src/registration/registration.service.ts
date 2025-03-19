@@ -21,6 +21,7 @@ export class RegistrationService {
             id: true,
             title: true,
             activitStatus: true,
+            activeAddress: true,
           },
         },
       },
@@ -74,6 +75,17 @@ export class RegistrationService {
             activitStatus: true,
           },
         },
+      },
+    });
+    return res;
+  }
+
+  //签到活动
+  async signInActive(id) {
+    const res = await this.prisma.registration.update({
+      where: { id: id },
+      data: {
+        status: 2,
       },
     });
     return res;

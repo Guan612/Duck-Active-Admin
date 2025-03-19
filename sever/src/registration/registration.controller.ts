@@ -184,4 +184,19 @@ export class RegistrationController {
   findMyActive(@User('id') userId: string) {
     return this.registrationService.findMyAddActive(+userId);
   }
+
+  @Get('signInActive/:id')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '签到活动' })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: 200,
+    description: '签到成功',
+    schema: {
+      example: {},
+    },
+  })
+  async signInActive(@Param('id') id: string) {
+    return this.registrationService.signInActive(+id);
+  }
 }
