@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getActiveByCreatUserAPI, updateActiveAPI } from '@/api/active';
+import useScoket from '@/api/socket';
 import { ActivitieStatus } from '@/dto/activeDto';
 import { message } from 'ant-design-vue';
 import { onMounted, ref } from 'vue';
@@ -12,6 +13,11 @@ import {
 
 const activeList = ref([]);
 const router = useRouter();
+const socket = useScoket('active');
+
+//开启socket监听
+socket.on('activityStarted', () => { })
+
 
 const getActiveList = async () => {
   const res = await getActiveByCreatUserAPI();
@@ -30,10 +36,15 @@ const getActivitieStatusText = (status: number): string => {
   return ActivitieStatus[status] ?? '未知状态';
 };
 
-const handleStartActivity = async (id: number) => {
+const handleStartActivity = async (id: number, title: string) => {
   const res = await updateActiveAPI(id, { activitStatus: 4 });
   if (res) {
     message.success('活动已开始');
+    socket.emit('startActivity', {
+      message: '活动' + title + '已开始',
+      id: id
+    });
+
     getActiveList();
   }
 };
@@ -87,7 +98,7 @@ onMounted(() => {
           </a-button>
 
           <a-button type="default" size="small" :disabled="!(item.activitStatus == 2 || item.activitStatus == 3)"
-            class="!h-8" @click="handleStartActivity(item.id)">
+            class="!h-8" @click="handleStartActivity(item.id, item.title)">
             <template #icon><user-add-outlined /></template>
             活动开始
           </a-button>
