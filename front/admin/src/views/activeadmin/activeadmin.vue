@@ -4,7 +4,7 @@ import { ActivitieType } from '@/dto/activeDto';
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import dayjs from 'dayjs';
-import { EditOutlined, CloseCircleOutlined } from '@ant-design/icons-vue';
+import { EditOutlined, CloseCircleOutlined, CheckCircleFilled } from '@ant-design/icons-vue';
 
 const router = useRouter()
 const activedetail = ref({})
@@ -78,12 +78,9 @@ onMounted(() => {
                         </div>
                         <div>
                             <span class="text-gray-600">人数:</span>
-                            <a-progress
-                                :percent="(activedetail.remainingNum / activedetail.activitiePeopleNum) * 100"
-                                status="active"
-                                stroke-color="#3b82f6"
-                                :format="() => `${activedetail.remainingNum || 0}/${activedetail.activitiePeopleNum || 0}`"
-                            />
+                            <a-progress :percent="(activedetail.remainingNum / activedetail.activitiePeopleNum) * 100"
+                                status="active" stroke-color="#3b82f6"
+                                :format="() => `${activedetail.remainingNum || 0}/${activedetail.activitiePeopleNum || 0}`" />
                         </div>
                     </div>
                 </div>
@@ -104,6 +101,10 @@ onMounted(() => {
                     <a-button type="primary" danger size="large" class="!h-12 !px-8">
                         <close-circle-outlined />
                         取消审核
+                    </a-button>
+                    <a-button type="primary" size="large" class="!h-12 !px-8 !bg-green-600 hover:!bg-green-700">
+                        <CheckCircleFilled />
+                        更改活动状态
                     </a-button>
                 </div>
             </div>
