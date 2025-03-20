@@ -73,7 +73,7 @@ export class IntegralService {
     const participants = await this.prisma.registration.findMany({
       where: {
         activitieId: activityId,
-        status: 1, // 只处理已参加活动的用户
+        status: 2, // 只处理已参加活动的用户
       },
       select: {
         userId: true,
@@ -120,6 +120,11 @@ export class IntegralService {
         }),
       ),
     );
+
+    await this.prisma.activitie.update({
+      where: { id: activityId },
+      data: { activitStatus: 5 }, // 更新活动状态为已完成
+    });
 
     return { success: true, updatedCount: participants.length };
   }
