@@ -11,3 +11,7 @@ export function getMyActiveAPI() {
 export function addActiveAPI(data: object) {
 	return http.post("/registration/join", data);
 }
+
+export function signInActiveAPI(id: number) {
+	return http.get(`/registration/signInActive/${id}`);
+}

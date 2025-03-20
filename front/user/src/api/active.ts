@@ -44,7 +44,3 @@ export function getActiveByTimeAPI(dates: Date[]) {
 		},
 	});
 }
-
-export function signInActiveAPI(id: number) {
-	return http.get(`/active/signInActive/${id}`);
-}
