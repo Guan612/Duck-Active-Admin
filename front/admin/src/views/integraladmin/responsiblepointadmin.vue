@@ -4,6 +4,7 @@ import { addpointAPI } from '@/api/integral'
 import { ActivitieStatus } from '@/dto/activeDto';
 import { onMounted, ref } from 'vue';
 import { PlusOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
 
 const activeList = ref([]);
 const getActiveList = async () => {
@@ -13,6 +14,11 @@ const getActiveList = async () => {
 
 const addPotin = async (activeid) => {
     const res = await addpointAPI(activeid)
+    if (res) {
+        message.success('加分成功，一共加分' + res.updatedCount + '人')
+    } else {
+        message.error('加分失败，请重试')
+    }
 }
 
 const getActivitieStatusText = (status: number): string => {
