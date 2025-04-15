@@ -61,7 +61,7 @@ export class CreateUserDto {
 export class LoginUserDto {
   @ApiProperty({
     description: '用户的用户名',
-    example: 'snmqwq',
+    example: 'nizai',
   })
   @IsNotEmpty()
   @IsString()
