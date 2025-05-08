@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { getMyActiveAPI } from "../../api/registration";
+import { getUserIntegralAPI } from "../../api/integral";
 
 export default function useUserStatistics() {
   const [userData, setUserData] = useState([]);
+  const [userintegral, setUserintegral] = useState([]); 
+
+  const getUserIntegral = async () => {
+    const res = await getUserIntegralAPI();
+    setUserintegral(res);
+  };
+
 
   const getUserData = async () => {
     const res = await getMyActiveAPI();
@@ -23,7 +31,12 @@ export default function useUserStatistics() {
       {
         name: "分数",
         type: "bar",
-        data: [5, 10, 5, 10],
+        data: [
+          userintegral?.moralPoints || 0,    // 明德 (对应 moralPoints)
+          userintegral?.actionPoints || 0,   // 笃行 (对应 actionPoints)
+          userintegral?.beautyPoints || 0,   // 尽美 (对应 beautyPoints)
+          userintegral?.learnedPoints || 0  
+        ],
       },
     ],
   };
@@ -62,6 +75,7 @@ export default function useUserStatistics() {
 
   useEffect(() => {
     getUserData();
+    getUserIntegral();
   }, []);
 
   return { options, options2 };

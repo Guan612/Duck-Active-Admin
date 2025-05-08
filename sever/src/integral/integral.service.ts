@@ -34,6 +34,8 @@ export class IntegralService {
         userId: userid,
       },
     });
+    // 解构并排除不需要的字段
+    const { id, userId, ...result } = res || {};
     return res;
   }
 

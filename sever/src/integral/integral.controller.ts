@@ -65,7 +65,7 @@ export class IntegralController {
     schema: {},
   })
   findByuser(@User('id') userid: string) {
-    return this.integralService.findOne(+userid);
+    return this.integralService.findByUserId(+userid);
   }
 
   @Get()
