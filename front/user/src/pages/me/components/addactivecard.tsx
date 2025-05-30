@@ -25,7 +25,7 @@ export default function AddActiveCard({ myActive }) {
 
 	return (
 		<div
-			className={`m-2 group ${borderColor} border-l-4 bg-white p-4 rounded-xl shadow-sm hover:shadow-lg transition-all cursor-pointer hover:-translate-y-1`}
+			className={`m-2 group ${borderColor} border-l-4 bg-white p-4 rounded-xl shadow-xs hover:shadow-lg transition-all cursor-pointer hover:-translate-y-1`}
 		>
 			<div className="flex justify-between items-start">
 				<h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2 flex-1">

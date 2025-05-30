@@ -11,7 +11,7 @@ const ActivityCard = ({ item }: { item: ActiveDto }) => (
         alt={item.title}
         className="w-full h-full object-cover"
       />
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 p-3">
+      <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 p-3">
         <h3 className="text-white font-bold text-lg truncate">{item.title}</h3>
 						</div>
 			</div>
@@ -24,7 +24,7 @@ const ActivityCard = ({ item }: { item: ActiveDto }) => (
 
 const NewsCard = () => (
   <div className="h-48 bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 m-2">
-    <div className="h-32 bg-gradient-to-r from-blue-100 to-purple-100 flex items-center justify-center">
+    <div className="h-32 bg-linear-to-r from-blue-100 to-purple-100 flex items-center justify-center">
       <NotificationOutlined className="text-4xl text-blue-500" />
     </div>
     <div className="p-3">
@@ -55,7 +55,7 @@ export default function Home() {
                   alt={item.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 p-8">
+                <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 p-8">
                   <h2 className="text-3xl font-bold text-white mb-4">
                     {item.title}
                   </h2>

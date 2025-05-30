@@ -17,7 +17,7 @@ export default function Active() {
 
 	return (
 		<div className="p-4 md:p-8 bg-gray-50 min-h-screen">
-			<Card className="rounded-2xl shadow-sm mb-6">
+			<Card className="rounded-2xl shadow-xs mb-6">
 				<Title level={3} className="text-center mb-6">
 					<ThunderboltOutlined className="text-blue-500 mr-2" />
 					精彩活动探索

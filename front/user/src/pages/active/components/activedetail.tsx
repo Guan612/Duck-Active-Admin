@@ -21,7 +21,7 @@ export default function ActiveDetail() {
   };
   return (
     <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
-      <Card className="rounded-2xl shadow-sm mb-6">
+      <Card className="rounded-2xl shadow-xs mb-6">
         <Button
 					icon={<LeftOutlined />}
           onClick={backActive}

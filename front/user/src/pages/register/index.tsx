@@ -13,14 +13,14 @@ export default function Register() {
 	const { onFinish, uploadAvatar, beforeUpload, imageUrl } = useRegister();
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+		<div className="min-h-screen bg-linear-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
 			<motion.div
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.6 }}
 				className="w-full max-w-2xl bg-white rounded-2xl shadow-xl overflow-hidden"
 			>
-				<div className="h-2 bg-gradient-to-r from-blue-500 to-purple-500" />
+				<div className="h-2 bg-linear-to-r from-blue-500 to-purple-500" />
 				<div className="p-8 space-y-6">
 					<div className="text-center space-y-2">
 						<h1 className="text-3xl font-bold text-gray-800">

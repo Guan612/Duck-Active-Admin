@@ -54,12 +54,12 @@ export default function HeaderBar() {
 	];
 
 	return (
-		<Header className="bg-white/80 backdrop-blur-sm shadow-sm z-50 sticky top-0 px-4 md:px-8 h-16">
+		<Header className="bg-white/80 backdrop-blur-xs shadow-xs z-50 sticky top-0 px-4 md:px-8 h-16">
 			<div className="max-w-7xl mx-auto flex items-center justify-between h-full">
 				{/* 左侧导航 */}
 				<div className="flex items-center gap-6">
 					<Link to="/" className="flex items-center gap-2">
-						<div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+						<div className="text-2xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
 							鸭鸭活动
 						</div>
 					</Link>
