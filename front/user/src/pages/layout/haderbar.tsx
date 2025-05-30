@@ -54,7 +54,7 @@ export default function HeaderBar() {
 	];
 
 	return (
-		<Header className="bg-white/80 backdrop-blur-xs shadow-xs z-50 sticky top-0 px-4 md:px-8 h-16">
+		<div className="bg-white/80 backdrop-blur-xs shadow-xs z-50 sticky top-0 px-4 md:px-8 h-16">
 			<div className="max-w-7xl mx-auto flex items-center justify-between h-full">
 				{/* 左侧导航 */}
 				<div className="flex items-center gap-6">
@@ -144,6 +144,6 @@ export default function HeaderBar() {
 					</div>
 				</div>
 			</div>
-		</Header>
+		</div>
 	);
 }
