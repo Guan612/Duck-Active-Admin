@@ -170,6 +170,8 @@ const onFinishFailed = errorInfo => {
 </template>
 
 <style scoped>
+@reference "tailwindcss";
+
 :deep(.ant-upload-select) {
   @apply w-full h-48 md:w-48 md:h-48;
 }

@@ -114,6 +114,8 @@ onMounted(() => {
 </template>
 
 <style scoped>
+@reference "tailwindcss";
+
 :deep(.ant-page-header-heading-title) {
   @apply !text-2xl;
 }

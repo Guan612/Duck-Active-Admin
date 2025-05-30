@@ -76,6 +76,8 @@ onMounted(() => {
 </template>
 
 <style scoped>
+@reference "tailwindcss";
+
 @media (max-width: 768px) {
     .ant-empty {
         @apply !px-0;

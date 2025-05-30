@@ -71,6 +71,8 @@ const onFinish = (loginInfo: loginDto) => {
 </template>
 
 <style scoped>
+@reference "tailwindcss";
+
 .login-form :deep(.ant-input-affix-wrapper) {
     @apply !pl-3;
 }

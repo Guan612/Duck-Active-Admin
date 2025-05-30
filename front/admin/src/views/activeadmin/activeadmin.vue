@@ -194,6 +194,8 @@ onMounted(() => {
 </template>
 
 <style scoped>
+@reference "tailwindcss";
+
 :deep(.ant-page-header) {
     @apply !pb-0 !mb-6;
 }

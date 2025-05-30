@@ -114,6 +114,8 @@ onMounted(() => {
 </template>
 
 <style scoped>
+@reference "tailwindcss";
+
 .ant-input-number-focused {
   @apply !border-blue-500 !shadow-sm;
 }
