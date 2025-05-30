@@ -4,8 +4,10 @@ import {
 	UnorderedListOutlined,
 	UserOutlined,
 	SearchOutlined,
+	DownOutlined,
+	MenuOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 
 const { Header } = Layout;
@@ -54,90 +56,103 @@ export default function HeaderBar() {
 	];
 
 	return (
-		<div className="bg-white/80 backdrop-blur-xs shadow-xs z-50 sticky top-0 px-4 md:px-8 h-16">
-			<div className="max-w-7xl mx-auto flex items-center justify-between h-full">
-				{/* 左侧导航 */}
-				<div className="flex items-center gap-6">
+		<div className="bg-white/90 backdrop-blur-sm shadow-sm z-50 sticky top-0 px-4 md:px-6 h-16 transition-all duration-300">
+			<div className="max-w-7xl mx-auto flex items-center h-full justify-between">
+				{/* 左侧导航 - Enhanced with spacing and animation */}
+				<div className="flex items-center gap-5">
 					<Link to="/" className="flex items-center gap-2">
-						<div className="text-2xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+						<div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent transition-transform hover:scale-105">
 							鸭鸭活动
 						</div>
 					</Link>
 
-					{/* 桌面导航 */}
-					<nav className="hidden md:flex items-center gap-4 ml-6">
+					{/* 桌面导航 - Improved hover effects */}
+					<nav className="hidden md:flex items-center gap-6 ml-4">
 						{navItems.map((item) => (
-							<Link
+							<NavLink
 								key={item.key}
 								to={item.path}
-								className="text-gray-600 hover:text-blue-600 transition-colors font-medium"
+								className={({ isActive }) =>
+									`font-medium transition-colors duration-200 ${
+										isActive
+											? "text-blue-600 font-semibold"
+											: "text-gray-600 hover:text-blue-500"
+									}`
+								}
 							>
-								{item.label}
-							</Link>
+												{item.label}
+							</NavLink>
 						))}
 					</nav>
-				</div>
+						</div>
 
-				{/* 右侧功能区 */}
-				<div className="flex items-stretch gap-4">
-					{/* 搜索栏 */}
-					<div className="hidden md:flex items-center w-64">
+				{/* 右侧功能区 - Better spacing and consistency */}
+				<div className="flex items-center gap-3">
+					{/* 搜索栏 - Modern styling */}
+					<div className="hidden md:flex items-center w-56">
 						<Search
 							placeholder="搜索活动..."
 							enterButton={
-								<SearchOutlined className="text-gray-500" />
-							}
+								<Button
+									type="text"
+									icon={<SearchOutlined className="text-blue-500" />}
+									className="rounded-r-full"
+								/>
+}
 							onSearch={onSearch}
-							className="rounded-full h-10"
+							className="rounded-full border-gray-200 hover:border-blue-300"
 						/>
 					</div>
 
-					{/* 用户信息 */}
-					{userInfo ? (
-						<Dropdown menu={userMenu} trigger={["click"]}>
-							<button className="flex items-center gap-2 hover:bg-gray-100 px-3 py-1 rounded-full transition-colors h-10">
-								<Avatar
-									src={userInfo?.headerimg}
-									icon={<UserOutlined />}
-									className="border-2 border-blue-200"
-									size={32}
-								/>
-								<span className="text-gray-700 font-bold hidden lg:block">
-									{userInfo.nickname || userInfo.loginId}
+					<div className="flex items-center gap-3">
+						{/* 用户信息 - Polished dropdown */}
+						{userInfo ? (
+							<Dropdown menu={userMenu} trigger={["click"]}>
+								<button className="flex items-center gap-2 hover:bg-gray-100 px-3 py-1.5 rounded-full transition-all duration-200">
+									<Avatar
+										src={userInfo?.headerimg}
+										icon={<UserOutlined />}
+										className="border border-blue-100 shadow-sm"
+										size={34}
+									/>
+									<span className="text-gray-800 font-medium hidden lg:block truncate max-w-[120px]">
+										{userInfo.nickname || userInfo.loginId}
+									</span>
+									<DownOutlined className="text-gray-400 text-xs ml-1"/>
+								</button>
+							</Dropdown>
+						) : (
+							<Button
+								type="primary"
+								shape="round"
+								onClick={goLogin}
+								className="h-9 font-medium px-5 shadow-sm hover:shadow-md transition-shadow"
+							>
+								<span className="transform hover:-translate-y-0.5 transition-transform">
+									登录/注册
 								</span>
-							</button>
-						</Dropdown>
-					) : (
-						<Button
-							type="primary"
-							shape="round"
-							onClick={goLogin}
-							className="h-10 flex items-center"
-						>
-							登录/注册
-						</Button>
-					)}
+							</Button>
+						)}
 
-					{/* 移动端菜单按钮 */}
-					<div className="md:hidden flex items-center">
-						<div className="md:hidden">
+						{/* 移动端菜单 - Better icon alignment */}
+						<div className="md:hidden flex items-center">
 							<Dropdown
 								menu={{
-									items: navItems.map((item) => ({
+									items: navItems.map(item => ({
 										key: item.key,
 										label: (
-											<Link to={item.path}>
+											<Link to={item.path} className="px-4 py-2 block">
 												{item.label}
 											</Link>
-										),
+										)
 									})),
 								}}
+								overlayClassName="shadow-lg rounded-xl"
 							>
 								<Button
 									type="text"
-									icon={
-										<UnorderedListOutlined className="text-xl" />
-									}
+									icon={<MenuOutlined className="text-xl text-gray-600" />}
+									className="flex items-center justify-center w-10 h-10"
 								/>
 							</Dropdown>
 						</div>
