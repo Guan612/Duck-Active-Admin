@@ -89,26 +89,34 @@ const onFinishFailed = errorInfo => {
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-6">
-    <a-page-header title="创建新活动" class="p-0 mb-6" :style="{ borderBottom: '1px solid #f0f0f0' }" />
+  <div class="p-6 w-full max-w-5xl mx-auto">
+    <a-page-header title="创建新活动" class="p-0 mb-4" :style="{ borderBottom: '1px solid #f0f0f0' }" />
 
-    <a-form :model="activeState" layout="vertical" class="max-w-3xl mx-auto" @finish="handleFinish">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="space-y-4">
+    <a-form :model="activeState" layout="vertical" class="w-full max-w-4xl mx-auto" @finish="handleFinish">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Left Column -->
+        <div class="space-y-5">
           <a-form-item label="活动标题" name="title" :rules="[{ required: true, message: '请输入活动标题' }]">
-            <a-input v-model:value="activeState.title" placeholder="请输入活动标题" class="!h-10" />
+            <a-input v-model:value="activeState.title" placeholder="请输入活动标题" class="!h-11" />
           </a-form-item>
-          <a-form-item label="活动时间" name="time" :rules="[{ required: true, message: '请选择活动时间' }]">
-            <a-range-picker v-model:value="activeState.time" />
+
+          <a-form-item label="活动时间" name="time" :rules="[{ required: true, message: '请选择活动时间' }]" class="!mb-3">
+            <a-range-picker v-model:value="activeState.time" class="w-full" :show-time="{ format: 'HH:mm' }" />
           </a-form-item>
+
           <a-form-item label="活动类型" name="activitieType" :rules="[{ required: true, message: '请选择活动类型' }]">
-            <a-select v-model:value="activeState.activitieType" class="w-full" option-label-prop="label" :options="[
+            <a-select
+              v-model:value="activeState.activitieType"
+              class="w-full !h-11"
+              option-label-prop="label"
+              :options="[
               { value: 0, label: '通用', color: 'gray' },
               { value: 1, label: '博学', color: 'blue' },
               { value: 2, label: '笃行', color: 'green' },
               { value: 3, label: '尽美', color: 'orange' },
               { value: 4, label: '明德', color: 'purple' }
-            ]">
+              ]"
+            >
               <template #option="{ label, color }">
                 <a-tag :color="color" class="!m-0">{{ label }}</a-tag>
               </template>
@@ -119,33 +127,39 @@ const onFinishFailed = errorInfo => {
           </a-form-item>
         </div>
 
-        <div class="space-y-4">
-          <a-form-item label="活动分数" name="point" :rules="[{ required: true, message: '请输入活动分数' }]">
-            <a-input-number v-model:value="activeState.point" :min="1" class="!w-full !h-10" />
-          </a-form-item>
-          <a-form-item label="活动人数" name="activitiePeopleNum">
-            <a-input-number v-model:value="activeState.activitiePeopleNum" :min="1" class="!w-full !h-10" />
-          </a-form-item>
+        <!-- Right Column -->
+        <div class="space-y-5">
+          <div class="grid grid-cols-2 gap-5">
+            <a-form-item label="活动分数" name="point" :rules="[{ required: true, message: '请输入活动分数' }]">
+              <a-input-number v-model:value="activeState.point" :min="1" class="!w-full !h-11" />
+            </a-form-item>
+
+            <a-form-item label="活动人数" name="activitiePeopleNum">
+              <a-input-number v-model:value="activeState.activitiePeopleNum" :min="1" class="!w-full !h-11" />
+            </a-form-item>
+          </div>
 
           <a-form-item label="活动形式" name="isOnline">
-            <a-radio-group v-model:value="activeState.isOnline" button-style="solid" class="w-full">
-              <a-radio-button :value="0" class="w-1/2 text-center">线下活动</a-radio-button>
-              <a-radio-button :value="1" class="w-1/2 text-center">线上活动</a-radio-button>
+            <a-radio-group v-model:value="activeState.isOnline" button-style="solid" class="w-full grid grid-cols-2">
+              <a-radio-button :value="0" class="text-center py-2">线下活动</a-radio-button>
+              <a-radio-button :value="1" class="text-center py-2">线上活动</a-radio-button>
             </a-radio-group>
           </a-form-item>
 
           <a-form-item :label="activeState.isOnline ? '活动链接' : '活动地点'" name="activeAddress">
             <a-input v-model:value="activeState.activeAddress"
-              :placeholder="activeState.isOnline ? '请输入在线会议链接' : '请输入详细活动地址'" class="!h-10" />
+              :placeholder="activeState.isOnline ? 'https://' : '例如：学校礼堂 101'" class="!h-11" />
           </a-form-item>
         </div>
       </div>
 
+      <!-- Description -->
       <a-form-item label="活动详情" name="content" class="!mt-6">
-        <a-textarea v-model:value="activeState.content" placeholder="请输入活动详细说明" :rows="4" class="!resize-none"
-          show-count :maxlength="300" />
+        <a-textarea v-model:value="activeState.content" placeholder="请输入活动详细说明..." :rows="4"
+          class="!resize-none !rounded-lg" show-count :maxlength="300" />
       </a-form-item>
 
+      <!-- Poster -->
       <a-form-item label="活动海报" name="activitieImgUrl" class="!mt-6">
         <a-upload :custom-request="handleCustomUpload" v-model:file-list="fileList" list-type="picture-card"
           :max-count="1">
@@ -157,13 +171,17 @@ const onFinishFailed = errorInfo => {
         </a-upload>
       </a-form-item>
 
-      <a-form-item class="!mt-8">
-        <a-button type="primary" html-type="submit" size="large" class="!h-12 !px-8 float-right" :loading="false">
-          <template #icon>
-            <PlusOutlined />
-          </template>
-          立即发布活动
-        </a-button>
+      <!-- Submit -->
+      <a-form-item class="!mt-9">
+        <div class="flex justify-center w-full">
+          <a-button type="primary" html-type="submit" size="large"
+            class="!h-12 !px-10 !text-base shadow-md hover:shadow-lg" :loading="false">
+            <template #icon>
+              <PlusOutlined />
+            </template>
+            立即发布活动
+          </a-button>
+        </div>
       </a-form-item>
     </a-form>
   </div>
@@ -172,10 +190,16 @@ const onFinishFailed = errorInfo => {
 <style scoped>
 @reference "tailwindcss";
 
-:deep(.ant-upload-select) {
-  @apply w-full h-48 md:w-48 md:h-48;
+:deep(.ant-upload) {
+  @apply w-full aspect-[5/3] max-w-lg md:max-w-[280px];
 }
 :deep(.ant-upload-list-item-container) {
-  @apply w-full md:w-48;
+  @apply w-full aspect-[5/3] max-w-lg md:max-w-[280px] !m-0;
+}
+:deep(.ant-btn.ant-btn-lg) {
+  @apply flex items-center;
+}
+.grid-cols-2 .ant-form-item {
+  @apply !mb-0;
 }
 </style>
