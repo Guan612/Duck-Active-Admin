@@ -3,7 +3,7 @@ import { useUserStore } from "@/stores/userstore";
 import { message } from "ant-design-vue";
 import router from "@/router";
 const http = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:3000/apis",
   timeout: 2000,
 });
 

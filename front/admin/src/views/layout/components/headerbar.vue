@@ -41,7 +41,7 @@ const pointUrl = (role: number) => {
         <!-- 信息统计 -->
         <a-dropdown :trigger="['hover']" overlay-class-name="header-dropdown">
           <router-link
-            :to="infoUrl(userstore.userInfo.role)"
+            :to="infoUrl(userstore.userInfo?.role)"
             class="nav-link text-gray-600 hover:text-blue-600 transition-colors"
           >
             信息统计
