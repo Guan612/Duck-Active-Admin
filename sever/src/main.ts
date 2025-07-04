@@ -18,6 +18,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe()); // 全局验证
 
+  app.setGlobalPrefix('apis');
+
   app.useStaticAssets('upload', { prefix: '/upload' });
 
   await app.enableCors();

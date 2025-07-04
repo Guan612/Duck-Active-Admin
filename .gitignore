@@ -1,6 +1,11 @@
 #upload foder
 upload/
 
+#public foder
+public/
+
+client/
+
 # Logs
 logs
 *.log
