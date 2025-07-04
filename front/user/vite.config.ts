@@ -10,4 +10,5 @@ export default defineConfig({
 		// 是否开启 https
 		https: false,
 	},
+	base: '/user',
 });

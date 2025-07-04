@@ -2,6 +2,7 @@ import { Button, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import useLogin from "../../hooks/login/uselogin";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Login() {
 	const { onFinish } = useLogin();
@@ -79,12 +80,12 @@ export default function Login() {
 
 					<div className="text-center text-sm text-gray-500">
 						还没有账号？{" "}
-						<a
-							href="/register"
+						<Link
+							to="/register"
 							className="text-blue-500 hover:text-blue-600 font-medium underline underline-offset-2"
 						>
 							快速注册
-						</a>
+						</Link>
 					</div>
 				</div>
 			</motion.div>

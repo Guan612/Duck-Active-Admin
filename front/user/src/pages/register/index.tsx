@@ -8,6 +8,7 @@ import {
 import { Button, Form, Input, Upload } from "antd";
 import useRegister from "../../hooks/register/useregister";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Register() {
 	const { onFinish, uploadAvatar, beforeUpload, imageUrl } = useRegister();
@@ -157,12 +158,12 @@ export default function Register() {
 
 						<div className="text-center text-sm text-gray-500">
 							已有账号？{" "}
-							<a
-								href="/login"
+							<Link
+								to="/login"
 								className="text-blue-500 hover:text-blue-600 font-medium underline underline-offset-2"
 							>
 								立即登录
-							</a>
+							</Link>
 						</div>
 					</Form>
 				</div>
