@@ -28,3 +28,9 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# 明确忽略开发和生产环境文件
+# 即使它们不包含 .local 后缀，也强烈建议忽略
+.env.development
+.env.production
+.env.example
