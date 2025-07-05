@@ -120,7 +120,7 @@ export default function Register() {
 								listType="picture-card"
 								className="avatar-uploader w-full"
 								showUploadList={false}
-								action="http://127.0.0.1:3000/uploadfile/avter"
+								action="http://127.0.0.1:3000/apis/uploadfile/avter"
 								beforeUpload={beforeUpload}
 								onChange={uploadAvatar}
 							>
