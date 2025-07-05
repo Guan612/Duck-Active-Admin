@@ -6,6 +6,7 @@ import { UploadfileModule } from './uploadfile/uploadfile.module';
 import { IntegralModule } from './integral/integral.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -27,11 +28,11 @@ import { join } from 'path';
         // URL 前缀
         serveRoot: '/admin',
         // 建议保留，避免与API冲突
-        exclude: ['/api/(.*)','/apis/(.*)'],
+        exclude: ['/api/(.*)', '/apis/(.*)'],
       },
     ),
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

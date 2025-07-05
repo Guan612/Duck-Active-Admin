@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { RequestMethod, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -18,7 +18,9 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe()); // 全局验证
 
-  app.setGlobalPrefix('apis');
+  app.setGlobalPrefix('apis', {
+    exclude: [{ path: '/', method: RequestMethod.GET }],
+  });
 
   app.useStaticAssets('upload', { prefix: '/upload' });
 
