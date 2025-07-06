@@ -120,9 +120,9 @@ export default function Register() {
 								listType="picture-card"
 								className="avatar-uploader w-full"
 								showUploadList={false}
-								action={import.meta.env.VITE_API_BASE_URL+"/uploadfile/avter"}
 								beforeUpload={beforeUpload}
 								onChange={uploadAvatar}
+								customRequest={({ file, onSuccess }) => onSuccess?.('ok')}
 							>
 								<motion.div
 									whileHover={{ scale: 1.02 }}

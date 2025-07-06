@@ -4,6 +4,7 @@ import { registerDto } from "../../dto/userDto";
 import { Form, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import type { AxiosResponse } from "axios";
+import { uploadAvatarAPI } from "../../api/upload";
 
 interface RegisterResponse {
   loginId: string;
@@ -44,18 +45,20 @@ export default function useRegister() {
     return isJpgOrPng && isLt2M;
   };
 
-  const uploadAvatar = ({ file }: { file: any }) => {
+  const uploadAvatar = async ({ file }: { file: any }) => {
     if (file.status === "done") {
-      message.success(`${file.name} 文件上传成功`);
-      if (file.response && file.response.url) {
-        const url = file.response.url; // 从响应中获取 URL
-        console.log("Got avatar URL:", url);
-        setImageUrl(url); // 更新头像 URL
+      try {
+        const res = await uploadAvatarAPI(file.originFileObj);
+        const url = res.url; // Adjust to match your API response structure
+        message.success(`${file.name} 文件上传成功`);
+        //console.log("Got avatar URL:", url);
+        setImageUrl(url);
         form.setFieldsValue({
           headerimg: url,
         });
-      } else {
-        console.warn("No URL found in response:", file.response);
+      } catch (error) {
+        message.error(`${file.name} 文件上传失败`);
+        console.error("Upload failed:", error);
       }
     } else if (file.status === "error") {
       message.error(`${file.name} 文件上传失败`);
