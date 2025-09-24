@@ -7,6 +7,8 @@ import { IntegralModule } from './integral/integral.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AppController } from './app.controller';
+import { ChatModule } from './chat/chat.module';
+import { ChatroomModule } from './chatroom/chatroom.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { AppController } from './app.controller';
     RegistrationModule,
     UploadfileModule,
     IntegralModule,
+    ChatModule,
+    ChatroomModule,
     ServeStaticModule.forRoot(
       {
         rootPath: join(__dirname, '..', 'client', 'user'),
