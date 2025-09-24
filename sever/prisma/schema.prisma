@@ -20,6 +20,7 @@ model User {
   registration Registration[]
   integral     Integral[]
   activitie    Activitie[]
+  ChatContext  ChatContext[]
 }
 
 model Activitie {
@@ -41,6 +42,7 @@ model Activitie {
   updatedAt          DateTime       @updatedAt
   registration       Registration[]
   user               User           @relation(fields: [createdPeople], references: [id])
+  ChatRoom           ChatRoom[]
 }
 
 model Integral {
@@ -62,4 +64,24 @@ model Registration {
   activitie   Activitie @relation(fields: [activitieId], references: [id])
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model ChatRoom {
+  id          Int           @id @default(autoincrement())
+  activitieId Int
+  activitie   Activitie     @relation(fields: [activitieId], references: [id])
+  ChatContext ChatContext[]
+}
+
+model ChatContext {
+  id          Int      @id @default(autoincrement())
+  chatroomId  Int
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  context     String
+  messageType Int      @default(0) //0:文字，1图片，2视频
+  status      Int      @default(0) // 0: 未读，1: 已读等
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  chatroom    ChatRoom @relation(fields: [chatroomId], references: [id])
 }
