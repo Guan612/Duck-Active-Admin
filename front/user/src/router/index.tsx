@@ -10,51 +10,52 @@ import Active from "../pages/active";
 import Me from "../pages/me";
 import ActiveDetail from "../pages/active/components/activedetail";
 import Register from "../pages/register";
+import { ReactNode } from "react";
 
-const RequireAuth = ({ element }) => {
-	const auth = useAuth();
-	if (!auth) {
-		message.error("请先登录后使用");
-		return <Navigate to="/login" />;
-	} else {
-		return element;
-	}
-	//return auth ? element : <Navigate to="/auth" />;
+const RequireAuth = ({ element }: { element: ReactNode }) => {
+  const auth = useAuth();
+  if (!auth) {
+    message.error("请先登录后使用");
+    return <Navigate to="/login" />;
+  } else {
+    return element;
+  }
+  //return auth ? element : <Navigate to="/auth" />;
 };
 
 const routes = [
-	{
-		path: "/",
-		element: <Layout />,
-		children: [
-			{
-				path: "/",
-				element: <Home />,
-			},
-			{
-				path: "/active",
-				element: <RequireAuth element={<Active />} />,
-			},
-			{
-				path: "/activedetail/:id",
-				element: <RequireAuth element={<ActiveDetail />} />,
-			},
-			{
-				path: "/me",
-				element: <RequireAuth element={<Me />} />,
-			},
-		],
-	},
-	{
-		path: "/login",
-		element: <Login />,
-	},
-	{
-		path:"/register",
-		element:<Register/>
-	}
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/active",
+        element: <RequireAuth element={<Active />} />,
+      },
+      {
+        path: "/activedetail/:id",
+        element: <RequireAuth element={<ActiveDetail />} />,
+      },
+      {
+        path: "/me",
+        element: <RequireAuth element={<Me />} />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
 ];
 
 export default function Router() {
-	return useRoutes(routes);
+  return useRoutes(routes);
 }
