@@ -1,22 +1,21 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class UpdatePasswordPipe implements PipeTransform {
-  transform(value: any) {
+  async transform(value: any) {
     if (!value) {
       return {};
     }
 
     if (value.newpassword) {
-      const salt = bcrypt.genSaltSync(10);
-      const hashedPassword = bcrypt.hashSync(value.newpassword, salt);
+      const hashedPassword = await argon2.hash(value.newpassword);
       return {
         ...value,
         password: hashedPassword,
       };
     }
-    
+
     return value || {};
   }
 }
