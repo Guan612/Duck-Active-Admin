@@ -1,9 +1,8 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
+import * as argon2 from 'argon2';
 import { UserService } from './user.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserDto } from '../dto/user.dto';
-import { userInfo } from 'os';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +16,7 @@ export class AuthService {
     const user = await this.userService.findByLoginId(LoginUserDto.loginId);
     if (user) {
       const { password, createdAt, updatedAt, ...userInfo } = user;
-      if (bcrypt.compareSync(LoginUserDto.password, password)) {
+      if (await argon2.verify(LoginUserDto.password, password)) {
         const payload = { userInfo };
         return {
           message: '登录成功',
